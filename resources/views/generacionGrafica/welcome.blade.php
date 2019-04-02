@@ -278,7 +278,8 @@
 
                 var  options= [{
                     data: d1,
-                    lines: { show: true, fill: false }
+                    lines: { show: true, fill: false },
+                    points: { show: true, fill: true }
                 }
                 ];
 
