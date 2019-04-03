@@ -231,66 +231,148 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
+            <!--@if (Route::has('login'))-->
                 <div class="top-right links">
-                    @auth
+                    <!--@auth-->
                         <a href="{{ url('/home') }}">Home</a>
-                    @else
+                   <!-- @else-->
                         <a href="{{ route('login') }}">Login</a>
 
-                        @if (Route::has('register'))
+                        <!--@if (Route::has('register'))-->
                             <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+                        <!--@endif-->
+                   <!-- @endauth-->
                 </div>
-            @endif
+            <!--@endif-->
 
             <div class="content">
                 <div class="title m-b-md">
 
 
-                <div id="grafica1"  style="width:600px;height:300px">
+                    <div id="grafica1"  style="width:600px;height:300px">
 
+                    </div>
+                    <h6 style ="float:left;margin: 20px">Líneas</h6>
+                    <input type="checkbox" id="lines"  style ="float:left;margin: 20px" checked>
+                    <input type="color" id="cLineas" value="#ffd3ab" style ="float:left;margin: 20px">
+                    <h6 style ="float:left;margin: 20px">Puntos</h6>
+                    <input type="checkbox" id="points" style ="float:left;margin: 20px" checked>
+                    <input type="color" id = "cPuntos" value="#d3ffb5" style ="float:left;margin: 20px">
+                    <h6 style ="float:left;margin: 20px">Barras</h6>
+                    <input type="checkbox" id="bars" style ="float:left;margin: 20px" checked>
+                    <input type="color" id = "cBarras" value="#c1e9ff" style ="float:left;margin: 20px">
+                    <h6 style ="float:left;margin: 20px">Relleno</h6>
+                    <input type="checkbox" id="relleno" style ="float:left;margin: 20px" checked>
                 </div>
-
-
-
             </div>
+        </div>
     </body>
 </html>
 <script>
-    $( document ).ready(function() {
-        window.onload = function () {
+
+    var cL = "#ffd3ab";
+    var cP = "#d3ffb5";
+    var cB = "#c1e9ff";
+
+    var bLines=true;
+    var bPoints = true;
+    var bBars = true;
+    var bFill = true;
+
+    $("#cLineas").change(function () {
+        cL = $("#cLineas").val();
+        carga();
+    });
+
+    $("#cPuntos").change(function () {
+        cP = $("#cPuntos").val();
+        carga();
+    });
+
+    $("#cBarras").change(function () {
+        cB = $("#cBarras").val();
+        carga();
+    });
+
+    $("#cRelleno").change(function () {
+        cR = $("#cRelleno").val();
+        carga();
+    });
+
+    $("#lines").click(function () {
+        if ($(this).prop("checked")) {
+            bLines = true;
+            carga();
+        }
+        else {
+            bLines = false;
+            carga();
+        }
+    });
+
+    $("#points").click(function () {
+        if ($(this).prop("checked")) {
+            bPoints = true;
+            carga();
+        }
+        else {
+            bPoints = false;
+            carga();
+        }
+    });
+
+    $("#bars").click(function () {
+        if ($(this).prop("checked")) {
+            bBars = true;
+            carga();
+        }
+        else {
+            bBars = false;
+            carga();
+        }
+    });
+
+    $("#relleno").click(function () {
+        if ($(this).prop("checked")) {
+            bFill = true;
+            carga();
+        }
+        else {
+            bFill = false;
+            carga();
+        }
+    });
 
 
-            $(function() {
+    function carga() {
 
-                var d1 = [];
-                for (var i = 0; i < 14; i += 0.5) {
-                    d1.push([i, Math.sin(i)]);
-                }
+        $(function() {
 
-                var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
+            var d1 = [];
+            for (var i = 0; i < 14; i += 0.5) {
+                d1.push([i, Math.sin(i)]);
+            }
 
-                // A null signifies separate line segments
+            var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
 
-                var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
+            // A null signifies separate line segments
 
-                var  options= [{
-                    data: d1,
-                    lines: { show: true, fill: false },
-                    points: { show: true, fill: true }
-                }
-                ];
+            var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
+
+            var  options= [{
+                data: d1,
+                lines: {show: bLines, fill: bFill,fillColor:cL},
+                points: {show: bPoints, fill: bFill,fillColor:cP},
+                bars: {show: bBars, fill: bFill,fillColor:cB},
+            }];
 
 
             $.plot("#grafica1", options);
 
+        });
 
-
-            });
-
-
-        }
+    }
+    $( document ).ready(function() {
+        window.onload = carga();
     });
 </script>
