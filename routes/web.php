@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/generacionGrafica', function () {
     return view('generacionGrafica/welcome');
 });
+
+Route::get('/generacionIndicador', function () {
+    return view('generacionIndicadores/welcome');
+});
