@@ -227,6 +227,10 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .graficas{
+                display: inline-flex;
+            }
         </style>
 
     </head>
@@ -253,17 +257,18 @@
                     <div id="grafica1"  style="width:600px;height:300px">
 
                     </div>
+                    <div class="graficas">
                     <table class="table">
                         <tr>
                             <td><h6 style ="float:left;margin: 20px">Líneas</h6></td>
                             <td><input type="checkbox" id="lines"  style ="float:left;margin: 20px" checked></td>
-                            <td><input type="color" id="cLineas" value="#ffd3ab" style ="float:left;margin: 20px"></td>
+                            <td><input type="color" id="cLinea" value="#ffd3ab" style ="float:left;margin: 20px"></td>
                         </tr>
                         <tr>
                             <td><h6 style ="float:left;margin: 20px">Puntos</h6></td>
                             <td><input type="checkbox" id="points" style ="float:left;margin: 20px" checked></td>
                             <td><input type="color" id = "cPuntos" value="#d3ffb5" style ="float:left;margin: 20px"></td>
-                        </div>
+
                         </tr>
                         <tr>
                             <td><h6 style ="float:left;margin: 20px">Barras</h6></td>
@@ -273,9 +278,48 @@
                         <tr>
                             <td><h6 style ="float:left;margin: 20px">Relleno</h6></td>
                             <td><input type="checkbox" id="relleno" style ="float:left;margin: 20px" checked></td>
+                            <td><input type="color" id="cLineas" value="#ffd3ab" style ="float:left;margin: 20px"></td>
                         </tr>
                 </table>
 
+                    <table class="table">
+                        <tr>
+                            <td><h6 style ="float:left;margin: 20px">Min</h6></td>
+                            <td> <input id = "nMinY" type="number" value="0" style ="float:left;margin: 20px"></td>
+                        </tr>
+                        <tr>
+                            <td><h6 style ="float:left;margin: 20px">Max</h6></td>
+                            <td> <input id = "nMaxY" type="number" value="20" style ="float:left;margin: 20px"></td>
+                        </tr>
+                        <tr>
+                            <td><h6 style ="float:left;margin: 20px">Ticks</h6></td>
+                            <td> <input id = "ticksY" type="number" value="5" style ="float:left;margin: 20px"></td>
+                        </tr>
+                        <tr>
+                            <td><h6 style ="float:left;margin: 20px">Digitos</h6></td>
+                            <td> <input id = "ticksYD" type="number" value="0" style ="float:left;margin: 20px"></td>
+                        </tr>
+                    </table>
+
+                        <table class="table">
+                            <tr>
+                                <td><h6 style ="float:left;margin: 20px">Min</h6></td>
+                                <td> <input id = "nMinX" type="number" value="0" style ="float:left;margin: 20px"></td>
+                            </tr>
+                            <tr>
+                                <td><h6 style ="float:left;margin: 20px">Max</h6></td>
+                                <td> <input id = "nMaxX" type="number" value="20" style ="float:left;margin: 20px"></td>
+                            </tr>
+                            <tr>
+                                <td><h6 style ="float:left;margin: 20px">Ticks</h6></td>
+                                <td> <input id = "ticksX" type="number" value="5" style ="float:left;margin: 20px"></td>
+                            </tr>
+                            <tr>
+                                <td><h6 style ="float:left;margin: 20px">Digitos</h6></td>
+                                <td> <input id = "ticksXD" type="number" value="0" style ="float:left;margin: 20px"></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -286,6 +330,16 @@
     var cL = "#ffd3ab";
     var cP = "#d3ffb5";
     var cB = "#c1e9ff";
+    var cLL = "#ffd3ab";
+    var nminY=0;
+    var nmaxY=20;
+    var ticksY=5;
+    var ticksYD=0;
+
+    var nminX=0;
+    var nmaxX=20;
+    var ticksX=5;
+    var ticksXD=0;
 
     var bLines=true;
     var bPoints = true;
@@ -356,10 +410,53 @@
         }
     });
 
+    $("#nMinY").change(function () {
+        nminY = $("#nMinY").val();
+        carga();
+    });
+
+    $("#nMaxY").change(function () {
+        nMaxY = $("#nMaxY").val();
+        carga();
+    });
+
+    $("#ticksY").change(function () {
+        ticksY = $("#ticksY").val();
+        carga();
+    });
+
+    $("#ticksYD").change(function () {
+        ticksYD = $("#ticksYD").val();
+        carga();
+    });
+
+    $("#nMinX").change(function () {
+        nMinX = $("#nMinX").val();
+        carga();
+    });
+
+    $("#nMaxX").change(function () {
+        nMaxX = $("#nMaxX").val();
+        carga();
+    });
+
+    $("#ticksX").change(function () {
+        ticksX = $("#ticksX").val();
+        carga();
+    });
+
+    $("#ticksXD").change(function () {
+        ticksXD = $("#ticksXD").val();
+        carga();
+    });
+
+    $("#cLinea").change(function () {
+        cLL = $("#cLinea").val();
+        carga();
+    });
+
 
     function carga() {
-
-        $(function() {
 
             var d1 = [];
             for (var i = 0; i < 14; i += 0.5) {
@@ -372,17 +469,33 @@
 
             var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
 
-            var  options= [{
-                data: d1,
+            var  options= {series:{
                 lines: {show: bLines, fill: bFill,fillColor:cL},
                 points: {show: bPoints, fill: bFill,fillColor:cP},
-                bars: {show: bBars, fill: bFill,fillColor:cB},
-            }];
+                bars: {show: bBars, fill: bFill,fillColor:cB}},
+                xaxis:{
+                    showTicks: true,
+                    gridLines: true,
+                    autoScale: "none",
+                    ticks: ticksX,
+                    min: nminX,
+                    max: nmaxX,
+                    tickDecimals: ticksXD
+                },
+                yaxis: {
+                    autoScale: "none",
+                    ticks: ticksY,
+                    min: nminY,
+                    max: nmaxY,
+                    tickDecimals: ticksYD
+                }
+            };
+
+            var data=[{label:"Hola",data:d2,color: cLL}];
+
+            $.plot("#grafica1",data, options);
 
 
-            $.plot("#grafica1", options);
-
-        });
 
     }
     $( document ).ready(function() {
