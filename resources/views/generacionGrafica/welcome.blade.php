@@ -253,23 +253,28 @@
                     <div id="grafica1"  style="width:600px;height:300px">
 
                     </div>
-
-                            <h6 style ="float:left;margin: 20px">Líneas</h6>
-                            <input type="checkbox" id="lines"  style ="float:left;margin: 20px" checked>
-                            <input type="color" id="cLineas" value="#ffd3ab" style ="float:left;margin: 20px">
-
-                        <h6 style ="float:left;margin: 20px">Puntos</h6>
-                            <input type="checkbox" id="points" style ="float:left;margin: 20px" checked>
-                            <input type="color" id = "cPuntos" value="#d3ffb5" style ="float:left;margin: 20px">
+                    <table class="table">
+                        <tr>
+                            <td><h6 style ="float:left;margin: 20px">Líneas</h6></td>
+                            <td><input type="checkbox" id="lines"  style ="float:left;margin: 20px" checked></td>
+                            <td><input type="color" id="cLineas" value="#ffd3ab" style ="float:left;margin: 20px"></td>
+                        </tr>
+                        <tr>
+                            <td><h6 style ="float:left;margin: 20px">Puntos</h6></td>
+                            <td><input type="checkbox" id="points" style ="float:left;margin: 20px" checked></td>
+                            <td><input type="color" id = "cPuntos" value="#d3ffb5" style ="float:left;margin: 20px"></td>
                         </div>
-
-                        <h6 style ="float:left;margin: 20px">Barras</h6>
-                            <input type="checkbox" id="bars" style ="float:left;margin: 20px" checked>
-                            <input type="color" id = "cBarras" value="#c1e9ff" style ="float:left;margin: 20px">
-
-                            <h6 style ="float:left;margin: 20px">Relleno</h6>
-                            <input type="checkbox" id="relleno" style ="float:left;margin: 20px" checked>
-
+                        </tr>
+                        <tr>
+                            <td><h6 style ="float:left;margin: 20px">Barras</h6></td>
+                            <td><input type="checkbox" id="bars" style ="float:left;margin: 20px" checked></td>
+                            <td> <input type="color" id = "cBarras" value="#c1e9ff" style ="float:left;margin: 20px"></td>
+                        </tr>
+                        <tr>
+                            <td><h6 style ="float:left;margin: 20px">Relleno</h6></td>
+                            <td><input type="checkbox" id="relleno" style ="float:left;margin: 20px" checked></td>
+                        </tr>
+                </table>
 
                 </div>
             </div>
