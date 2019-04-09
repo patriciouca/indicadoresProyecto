@@ -232,7 +232,7 @@
         <style>
             .graficas{
                 overflow:hidden;
-                
+
             }
         </style>
     </head>
