@@ -19,6 +19,5 @@ Route::get('/generacionGrafica', function () {
     return view('generacionGrafica/welcome');
 });
 
-Route::get('/generacionIndicador', function () {
-    return view('generacionIndicadores/welcome');
-});
+Route::get('/generacionIndicador', 'GeneracionIndicadores@index');
+Route::get('/generacionIndicador/getCampos/{nombre}', 'GeneracionIndicadores@getCampos');
