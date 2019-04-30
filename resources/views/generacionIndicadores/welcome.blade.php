@@ -19,22 +19,6 @@
                     collapsible: true
                 });
 
-                /*
-                var url="{{Request::url()}}";
-                $( "div.tabla" ).click(function(event) {
-                    texto=$($(event.target).find("h3").context).text();
-                    $.get( url+"/getCampos/"+texto, function( data ) {
-
-                        var cadena="<div><ul>";
-                        data.forEach(function(element) {
-                            cadena+="<li>";
-                            cadena+=element['Field'];
-                            cadena+="</li>";
-                        });
-                        cadena+="</ul></div>";
-                        $(event.target).append(cadena)
-                    });
-                });*/
             });
 
         </script>
@@ -46,11 +30,19 @@
             <div class="content">
                 <div id="accordion">
                 @foreach($tablas as $tabla)
-                    <div class="tabla group">
+
                         <h3>
-                            {{head($tabla)}}
+                            {{$tabla[0]}}
                         </h3>
-                    </div>
+                        <div>
+                            <ul>
+                            @foreach($tabla[1] as $campo)
+                                <li>
+                                {{$campo->Field}}
+                                </li>
+                            @endforeach
+                            </ul>
+                        </div>
                 @endforeach
                 </div>
             </div>
