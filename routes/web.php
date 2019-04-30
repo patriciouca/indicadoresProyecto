@@ -21,3 +21,4 @@ Route::get('/generacionGrafica', function () {
 
 Route::get('/generacionIndicador', 'GeneracionIndicadores@index');
 Route::get('/generacionIndicador/getCampos/{nombre}', 'GeneracionIndicadores@getCampos');
+Route::get('/generacionIndicador/getRelaciones', 'GeneracionIndicadores@getRelaciones');

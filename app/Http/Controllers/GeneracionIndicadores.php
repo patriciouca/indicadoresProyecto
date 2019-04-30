@@ -26,4 +26,23 @@ class GeneracionIndicadores extends Controller
         $tablas = DB::select('DESCRIBE '.$nombre);
         return $tablas;
     }
+
+    public function getRelaciones()
+    {
+        $tablas = DB::select('SELECT CONCAT( table_name, \'.\',
+        column_name, \' -> \',
+        referenced_table_name, \'.\',
+        referenced_column_name ) AS list_of_fks
+        FROM information_schema.KEY_COLUMN_USAGE
+        WHERE REFERENCED_TABLE_SCHEMA = \'indicadoresproyecto\'
+        AND REFERENCED_TABLE_NAME is not null
+        ORDER BY TABLE_NAME, COLUMN_NAME ');
+        $contador=0;
+        foreach ($tablas as $tabla)
+        {
+            $devolver[$contador]=head($tablas[$contador]);
+            $contador++;
+        }
+        return $devolver;
+    }
 }
