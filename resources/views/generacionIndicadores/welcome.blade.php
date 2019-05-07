@@ -184,12 +184,133 @@ Template: jquery
 
         <script>
 
+            var metido1=[];
+            var metido2=[];
+            var elemento1=true,elemento2=true;
+            var incontar1=false,incontar2=false;
+
             var dropfuncion=function( event, ui ) {
                 var hemetido=$(ui.draggable)[0].innerHTML;
-                if($( this ).html()=="Drop here")
-                    $( this ).html(hemetido);
-                else
-                    $( this ).append(hemetido);
+                hemetido=hemetido.trim();
+                var esElemento=false;
+
+                //hasClass("draggable1")
+                var clase=$(ui.draggable)[0].className;
+                if(clase.indexOf("draggable1")!=-1)
+                    esElemento=true;
+
+                var predicado;
+                var textoOperacion=$(ui.draggable)[0].innerHTML;
+
+                if(hemetido=="contar")
+                    hemetido+="(";
+
+                if($( this ).is("#droppable1"))
+                {
+                    if(textoOperacion == "contar(" && !incontar1)
+                    {
+                        if(elemento1==false || $( this ).html()=="Drop here")
+                        {
+                            predicado=true;
+                            elemento1=true;
+                        }
+                    }
+                    else if(textoOperacion==")"){
+                        predicado=true;
+                        elemento1=true;
+                    }
+                    else{
+                        if(esElemento && elemento1){
+                            predicado=true;
+                            elemento1=false;
+                        }
+                        else if(!esElemento && !elemento1 && !incontar1){
+                            predicado=true;
+                            elemento1=true;
+                        }
+                        else{
+                            predicado=false;
+                        }
+                    }
+
+                    if(predicado)
+                    {
+                        metido1.push(hemetido);
+                        if(incontar1)
+                        {
+                            incontar1=false;
+                            metido1.push(")");
+                            hemetido+=")";
+                        }
+                        if(textoOperacion == "contar(" && predicado)
+                        {
+                            incontar1=true;
+                        }
+                    }
+                }
+                else{
+
+                    if(textoOperacion == "contar(" && !incontar2)
+                    {
+                        if(elemento2==false || $( this ).html()=="Drop here")
+                        {
+                            predicado=true;
+                            elemento2=true;
+                        }
+
+                    }
+                    else if(textoOperacion==")"){
+                        predicado=true;
+                        elemento2=true;
+                    }
+                    else{
+                        if(esElemento && elemento2){
+                            predicado=true;
+                            elemento2=false;
+                        }
+                        else if(!esElemento && !elemento2 && !incontar2){
+                            predicado=true;
+                            elemento2=true;
+                        }
+                        else{
+                            predicado=false;
+                        }
+                    }
+
+                    if(predicado)
+                    {
+                        metido2.push(hemetido);
+                        if(incontar2)
+                        {
+                            incontar2=false;
+                            metido2.push(")");
+                        }
+                        hemetido+=")";
+
+                        if(textoOperacion == "contar(" && predicado)
+                        {
+                            incontar2=true;
+                        }
+
+                    }
+
+
+                }
+
+
+
+                console.log(metido1);
+                console.log(metido2);
+
+
+                if(predicado)
+                {
+                    if($( this ).html()=="Drop here")
+                        $( this ).html(hemetido);
+                    else
+                        $( this ).append(hemetido);
+                }
+
 
             };
 
@@ -241,7 +362,7 @@ Template: jquery
                             <div>
                                 <ul>
                                 @foreach($tabla[1] as $campo)
-                                    <li class="draggable badge badge-secondary">
+                                    <li class="draggable badge badge-secondary draggable1">
                                     {{$campo->Field}}
                                     </li>
                                 @endforeach
@@ -254,18 +375,19 @@ Template: jquery
                 <div class="contenedor">
                     <div class="operaciones">
                         <ul >
-                            <li class="btn btn-primary operacion draggable">+</li>
-                            <li class="btn btn-primary operacion draggable">-</li>
-                            <li class="btn btn-primary operacion draggable">*</li>
-                            <li class="btn btn-primary operacion draggable">/</li>
-                            <li class="btn btn-primary operacion draggable">contar</li>
-                            <li class="btn btn-primary operacion draggable">)</li>
+                            <li class="btn btn-primary operacion draggable draggable2">+</li>
+                            <li class="btn btn-primary operacion draggable draggable2">-</li>
+                            <li class="btn btn-primary operacion draggable draggable2">*</li>
+                            <li class="btn btn-primary operacion draggable draggable2">/</li>
+                            <li class="btn btn-primary operacion draggable draggable2">contar</li>
+                            <li class="btn btn-primary operacion draggable draggable2">)</li>
                         </ul>
                     </div>
 
 
                     <p id="droppable1">Drop here</p>
                     <p id="droppable2">Drop here</p>
+
                     <div class="botones">
 
                         <button type="button" class="btn btn-success">Generar consulta</button>
