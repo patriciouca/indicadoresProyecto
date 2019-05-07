@@ -66,7 +66,7 @@ class GeneracionIndicadores extends Controller
                case "/":
                    $sSql = $sSql + "/";
 
-               case "count(":
+               case "contar(":
                    $sSql = $sSql + "count(";
 
                case ")":
