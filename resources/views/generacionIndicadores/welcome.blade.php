@@ -184,7 +184,32 @@ Template: jquery
 
         <script>
 
+            var dropfuncion=function( event, ui ) {
+                var hemetido=$(ui.draggable)[0].innerHTML;
+                if($( this ).html()=="Drop here")
+                    $( this ).html(hemetido);
+                else
+                    $( this ).append(hemetido);
+
+            };
+
+            var clickOperacion=function() {
+                var meto=$(this)[0].innerHTML;
+                if($("#droppable").html()=="Drop here")
+                    $( "#droppable" ).html(meto);
+                else
+                    $( "#droppable" ).append(meto);
+            };
+
+            var dragablefuncionHelper=function(){
+                $copy = $(this).clone();
+                return $copy;};
+
+            
+
             $(document).ready(function() {
+
+                $( ".operacion" ).click(clickOperacion);
 
                 $( "#accordion" ).accordion({
                     header: "> div > h3",
@@ -196,21 +221,12 @@ Template: jquery
 
                 $( ".draggable" ).draggable({
                     revert: "true" ,
-                    helper: function(){
-                        $copy = $(this).clone();
-                        return $copy;},
+                    helper: dragablefuncionHelper,
                     appendTo: 'body',
                     scroll: false
                 });
                 $( "#droppable" ).droppable({
-                    drop: function( event, ui ) {
-                        var hemetido=$(ui.draggable)[0].innerHTML;
-                        if($( this ).find( "p" ).html()=="Drop here")
-                            $( this ).find( "p" ).html(hemetido);
-                        else
-                            $( this ).find( "p" ).append(hemetido);
-
-                    }
+                    drop: dropfuncion
                 });
             } );
 
@@ -240,10 +256,21 @@ Template: jquery
 
                 @endforeach
                 </div>
-                <div id="droppable" class="contenedor">
-                    <p>Drop here</p>
-                </div>
+                <div class="contenedor">
+                    <div class="operaciones">
+                        <ul >
+                            <li class="btn btn-primary operacion">+</li>
+                            <li class="btn btn-primary operacion">-</li>
+                            <li class="btn btn-primary operacion">*</li>
+                            <li class="btn btn-primary operacion">/</li>
+                            <li class="btn btn-primary operacion">count</li>
+                        </ul>
+                    </div>
+                    <div class="contenedor">
+                        <p id="droppable">Drop here</p>
 
+                    </div>
+                </div>
             </div>
         </div>
     </body>
