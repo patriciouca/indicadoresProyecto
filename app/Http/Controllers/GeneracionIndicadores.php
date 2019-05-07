@@ -72,6 +72,9 @@ class GeneracionIndicadores extends Controller
                case ")":
                    $sSql = $sSql + ")";
 
+               case "(":
+                   $sSql = $sSql + "(";
+
                default:
 
                $tmp = $sCampos[$i].str_split(".");
