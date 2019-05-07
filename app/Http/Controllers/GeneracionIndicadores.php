@@ -45,4 +45,43 @@ class GeneracionIndicadores extends Controller
         }
         return $devolver;
     }
+
+    public function generateSql($sCampos){
+       $sSql = "SELECT ";
+       $sSqlFrom = "FROM";
+
+       for($i = 0; $i<sizeof($sCampos);$i++){
+
+           switch($sCampos){
+
+               case "+":
+                   $sSql = $sSql + "+";
+
+               case "-":
+                   $sSql = $sSql + "-";
+
+               case "*":
+                   $sSql = $sSql + "*";
+
+               case "/":
+                   $sSql = $sSql + "/";
+
+               case "count(":
+                   $sSql = $sSql + "count(";
+
+               case ")":
+                   $sSql = $sSql + ")";
+
+               default:
+
+               $tmp = $sCampos[$i].str_split(".");
+               $sSqlFrom = $sSqlFrom + $tmp[0] + ",";
+               $sSql = $sSql + $tmp[1];
+
+           }
+
+       }
+       $sSqlFrom = substr($sSqlFrom,sizeof($sSqlFrom)-1);
+       $sSqlDef  = $sSql+$sSqlFrom;
+    }
 }
