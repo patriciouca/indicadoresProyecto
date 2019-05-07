@@ -193,15 +193,6 @@ Template: jquery
 
             };
 
-            var clickOperacion=function() {
-                var meto=$(this)[0].innerHTML;
-                if(meto=="contar")
-                    meto=meto+"(";
-                if($("#droppable").html()=="Drop here")
-                    $( "#droppable" ).html(meto);
-                else
-                    $( "#droppable" ).append(meto);
-            };
 
             var dragablefuncionHelper=function(){
                 $copy = $(this).clone();
@@ -210,8 +201,6 @@ Template: jquery
 
 
             $(document).ready(function() {
-
-                $( ".operacion" ).click(clickOperacion);
 
                 $( "#accordion" ).accordion({
                     header: "> div > h3",
@@ -265,19 +254,19 @@ Template: jquery
                 <div class="contenedor">
                     <div class="operaciones">
                         <ul >
-                            <li class="btn btn-primary operacion">+</li>
-                            <li class="btn btn-primary operacion">-</li>
-                            <li class="btn btn-primary operacion">*</li>
-                            <li class="btn btn-primary operacion">/</li>
-                            <li class="btn btn-primary operacion">contar</li>
-                            <li class="btn btn-primary operacion">)</li>
+                            <li class=" h1 btn btn-primary operacion draggable">+</li>
+                            <li class="btn btn-primary operacion draggable">-</li>
+                            <li class="btn btn-primary operacion draggable">*</li>
+                            <li class="btn btn-primary operacion draggable">/</li>
+                            <li class="btn btn-primary operacion draggable">contar</li>
+                            <li class="btn btn-primary operacion draggable">)</li>
                         </ul>
                     </div>
-                    <div class="contenedor">
-                        <p id="droppable1">Drop here</p>
-                        <p id="droppable2">Drop here</p>
 
-                    </div>
+
+                    <p id="droppable1">Drop here</p>
+                    <p id="droppable2">Drop here</p>
+
                 </div>
             </div>
         </div>
