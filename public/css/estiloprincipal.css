@@ -1,0 +1,19 @@
+.content{
+    display: inline;
+}
+
+.contenedor{
+    width: 50% !important;
+    margin: 0 !important;
+    float: left;
+    overflow:hidden !important;
+}
+.contenedor *{
+    overflow:hidden !important;
+}
+
+.draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
+
+#droppable{
+    min-height: 200px;
+}

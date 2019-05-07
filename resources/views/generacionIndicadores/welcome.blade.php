@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script
                 src="https://code.jquery.com/jquery-3.4.0.min.js"
                 integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
@@ -19,6 +19,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
 
+        <link rel="stylesheet" href="{{ URL::asset('css/estiloprincipal.css') }}?{{date('l jS \of F Y h:i:s A')}}" type="text/css" media="all" />
 
 
         <style>
@@ -184,11 +185,32 @@ Template: jquery
         <script>
 
             $(document).ready(function() {
+
                 $( "#accordion" ).accordion({
                     header: "> div > h3",
-                    collapsible: true
+                    collapsible: true,
+                    active : 'none'
                 }).sortable({
                     items: '.group'
+                });
+
+                $( ".draggable" ).draggable({
+                    revert: "true" ,
+                    helper: function(){
+                        $copy = $(this).clone();
+                        return $copy;},
+                    appendTo: 'body',
+                    scroll: false
+                });
+                $( "#droppable" ).droppable({
+                    drop: function( event, ui ) {
+                        var hemetido=$(ui.draggable)[0].innerHTML;
+                        if($( this ).find( "p" ).html()=="Drop here")
+                            $( this ).find( "p" ).html(hemetido);
+                        else
+                            $( this ).find( "p" ).append(hemetido);
+
+                    }
                 });
             } );
 
@@ -199,7 +221,7 @@ Template: jquery
 
 
             <div class="content">
-                <div id="accordion">
+                <div id="accordion" class="contenedor">
                 @foreach($tablas as $tabla)
                         <div class="group">
                             <h3>
@@ -208,7 +230,7 @@ Template: jquery
                             <div>
                                 <ul>
                                 @foreach($tabla[1] as $campo)
-                                    <li>
+                                    <li class="draggable badge badge-secondary">
                                     {{$campo->Field}}
                                     </li>
                                 @endforeach
@@ -217,6 +239,9 @@ Template: jquery
                         </div>
 
                 @endforeach
+                </div>
+                <div id="droppable" class="contenedor">
+                    <p>Drop here</p>
                 </div>
 
             </div>
