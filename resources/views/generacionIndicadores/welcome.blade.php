@@ -188,6 +188,7 @@ Template: jquery
             var metido2=[];
             var elemento1=true,elemento2=true;
             var incontar1=false,incontar2=false;
+            var inparentesis1=false,inparentesis2=false;
 
             var dropfuncion=function( event, ui ) {
                 var hemetido=$(ui.draggable)[0].innerHTML;
@@ -207,7 +208,7 @@ Template: jquery
 
                 if($( this ).is("#droppable1"))
                 {
-                    if(textoOperacion == "contar(" && !incontar1)
+                    if(hemetido == "contar(" && !incontar1)
                     {
                         if(elemento1==false || $( this ).html()=="Drop here")
                         {
@@ -215,9 +216,9 @@ Template: jquery
                             elemento1=true;
                         }
                     }
-                    else if(textoOperacion==")"){
+                    else if(textoOperacion=="("){
+                        inparentesis1=true;
                         predicado=true;
-                        elemento1=true;
                     }
                     else{
                         if(esElemento && elemento1){
@@ -227,6 +228,9 @@ Template: jquery
                         else if(!esElemento && !elemento1 && !incontar1){
                             predicado=true;
                             elemento1=true;
+                            if(textoOperacion==")"){
+                                console.log("a");
+                            }
                         }
                         else{
                             predicado=false;
@@ -242,15 +246,19 @@ Template: jquery
                             metido1.push(")");
                             hemetido+=")";
                         }
-                        if(textoOperacion == "contar(" && predicado)
+                        if(hemetido == "contar(" && predicado)
                         {
                             incontar1=true;
+                        }
+                        if(textoOperacion=="("){
+                            inparentesis1=true;
+                            predicado=true;
                         }
                     }
                 }
                 else{
 
-                    if(textoOperacion == "contar(" && !incontar2)
+                    if(hemetido == "contar(" && !incontar2)
                     {
                         if(elemento2==false || $( this ).html()=="Drop here")
                         {
@@ -271,6 +279,9 @@ Template: jquery
                         else if(!esElemento && !elemento2 && !incontar2){
                             predicado=true;
                             elemento2=true;
+                            if(textoOperacion==")"){
+                                console.log("a");
+                            }
                         }
                         else{
                             predicado=false;
@@ -284,12 +295,17 @@ Template: jquery
                         {
                             incontar2=false;
                             metido2.push(")");
+                            hemetido+=")";
                         }
-                        hemetido+=")";
 
-                        if(textoOperacion == "contar(" && predicado)
+
+                        if(hemetido == "contar(" && predicado)
                         {
                             incontar2=true;
+                        }
+                        if(textoOperacion=="("){
+                            inparentesis2=true;
+                            predicado=true;
                         }
 
                     }
@@ -380,6 +396,7 @@ Template: jquery
                             <li class="btn btn-primary operacion draggable draggable2">*</li>
                             <li class="btn btn-primary operacion draggable draggable2">/</li>
                             <li class="btn btn-primary operacion draggable draggable2">contar</li>
+                            <li class="btn btn-primary operacion draggable draggable2">(</li>
                             <li class="btn btn-primary operacion draggable draggable2">)</li>
                         </ul>
                     </div>
