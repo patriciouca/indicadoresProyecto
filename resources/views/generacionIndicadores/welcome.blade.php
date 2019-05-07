@@ -195,6 +195,8 @@ Template: jquery
 
             var clickOperacion=function() {
                 var meto=$(this)[0].innerHTML;
+                if(meto=="contar")
+                    meto=meto+"(";
                 if($("#droppable").html()=="Drop here")
                     $( "#droppable" ).html(meto);
                 else
@@ -205,7 +207,7 @@ Template: jquery
                 $copy = $(this).clone();
                 return $copy;};
 
-            
+
 
             $(document).ready(function() {
 
@@ -225,7 +227,11 @@ Template: jquery
                     appendTo: 'body',
                     scroll: false
                 });
-                $( "#droppable" ).droppable({
+                $( "#droppable1" ).droppable({
+                    drop: dropfuncion
+                });
+
+                $( "#droppable2" ).droppable({
                     drop: dropfuncion
                 });
             } );
@@ -263,11 +269,13 @@ Template: jquery
                             <li class="btn btn-primary operacion">-</li>
                             <li class="btn btn-primary operacion">*</li>
                             <li class="btn btn-primary operacion">/</li>
-                            <li class="btn btn-primary operacion">count</li>
+                            <li class="btn btn-primary operacion">contar</li>
+                            <li class="btn btn-primary operacion">)</li>
                         </ul>
                     </div>
                     <div class="contenedor">
-                        <p id="droppable">Drop here</p>
+                        <p id="droppable1">Drop here</p>
+                        <p id="droppable2">Drop here</p>
 
                     </div>
                 </div>

@@ -14,8 +14,9 @@
 
 .draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
 
-#droppable{
+#droppable1,#droppable2{
     min-height: 200px;
+    width: 100%;
 }
 
 .operaciones ul{
