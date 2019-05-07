@@ -15,7 +15,7 @@
 .draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
 
 #droppable1,#droppable2{
-    min-height: 200px;
+    min-height: 150px;
     width: 100%;
 }
 

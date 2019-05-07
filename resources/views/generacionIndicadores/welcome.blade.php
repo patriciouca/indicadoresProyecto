@@ -254,7 +254,7 @@ Template: jquery
                 <div class="contenedor">
                     <div class="operaciones">
                         <ul >
-                            <li class=" h1 btn btn-primary operacion draggable">+</li>
+                            <li class="btn btn-primary operacion draggable">+</li>
                             <li class="btn btn-primary operacion draggable">-</li>
                             <li class="btn btn-primary operacion draggable">*</li>
                             <li class="btn btn-primary operacion draggable">/</li>
@@ -266,6 +266,11 @@ Template: jquery
 
                     <p id="droppable1">Drop here</p>
                     <p id="droppable2">Drop here</p>
+                    <div class="botones">
+
+                        <button type="button" class="btn btn-success">Generar consulta</button>
+                        <button type="button" class="btn btn-primary">Guardar</button>
+                    </div>
 
                 </div>
             </div>
