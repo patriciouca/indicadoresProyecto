@@ -210,7 +210,7 @@ Template: jquery
                 {
                     if(hemetido == "contar(" && !incontar1)
                     {
-                        if(elemento1==false || $( this ).html()=="Drop here")
+                        if(elemento1|| $( this ).html()=="Drop here")
                         {
                             predicado=true;
                             elemento1=true;
@@ -260,7 +260,7 @@ Template: jquery
 
                     if(hemetido == "contar(" && !incontar2)
                     {
-                        if(elemento2==false || $( this ).html()=="Drop here")
+                        if(elemento2 || $( this ).html()=="Drop here")
                         {
                             predicado=true;
                             elemento2=true;
