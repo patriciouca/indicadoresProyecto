@@ -20,5 +20,7 @@ Route::get('/generacionGrafica', function () {
 });
 
 Route::get('/generacionIndicador', 'GeneracionIndicadores@index');
+Route::post('/generacionIndicador/getConsulta','GeneracionIndicadores@generateSql');
+
 Route::get('/generacionIndicador/getCampos/{nombre}', 'GeneracionIndicadores@getCampos');
 Route::get('/generacionIndicador/getRelaciones', 'GeneracionIndicadores@getRelaciones');

@@ -46,45 +46,65 @@ class GeneracionIndicadores extends Controller
         return $devolver;
     }
 
-    public function generateSql($sCampos){
+    public function generateSql(Request $request){
+
+        $sCampos=$request['campos'];
        $sSql = "SELECT ";
-       $sSqlFrom = "FROM";
+       $sSqlFrom = " FROM ";
+       $tablas=[];
 
-       for($i = 0; $i<sizeof($sCampos);$i++){
+        foreach ($sCampos as $valor)
+        {
+            switch($valor) {
 
-           switch($sCampos){
+                case "+":
+                    $sSql = $sSql . "+";
+                    break;
 
-               case "+":
-                   $sSql = $sSql + "+";
+                case "-":
+                    $sSql = $sSql . "-";
+                    break;
 
-               case "-":
-                   $sSql = $sSql + "-";
+                case "*":
+                    $sSql = $sSql . "*";
+                    break;
 
-               case "*":
-                   $sSql = $sSql + "*";
+                case "/":
+                    $sSql = $sSql . "/";
+                    break;
 
-               case "/":
-                   $sSql = $sSql + "/";
+                case "contar(":
+                    $sSql = $sSql . "count(";
+                    break;
 
-               case "contar(":
-                   $sSql = $sSql + "count(";
+                case ")":
+                    $sSql = $sSql . ")";
+                    break;
 
-               case ")":
-                   $sSql = $sSql + ")";
+                case "(":
+                    $sSql = $sSql . "(";
+                    break;
 
-               case "(":
-                   $sSql = $sSql + "(";
+                default:
+                    $tmp =  explode(".", $valor);
+                    if(sizeof($tmp)==2)
+                    {
 
-               default:
+                        if(array_search($tmp[0],$tablas)==false)
+                        {
+                            array_push($tablas,array_search($tmp[0],$tablas));
+                            array_push($tablas,$tmp[0]);
 
-               $tmp = $sCampos[$i].str_split(".");
-               $sSqlFrom = $sSqlFrom + $tmp[0] + ",";
-               $sSql = $sSql + $tmp[1];
-
-           }
-
-       }
-       $sSqlFrom = substr($sSqlFrom,sizeof($sSqlFrom)-1);
-       $sSqlDef  = $sSql+$sSqlFrom;
+                            $sSqlFrom = $sSqlFrom . $tmp[0] . ",";
+                        }
+                        $sSql = $sSql . $tmp[1];
+                    }
+                    else
+                        return var_dump($tmp);
+            }
+        }
+       $sSqlFrom = substr($sSqlFrom,0,strlen($sSqlFrom)-1);
+       $sSqlDef  = $sSql.$sSqlFrom;
+       return $sSqlDef;
     }
 }

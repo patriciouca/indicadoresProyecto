@@ -224,6 +224,9 @@ Template: jquery
                         if(esElemento && elemento1){
                             predicado=true;
                             elemento1=false;
+                            var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
+                            tabla=tabla.trim();
+
                         }
                         else if(!esElemento && !elemento1 && !incontar1){
                             predicado=true;
@@ -239,7 +242,11 @@ Template: jquery
 
                     if(predicado)
                     {
-                        metido1.push(hemetido);
+                        if(!elemento1)
+                            metido1.push(tabla+"."+hemetido);
+                        else
+                            metido1.push(hemetido);
+
                         if(incontar1)
                         {
                             incontar1=false;
@@ -275,6 +282,8 @@ Template: jquery
                         if(esElemento && elemento2){
                             predicado=true;
                             elemento2=false;
+                            var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
+                            tabla=tabla.trim();
                         }
                         else if(!esElemento && !elemento2 && !incontar2){
                             predicado=true;
@@ -290,7 +299,11 @@ Template: jquery
 
                     if(predicado)
                     {
-                        metido2.push(hemetido);
+                        if(!elemento2)
+                            metido2.push(tabla+"."+hemetido);
+                        else
+                            metido2.push(hemetido);
+
                         if(incontar2)
                         {
                             incontar2=false;
@@ -360,6 +373,14 @@ Template: jquery
                 $( "#droppable2" ).droppable({
                     drop: dropfuncion
                 });
+
+                $('#generar').click(function() {
+                    $.post("{{URL::to('/generacionIndicador/getConsulta')}}",{'_token': "{{ Session::token() }}",'campos':metido1}, function( data ) {
+                        console.log(metido1);
+                        console.log(data);
+                    });
+                });
+
             } );
 
         </script>
@@ -407,7 +428,7 @@ Template: jquery
 
                     <div class="botones">
 
-                        <button type="button" class="btn btn-success">Generar consulta</button>
+                        <button type="button" id="generar" class="btn btn-success">Generar consulta</button>
                         <button type="button" class="btn btn-primary">Guardar</button>
                     </div>
 
