@@ -1278,7 +1278,7 @@ jQuery.support = (function() {
 		leadingWhitespace: ( div.firstChild.nodeType === 3 ),
 
 		// Make sure that tbody elements aren't automatically inserted
-		// IE will insert them into empty tables
+		// IE will insert them into empty restables
 		tbody: !div.getElementsByTagName("tbody").length,
 
 		// Make sure that link elements get serialized correctly by innerHTML

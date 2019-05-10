@@ -107,4 +107,10 @@ class GeneracionIndicadores extends Controller
        $sSqlDef  = $sSql.$sSqlFrom;
        return $sSqlDef;
     }
+
+    public function evaluarConsulta(Request $request){
+        $tablas = DB::select($request['consulta']);
+        return $tablas;
+    }
+
 }
