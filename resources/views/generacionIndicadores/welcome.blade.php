@@ -203,10 +203,12 @@
                 }
 
                 var contenido="";
+                $('#campox').text(Object.keys(data[0])[0]);
+                $('#campoy').text(Object.keys(data[0])[1]);
                 data.forEach(function(element) {
                     contenido+="<tr>";
-                    contenido+="<td>"+Object.keys(element)[0]+"</td>";
                     contenido+="<td>"+element[Object.keys(element)[0]]+"</td>";
+                    contenido+="<td>"+element[Object.keys(element)[1]]+"</td>";
                     contenido+="</tr>";
                 });
 
@@ -251,6 +253,7 @@
                 });
 
                 $('#generar').click(function() {
+                    /*
                     $.post("{{URL::to('/generacionIndicador/getConsulta')}}",{'_token': "{{ Session::token() }}",'campos':metido1}, function( data ) {
                         //console.log(metido1);
                         console.log(data);
@@ -270,7 +273,16 @@
                         });
 
                     });
+                    */
+                    $.post("{{URL::to('/generacionIndicador/getConsulta2')}}",{'_token': "{{ Session::token() }}",'campos':metido1,'campos2':metido2}, function( data ) {
+                        //console.log(metido1);
+                        console.log(data);
+                        $.post("{{URL::to('/generacionIndicador/evaluarConsulta')}}",{'_token': "{{ Session::token() }}",'consulta':data}, function( data2 ) {
+                            console.log(data2);
+                            crearTabla(data2,1);
+                        });
 
+                    });
                 });
 
             } );
@@ -280,17 +292,18 @@
     <body>
         <div class="flex-center position-ref full-height">
             <div class="contenidotablas">
-                <table id="tabla1">
+                <table id="tabla1" class="table-striped  table-hover table">
                     <thead>
                         <tr>
-                            <th>Campo X</th>
-                            <th>Valor</th>
+                            <th id="campox">Campo X</th>
+                            <th id="campoy">Campo Y</th>
                         </tr>
                     </thead>
                     <tbody>
 
                     </tbody>
                 </table>
+                <!--
                 <table id="tabla2">
                     <thead>
                     <tr>
@@ -302,6 +315,7 @@
 
                     </tbody>
                 </table>
+                -->
             </div>
 
             <div class="content">

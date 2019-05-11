@@ -108,6 +108,120 @@ class GeneracionIndicadores extends Controller
        return $sSqlDef;
     }
 
+    public function generateSql2(Request $request){
+
+        $sCampos=$request['campos'];
+        $sCampos2=$request['campos2'];
+        $sSql = "SELECT ";
+        $sSqlFrom = " FROM ";
+        $tablas=[];
+
+        foreach ($sCampos as $valor)
+        {
+            switch($valor) {
+
+                case "+":
+                    $sSql = $sSql . "+";
+                    break;
+
+                case "-":
+                    $sSql = $sSql . "-";
+                    break;
+
+                case "*":
+                    $sSql = $sSql . "*";
+                    break;
+
+                case "/":
+                    $sSql = $sSql . "/";
+                    break;
+
+                case "contar(":
+                    $sSql = $sSql . "count(";
+                    break;
+
+                case ")":
+                    $sSql = $sSql . ")";
+                    break;
+
+                case "(":
+                    $sSql = $sSql . "(";
+                    break;
+
+                default:
+                    $tmp =  explode(".", $valor);
+                    if(sizeof($tmp)==2)
+                    {
+
+                        if(array_search($tmp[0],$tablas)==false)
+                        {
+                            array_push($tablas,array_search($tmp[0],$tablas));
+                            array_push($tablas,$tmp[0]);
+
+                            $sSqlFrom = $sSqlFrom . $tmp[0] . ",";
+                        }
+                        $sSql = $sSql . $tmp[1];
+                    }
+                    else
+                        return var_dump($tmp);
+            }
+        }
+        $sSql = $sSql . ",";
+        foreach ($sCampos2 as $valor)
+        {
+            switch($valor) {
+
+                case "+":
+                    $sSql = $sSql . "+";
+                    break;
+
+                case "-":
+                    $sSql = $sSql . "-";
+                    break;
+
+                case "*":
+                    $sSql = $sSql . "*";
+                    break;
+
+                case "/":
+                    $sSql = $sSql . "/";
+                    break;
+
+                case "contar(":
+                    $sSql = $sSql . "count(";
+                    break;
+
+                case ")":
+                    $sSql = $sSql . ")";
+                    break;
+
+                case "(":
+                    $sSql = $sSql . "(";
+                    break;
+
+                default:
+                    $tmp =  explode(".", $valor);
+                    if(sizeof($tmp)==2)
+                    {
+
+                        if(array_search($tmp[0],$tablas)==false)
+                        {
+                            array_push($tablas,array_search($tmp[0],$tablas));
+                            array_push($tablas,$tmp[0]);
+
+                            $sSqlFrom = $sSqlFrom . $tmp[0] . ",";
+                        }
+                        $sSql = $sSql . $tmp[1];
+                    }
+                    else
+                        return var_dump($tmp);
+            }
+        }
+        $sSqlFrom = substr($sSqlFrom,0,strlen($sSqlFrom)-1);
+        $sSqlDef  = $sSql.$sSqlFrom;
+        return $sSqlDef;
+    }
+
     public function evaluarConsulta(Request $request){
         $tablas = DB::select($request['consulta']);
         return $tablas;
