@@ -114,7 +114,9 @@ class GeneracionIndicadores extends Controller
         $sCampos2=$request['campos2'];
         $sSql = "SELECT ";
         $sSqlFrom = " FROM ";
+        $sSqlGroup = "";
         $tablas=[];
+        $sSqlGroupT =false;
 
         foreach ($sCampos as $valor)
         {
@@ -138,6 +140,7 @@ class GeneracionIndicadores extends Controller
 
                 case "contar(":
                     $sSql = $sSql . "count(";
+                    $sSqlGroupT=true;
                     break;
 
                 case ")":
@@ -152,6 +155,11 @@ class GeneracionIndicadores extends Controller
                     $tmp =  explode(".", $valor);
                     if(sizeof($tmp)==2)
                     {
+                        if($sSqlGroupT)
+                        {
+                            $sSqlGroup.=$tmp[0].".".$tmp[1];
+                            $sSqlGroupT=false;
+                        }
 
                         if(array_search($tmp[0],$tablas)==false)
                         {
@@ -189,6 +197,7 @@ class GeneracionIndicadores extends Controller
 
                 case "contar(":
                     $sSql = $sSql . "count(";
+                    $sSqlGroupT=true;
                     break;
 
                 case ")":
@@ -203,6 +212,11 @@ class GeneracionIndicadores extends Controller
                     $tmp =  explode(".", $valor);
                     if(sizeof($tmp)==2)
                     {
+                        if($sSqlGroupT)
+                        {
+                            $sSqlGroup.=$tmp[0].".".$tmp[1];
+                            $sSqlGroupT=false;
+                        }
 
                         if(array_search($tmp[0],$tablas)==false)
                         {
@@ -219,11 +233,14 @@ class GeneracionIndicadores extends Controller
         }
         $sSqlFrom = substr($sSqlFrom,0,strlen($sSqlFrom)-1);
         $sSqlDef  = $sSql.$sSqlFrom;
+        if($sSqlGroup != "")
+            $sSqlDef.=" GROUP BY indicadoresProyecto.".$sSqlGroup;
         return $sSqlDef;
     }
 
     public function evaluarConsulta(Request $request){
         $tablas = DB::select($request['consulta']);
+
         return $tablas;
     }
 
