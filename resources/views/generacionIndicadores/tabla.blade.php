@@ -24,6 +24,12 @@
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" type="text/css" media="all" />
 
+        <script>
+
+            $(document).ready(function() {
+                $('#tabla1').DataTable();
+            });
+        </script>
     </head>
     <body>
 
@@ -32,8 +38,9 @@
                 <table id="tabla1" class="table-striped  table-hover table">
                     <thead>
                         <tr>
-                            <th id="campox">{{ array_keys(get_object_vars($tablas[0]))[0]}}</th>
-                            <th id="campoy">{{ array_keys(get_object_vars($tablas[0]))[1]}}</th>
+                            @foreach($tablas[0] as $key=>$tam)
+                                <th>{{$key}}</th>
+                            @endforeach
                         </tr>
                     </thead>
                     <tbody>
@@ -47,19 +54,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <!--
-                <table id="tabla2">
-                    <thead>
-                    <tr>
-                        <th>Campo Y</th>
-                        <th>Valor</th>
-                    </tr>
-                    </thead>
-                    <tbody>
 
-                    </tbody>
-                </table>
-                -->
             </div> </div>
 
 
