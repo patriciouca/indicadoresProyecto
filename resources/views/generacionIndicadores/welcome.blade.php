@@ -182,6 +182,10 @@
                 }
 
 
+                $("#campos1").val(metido1);
+                $("#campos2").val(metido2);
+
+
             };
 
 
@@ -274,6 +278,8 @@
 
                     });
                     */
+
+                    /*
                     $.post("{{URL::to('/generacionIndicador/getConsulta2')}}",{'_token': "{{ Session::token() }}",'campos':metido1,'campos2':metido2}, function( data ) {
                         //console.log(metido1);
                         console.log(data);
@@ -286,6 +292,7 @@
                         });
 
                     });
+                    */
                 });
 
             } );
@@ -359,13 +366,18 @@
                     <p id="droppable2">Drop here</p>
 
                     <div class="botones">
+                        <form method="post" style="display: inline" action="{{ url("/generacionIndicador/getConsulta2")}}">
+                            @csrf
+                            <button type="submit" id="generar" class="btn btn-success">Generar consulta</button>
+                            <input hidden id="campos1" type="text" name="campos" class="">
+                            <input hidden id="campos2" type="text" name="campos2">
+                         </form>
+                             <button type="button" class="btn btn-primary">Guardar</button>
 
-                        <button type="button" id="generar" class="btn btn-success">Generar consulta</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
-                    </div>
+                     </div>
 
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+                 </div>
+             </div>
+         </div>
+     </body>
+ </html>

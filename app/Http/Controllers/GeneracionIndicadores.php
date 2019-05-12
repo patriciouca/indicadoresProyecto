@@ -210,8 +210,8 @@ class GeneracionIndicadores extends Controller
 
     public function generateSql2(Request $request){
 
-        $sCampos=$request['campos'];
-        $sCampos2=$request['campos2'];
+        $sCampos=explode(",",$request['campos']);
+        $sCampos2=explode(",",$request['campos2']);
         $sSql = "SELECT ";
         $sSqlFrom = " FROM ";
         $sSqlGroup = "";
@@ -335,13 +335,16 @@ class GeneracionIndicadores extends Controller
         $sSqlDef  = $sSql.$sSqlFrom;
         if($sSqlGroup != "")
             $sSqlDef.=" GROUP BY indicadoresProyecto.".$sSqlGroup;
-        return $sSqlDef;
+
+        $tablas = DB::select($sSqlDef);
+
+        return view('generacionIndicadores/tabla')->with('tablas', $tablas);
     }
 
     public function evaluarConsulta(Request $request){
         $tablas = DB::select($request['consulta']);
-
-        return $tablas;
+        return view('generacionIndicadores/tabla')->with('tablas', $tablas);
     }
+
 
 }
