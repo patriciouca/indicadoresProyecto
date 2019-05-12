@@ -19,7 +19,12 @@ Route::get('/generacionGrafica', function () {
     return view('generacionGrafica/welcome');
 });
 
-Route::get('/generacionIndicador', 'GeneracionIndicadores@index');
+Route::get('/generacionIndicador', 'GeneracionIndicadores@elegirBd');
+
+Route::get('/generacionIndicador/elegir', 'GeneracionIndicadores@index');
+
+Route::post('/generacionIndicador/setBd','GeneracionIndicadores@setBd');
+
 Route::post('/generacionIndicador/getConsulta','GeneracionIndicadores@generateSql');
 Route::post('/generacionIndicador/getConsulta2','GeneracionIndicadores@generateSql2');
 Route::post('/generacionIndicador/evaluarConsulta','GeneracionIndicadores@evaluarConsulta');
