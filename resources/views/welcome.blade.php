@@ -1,99 +1,99 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+    
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>Generador de Indicadores Automático</title>
+        
+		<link rel="stylesheet" href="{{ URL::asset('css/estiloprincipal2.css') }}?{{date('l jS \of F Y h:i:s A')}}" type="text/css" media="all" />
+        
+        
     </head>
+    
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+    	
+    	<section id="page"> 
+    <br><br>
+            <header> 
+            
+                <hgroup>
+                   <img src="img/Saica-svg.svg">
+                </hgroup>
+                                
+            
+            </header>
+			
+				
+            <section id="articles"> 
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+                <div class="line"></div> <br>
+				
+				    <nav class="clear">
+                    <ul>
+                        <li><a href="">Generar Indicadores</a></li>
+                    </ul>
+					</nav>
+					<br><br><br><br>
+				
+				<div class="line"></div> 
+                
+                <article id="article1"> 
+                    <h2>¿Cómo generar indicadores automáticamente?</h2>
+                    
+                    <div class="line"></div>
+                    
+                    <div class="articleBody clear">
+                    
+                    	<figure> 
+	                    	<img src="img/ejemplo.gif" width="620" height="340" />
+                        </figure>
+                        
+                        <p>En primer lugar debe seleccionar la tabla en la que se encuentre el indicador que desea utilizar. Una vez pulse sobre la tabla se desplegarán los distintos campos que esta contiene, en este momento deberá arrastrar el indicador deseado al eje en el que desee colocarlo.</p>
+                        <p>Recuerde que puede hacer operaciones entre los distintos indicadores como son: la suma, la multiplicación, la resta, y la división. </p>
+						<p>También es posible contar el número de elementos existentes para un indicador determinado, utilizando la operación contar. </p>
+						<p>NOTA: Recuerde cerrar el paréntesis de la operación contar cuando finalice esta.</p>
+						<p>Para finalizar pulse sobre "Generar consulta" </p>
+                    </div>
+                </article>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+                <div class="line"></div>
+                
+                <article id="article1"> 
+                    <h2>¿Qué hacer con los indicadores?</h2>
+                    
+                    <div class="line"></div>
+                    
+                    <div class="articleBody clear">
+                    
+                    	<figure> 
+	                    	<img src="img/ejemplo.gif" width="620" height="340" />
+                        </figure>
+                       
+						<p>Una vez se hayan generado los indicadores, aparecerán en una tabla para que los puedas interpretar. </p>
+						<p>Tambien tienes la opción de generar una gráfica con estos </p>
+						<p>NOTA: Recuerde cerrar el paréntesis de la operación contar cuando finalice esta.</p>
+						<p>Para finalizar pulse sobre "Generar consulta" </p>
+						<p>NOTA: Recuerde cerrar el paréntesis de la operación contar cuando finalice esta.</p>
+						<p>Para finalizar pulse sobre "Generar consulta" </p>
+						<p>NOTA: Recuerde cerrar el paréntesis de la operación contar cuando finalice esta.</p>
+						<p>Para finalizar pulse sobre "Generar consulta" </p>
+                    </div>
+                </article>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
+
+            </section>
+
+        <footer>
+
+           <div class="line"></div>
+		   
+           <a href="https://saicasl.eu/" ><img src="img/Saica-svgl.svg"></a>
+           
+
+        </footer>
+            
+		</section> 
+        
     </body>
 </html>
