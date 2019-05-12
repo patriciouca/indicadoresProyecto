@@ -51,7 +51,7 @@ class GeneracionIndicadores extends Controller
         return $devolver;
     }
 
-    public function matrizCaminos($tabla1,$tabla2){
+    public function matrizCaminos($tablaOrigen,$tablaDestino){
 
         $relaciones = array();
         $caminos = array();
@@ -111,7 +111,7 @@ class GeneracionIndicadores extends Controller
         }
 
         //$devolver=array($relaciones, $caminos);
-        return $this->camino($relaciones,$caminos,$tabla1,$tabla2);
+        return $this->camino($relaciones,$caminos,$tablaOrigen,$tablaDestino);
     }
 
     function encontrarRelacion($relaciones, $tabla1, $tabla2){
