@@ -18,7 +18,7 @@
             <header> 
             
                 <hgroup>
-                   <img src="img/Saica-svg.svg">
+                    <img src={{ URL::asset('img/Saica-svg.svg') }} alt="">
                 </hgroup>
                                 
             
@@ -45,8 +45,8 @@
                     
                     <div class="articleBody clear">
                     
-                    	<figure> 
-	                    	<img src="img/ejemplo.gif" width="620" height="340" />
+                    	<figure>
+                            <img src={{ URL::asset('img/ejemplo.gif') }}  width="620" height="340" alt="">
                         </figure>
                         
                         <p>En primer lugar debe seleccionar la tabla en la que se encuentre el indicador que desea utilizar. Una vez pulse sobre la tabla se desplegarán los distintos campos que esta contiene, en este momento deberá arrastrar el indicador deseado al eje en el que desee colocarlo.</p>
@@ -66,8 +66,8 @@
                     
                     <div class="articleBody clear">
                     
-                    	<figure> 
-	                    	<img src="img/ejemplo.gif" width="620" height="340" />
+                    	<figure>
+	                    	<img src={{ URL::asset('img/ejemplo.gif') }} width="620" height="340" />
                         </figure>
                        
 						<p>Una vez se hayan generado los indicadores, aparecerán en una tabla para que los puedas interpretar. </p>
@@ -87,8 +87,8 @@
         <footer>
 
            <div class="line"></div>
-		   
-           <a href="https://saicasl.eu/" ><img src="img/Saica-svgl.svg"></a>
+
+           <a href="https://saicasl.eu/" ><img src={{ URL::asset('img/Saica-svgl.svg') }}></a>
            
 
         </footer>
