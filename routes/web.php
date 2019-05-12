@@ -25,4 +25,7 @@ Route::post('/generacionIndicador/getConsulta2','GeneracionIndicadores@generateS
 Route::post('/generacionIndicador/evaluarConsulta','GeneracionIndicadores@evaluarConsulta');
 
 Route::get('/generacionIndicador/getCampos/{nombre}', 'GeneracionIndicadores@getCampos');
+
 Route::get('/generacionIndicador/getRelaciones', 'GeneracionIndicadores@getRelaciones');
+
+Route::get('/generacionIndicador/matrizCamino/{nombre}/{nombre2}', 'GeneracionIndicadores@matrizCaminos');

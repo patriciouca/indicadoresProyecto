@@ -9,7 +9,7 @@ use Illuminate\View\View;
 
 class GeneracionIndicadores extends Controller
 {
-    public function index() {
+    public function getTablasCampos(){
         $tablas = DB::select('SHOW TABLES');
         $contador=0;
         foreach ($tablas as $valor)
@@ -18,7 +18,12 @@ class GeneracionIndicadores extends Controller
             $devolver[$contador][1] = $this->getCampos($devolver[$contador][0]);
             $contador++;
         }
-        return view('generacionIndicadores/welcome')->with('tablas', $devolver);
+        return $devolver;
+    }
+
+    public function index() {
+
+        return view('generacionIndicadores/welcome')->with('tablas', $this->getTablasCampos());
     }
 
     public function getCampos($nombre)
@@ -46,10 +51,11 @@ class GeneracionIndicadores extends Controller
         return $devolver;
     }
 
-    public function matrizCaminos(&$relaciones, &$caminos){
+    public function matrizCaminos($tabla1,$tabla2){
+
         $relaciones = array();
         $caminos = array();
-        $arrayAux = array("tabla1.elemento1 -> tabla2.elemento2", "tabla2.elemento2 -> tabla3.elemento3", "tabla3.elemento3 -> tabla4.elemento4", "tabla4.elemento4 -> tabla5.elemento5");
+        $arrayAux = $this->getRelaciones();
 
         //Generacion de un Array que almacene todas las relaciones en un formato mas comodo para trabajar
         foreach ($arrayAux as $relacionSinProcesar) {
@@ -65,7 +71,7 @@ class GeneracionIndicadores extends Controller
             );
         }
 
-        $arrayAux = array(array("tabla1"), array("tabla2"), array("tabla3"), array("tabla4"), array("tabla5"));
+        $arrayAux = $this->getTablasCampos();
 
         //Convertir $arrayAux en un array con el cual sea mas facil trabajar
         for ($i = 0; $i < count($arrayAux); $i++) {
@@ -103,6 +109,9 @@ class GeneracionIndicadores extends Controller
                 }
             }
         }
+
+        //$devolver=array($relaciones, $caminos);
+        return $this->camino($relaciones,$caminos,$tabla1,$tabla2);
     }
 
     function encontrarRelacion($relaciones, $tabla1, $tabla2){
@@ -130,7 +139,7 @@ class GeneracionIndicadores extends Controller
 
         //Generacion de las distintas clausulas where para unir las tablas
         for($i=0; $i<$cont; $i++){
-            $r = encontrarRelacion($relaciones, $from[$i], $from[$i+1]);
+            $r = $this->encontrarRelacion($relaciones, $from[$i], $from[$i+1]);
             $where[$i] = $r["tabla1"] . "." . $r["elemento1"] . "=" . $r["tabla2"] . "." . $r["elemento2"];
         }
 
