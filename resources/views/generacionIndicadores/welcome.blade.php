@@ -277,9 +277,12 @@
                     $.post("{{URL::to('/generacionIndicador/getConsulta2')}}",{'_token': "{{ Session::token() }}",'campos':metido1,'campos2':metido2}, function( data ) {
                         //console.log(metido1);
                         console.log(data);
-                        $.post("{{URL::to('/generacionIndicador/evaluarConsulta')}}",{'_token': "{{ Session::token() }}",'consulta':data}, function( data2 ) {
+                        $.post("{{URL::to('/generacionIndicador/evaluarConsulta')}}",{'_token': "{{ Session::token() }}",'consulta':data}).done(function( data2 ) {
                             console.log(data2);
                             crearTabla(data2,1);
+                        }).fail(function (f) {
+                            console.log(f);
+                            alert(f['responseJSON']['message']);
                         });
 
                     });
