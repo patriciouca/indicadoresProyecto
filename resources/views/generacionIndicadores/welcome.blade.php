@@ -280,6 +280,9 @@
                         $.post("{{URL::to('/generacionIndicador/evaluarConsulta')}}",{'_token': "{{ Session::token() }}",'consulta':data}).done(function( data2 ) {
                             console.log(data2);
                             crearTabla(data2,1);
+                        }).fail(function (f) {
+                            console.log(f);
+                            alert(f['responseJSON']['message']);
                         });
 
                     });
