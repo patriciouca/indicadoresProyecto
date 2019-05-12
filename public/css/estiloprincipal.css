@@ -6,6 +6,10 @@ p{
     color: white;
 }
 
+.ui-accordion .ui-accordion-content-active {
+    background-color: #355664 !important;
+}
+
 .content{
     display: inline;
 }
