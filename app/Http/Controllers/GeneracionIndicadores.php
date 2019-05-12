@@ -46,6 +46,97 @@ class GeneracionIndicadores extends Controller
         return $devolver;
     }
 
+    public function matrizCaminos(&$relaciones, &$caminos){
+        $relaciones = array();
+        $caminos = array();
+        $arrayAux = array("tabla1.elemento1 -> tabla2.elemento2", "tabla2.elemento2 -> tabla3.elemento3", "tabla3.elemento3 -> tabla4.elemento4", "tabla4.elemento4 -> tabla5.elemento5");
+
+        //Generacion de un Array que almacene todas las relaciones en un formato mas comodo para trabajar
+        foreach ($arrayAux as $relacionSinProcesar) {
+            $tablasSeparadas = explode(' -> ', $relacionSinProcesar);
+            $elementosRelacion1 = explode('.', $tablasSeparadas[0]);
+            $elementosRelacion2 = explode('.', $tablasSeparadas[1]);
+            array_push($relaciones, array(
+                    "tabla1" => $elementosRelacion1[0],
+                    "elemento1" => $elementosRelacion1[1],
+                    "tabla2" => $elementosRelacion2[0],
+                    "elemento2" => $elementosRelacion2[1]
+                )
+            );
+        }
+
+        $arrayAux = array(array("tabla1"), array("tabla2"), array("tabla3"), array("tabla4"), array("tabla5"));
+
+        //Convertir $arrayAux en un array con el cual sea mas facil trabajar
+        for ($i = 0; $i < count($arrayAux); $i++) {
+            $arrayAux[$i] = $arrayAux[$i][0];
+        }
+
+        foreach ($arrayAux as $tabla1) {
+            $caminos[$tabla1] = array();
+            foreach ($arrayAux as $tabla2) {
+                $caminos[$tabla1][$tabla2] = "";
+            }
+        }
+
+        //Guardando relaciones directas entre tablas
+        foreach ($relaciones as $r) {
+            $caminos[$r["tabla1"]][$r["tabla2"]] = $r["tabla2"];
+            $caminos[$r["tabla2"]][$r["tabla1"]] = $r["tabla1"];
+
+        }
+
+        //Guardando caminos reflexivos triviales
+        foreach ($arrayAux as $tabla) {
+            $caminos[$tabla][$tabla] = $tabla;
+        }
+
+        //Guardando conexion entre las distintas tablas
+        foreach ($arrayAux as $tabla3) {
+            foreach ($arrayAux as $tabla1) {
+                foreach ($arrayAux as $tabla2) {
+                    if ($caminos[$tabla1][$tabla2] == "") {
+                        if ($caminos[$tabla1][$tabla3] != "" && $caminos[$tabla3][$tabla2] != "") {
+                            $caminos[$tabla1][$tabla2] = $tabla3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function encontrarRelacion($relaciones, $tabla1, $tabla2){
+        foreach ($relaciones as $r){
+            if(($r["tabla1"]==$tabla1 && $r["tabla2"]==$tabla2) || ($r["tabla2"]==$tabla1 && $r["tabla1"]==$tabla2))
+                return $r;
+        }
+        return null;
+    }
+
+    public function camino(&$relaciones, &$grafoTablas, $tabla1, $tabla2){
+        $tablaActual = $tabla2;
+        $from = array();
+        $where = array();
+        $cont = 0;
+        //Guarda en el array $from todas las tablas involucradas en el camino, empezsando por tabla2 y acabando en tabla 1
+        while($tablaActual != $grafoTablas[$tabla1][$tablaActual]){
+            $from[$cont] = $tablaActual;
+            $tablaActual = $grafoTablas[$tabla1][$tablaActual];
+            $cont++;
+        }
+        $from[$cont++] = $tablaActual;
+        $from[$cont] = $tabla1;
+
+
+        //Generacion de las distintas clausulas where para unir las tablas
+        for($i=0; $i<$cont; $i++){
+            $r = encontrarRelacion($relaciones, $from[$i], $from[$i+1]);
+            $where[$i] = $r["tabla1"] . "." . $r["elemento1"] . "=" . $r["tabla2"] . "." . $r["elemento2"];
+        }
+
+        return array("from" => $from, "where" => $where);
+    }
+
     public function generateSql(Request $request){
 
         $sCampos=$request['campos'];
