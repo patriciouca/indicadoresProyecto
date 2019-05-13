@@ -225,6 +225,11 @@
     font-size: 0.75em;
 }
 
+#consulta{
+    width: 100%;
+    text-align: center;
+}
+
 .numero{
     background-color: #c6e2ff !important;
 }

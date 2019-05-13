@@ -369,7 +369,7 @@ class GeneracionIndicadores extends Controller
 
         $tablas = DB::select($sSqlDef);
 
-        return view('generacionIndicadores/tabla')->with('tablas', $tablas);
+        return view('generacionIndicadores/tabla')->with('tablas', $tablas)->with('consulta', $sSqlDef);
     }
 
     public function pruebagenerateSql2(Request $request){

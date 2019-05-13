@@ -35,6 +35,7 @@
 
         <div class="flex-center position-ref full-height">
             <div class="contenidotablas">
+                <input id="consulta" type="text" value="{{$consulta}}" disabled>
                 <table id="tabla1" class="table-striped  table-hover table">
                     <thead>
                         <tr>
