@@ -121,7 +121,6 @@ class GeneracionIndicadores extends Controller
             }
         }
 
-        //$devolver=array($relaciones, $caminos);
         return array($relaciones,$caminos);
     }
 
@@ -370,6 +369,182 @@ class GeneracionIndicadores extends Controller
         $tablas = DB::select($sSqlDef);
 
         return view('generacionIndicadores/tabla')->with('tablas', $tablas);
+    }
+
+    public function pruebagenerateSql2(Request $request){
+        $this->inicial();
+        $sCampos=explode(",",$request['campos']);
+        $sCampos2=explode(",",$request['campos2']);
+        $sSql = "SELECT ";
+        $sSqlFrom = " FROM ";
+        $sSqlWhere = " WHERE ";
+        $sSqlGroup = "";
+        $tablas=[];
+        $sSqlGroupT =false;
+
+        foreach ($sCampos as $valor)
+        {
+            switch($valor) {
+
+                case "+":
+                    $sSql = $sSql . "+";
+                    break;
+
+                case "-":
+                    $sSql = $sSql . "-";
+                    break;
+
+                case "*":
+                    $sSql = $sSql . "*";
+                    break;
+
+                case "/":
+                    $sSql = $sSql . "/";
+                    break;
+
+                case "contar(":
+                    $sSql = $sSql . "count(";
+                    $sSqlGroupT=true;
+                    break;
+
+                case ")":
+                    $sSql = $sSql . ")";
+                    break;
+
+                case "(":
+                    $sSql = $sSql . "(";
+                    break;
+
+                default:
+                    $tmp =  explode(".", $valor);
+                    if(sizeof($tmp)==2)
+                    {
+                        if($sSqlGroupT)
+                        {
+                            $sSqlGroup.=$tmp[0].".".$tmp[1];
+                            $sSqlGroupT=false;
+                        }
+
+                        if(array_search($tmp[0],$tablas)==false)
+                        {
+                            array_push($tablas,array_search($tmp[0],$tablas));
+                            array_push($tablas,$tmp[0]);
+
+                            //$sSqlFrom = $sSqlFrom . $tmp[0] . ",";
+                        }
+                        $sSql = $sSql . $tmp[0] . "." . $tmp[1];
+                    }
+                    else
+                        return var_dump($tmp);
+            }
+        }
+        $sSql = $sSql . ",";
+        foreach ($sCampos2 as $valor)
+        {
+            switch($valor) {
+
+                case "+":
+                    $sSql = $sSql . "+";
+                    break;
+
+                case "-":
+                    $sSql = $sSql . "-";
+                    break;
+
+                case "*":
+                    $sSql = $sSql . "*";
+                    break;
+
+                case "/":
+                    $sSql = $sSql . "/";
+                    break;
+
+                case "contar(":
+                    $sSql = $sSql . "count(";
+                    $sSqlGroupT=true;
+                    break;
+
+                case ")":
+                    $sSql = $sSql . ")";
+                    break;
+
+                case "(":
+                    $sSql = $sSql . "(";
+                    break;
+
+                default:
+                    $tmp =  explode(".", $valor);
+                    if(sizeof($tmp)==2)
+                    {
+                        if($sSqlGroupT)
+                        {
+                            $sSqlGroup.=$tmp[0].".".$tmp[1];
+                            $sSqlGroupT=false;
+                        }
+
+                        if(array_search($tmp[0],$tablas)==false)
+                        {
+                            array_push($tablas,array_search($tmp[0],$tablas));
+                            array_push($tablas,$tmp[0]);
+
+                            //$sSqlFrom = $sSqlFrom . $tmp[0] . ",";
+                        }
+                        $sSql = $sSql . $tmp[0] . "." . $tmp[1];
+                    }
+                    else
+                        return var_dump($tmp);
+            }
+        }
+
+        $nTablas = sizeof($tablas);
+        $preFrom = array();
+        $preWhere = array();
+        if($nTablas > 2){
+            for($i=3; $i<$nTablas; $i=$i+2){
+                //La tabla esta dentro del contenedor anterior al from?
+                if(!in_array($tablas[$i],$preFrom)){
+                    //Si no lo esta buscamos el camino entre la anterior tabla, que debe estar en el contenedor y la actual
+                    $caminos = $this->camino($tablas[$i-2], $tablas[$i]);
+
+                    //Cada tabla del camino se revisa si esta incluida en el contenedor anteior al from
+                    //y si no lo esta entonces se incluye al mismo
+                    foreach($caminos['from'] as $tabla) {
+                        if (!in_array($tabla, $preFrom)) {
+                            array_push($preFrom, $tabla);
+                        }
+                    }
+
+                    //Cada conexion entre tablas se revisa si esta incluida en el contenedor anteior al where
+                    //y si no lo esta entonces se incluye al mismo
+                    foreach($caminos['where'] as $conexion) {
+                        if(!in_array($conexion, $preWhere)){
+                            array_push($preWhere, $conexion);
+                        }
+                    }
+                }
+            }
+        }
+
+        //Se vuelca el contenido del contenedor anterior al from a la sentencia From
+        foreach($preFrom as $tabla){
+            $sSqlFrom = $sSqlFrom . $tabla . ",";
+        }
+
+        //Se vuelca el contenido del contenedor anterior al where a la sentencia Where
+        foreach($preWhere as $conexion){
+            $sSqlWhere = $sSqlWhere . $conexion . " AND ";
+        }
+
+        $sSqlFrom = substr($sSqlFrom,0,strlen($sSqlFrom)-1);
+        $sSqlWhere = substr($sSqlWhere,0,strlen($sSqlWhere)-5);
+        $sSqlDef  = $sSql.$sSqlFrom.$sSqlWhere;
+        if($sSqlGroup != "")
+            $sSqlDef.=" GROUP BY (".session('base').".".$sSqlGroup;
+
+        $tablas = DB::select($sSqlDef);
+
+        return $sSqlDef;
+        //return view('generacionIndicadores/tabla')->with('tablas', $tablas);
     }
 
     public function evaluarConsulta(Request $request){

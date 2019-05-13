@@ -33,4 +33,4 @@ Route::get('/generacionIndicador/getCampos/{nombre}', 'GeneracionIndicadores@get
 
 Route::get('/generacionIndicador/getRelaciones', 'GeneracionIndicadores@getRelaciones');
 
-Route::get('/generacionIndicador/Camino/{nombre}/{nombre2}', 'GeneracionIndicadores@camino');
+Route::get('/generacionIndicador/camino/{nombre}/{nombre2}', 'GeneracionIndicadores@camino');
