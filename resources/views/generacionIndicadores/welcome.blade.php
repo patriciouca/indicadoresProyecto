@@ -182,6 +182,10 @@
                 }
 
 
+                $("#campos1").val(metido1);
+                $("#campos2").val(metido2);
+
+
             };
 
 
@@ -213,7 +217,7 @@
                 });
 
 
-                $(body).html(contenido);
+
 
                 if(tabla==1)
                 {
@@ -228,7 +232,7 @@
 
             $(document).ready(function() {
 
-                $( ".contenidotablas" ).hide();
+
 
                 $( "#accordion" ).accordion({
                     header: "> div > h3",
@@ -252,41 +256,6 @@
                     drop: dropfuncion
                 });
 
-                $('#generar').click(function() {
-                    /*
-                    $.post("{{URL::to('/generacionIndicador/getConsulta')}}",{'_token': "{{ Session::token() }}",'campos':metido1}, function( data ) {
-                        //console.log(metido1);
-                        console.log(data);
-                        $.post("{{URL::to('/generacionIndicador/evaluarConsulta')}}",{'_token': "{{ Session::token() }}",'consulta':data}, function( data2 ) {
-                            console.log(data2);
-                            crearTabla(data2,1);
-                        });
-
-                    });
-
-                    $.post("{{URL::to('/generacionIndicador/getConsulta')}}",{'_token': "{{ Session::token() }}",'campos':metido2}, function( data ) {
-                        //console.log(metido1);
-                        console.log(data);
-                        $.post("{{URL::to('/generacionIndicador/evaluarConsulta')}}",{'_token': "{{ Session::token() }}",'consulta':data}, function( data2 ) {
-                            console.log(data2);
-                            crearTabla(data2,2);
-                        });
-
-                    });
-                    */
-                    $.post("{{URL::to('/generacionIndicador/getConsulta2')}}",{'_token': "{{ Session::token() }}",'campos':metido1,'campos2':metido2}, function( data ) {
-                        //console.log(metido1);
-                        console.log(data);
-                        $.post("{{URL::to('/generacionIndicador/evaluarConsulta')}}",{'_token': "{{ Session::token() }}",'consulta':data}).done(function( data2 ) {
-                            console.log(data2);
-                            crearTabla(data2,1);
-                        }).fail(function (f) {
-                            console.log(f);
-                            alert(f['responseJSON']['message']);
-                        });
-
-                    });
-                });
 
             } );
 
@@ -294,32 +263,6 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            <div class="contenidotablas">
-                <table id="tabla1" class="table-striped  table-hover table">
-                    <thead>
-                        <tr>
-                            <th id="campox">Campo X</th>
-                            <th id="campoy">Campo Y</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                <!--
-                <table id="tabla2">
-                    <thead>
-                    <tr>
-                        <th>Campo Y</th>
-                        <th>Valor</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                -->
-            </div>
 
             <div class="content">
                 <div id="accordion" class="contenedor">
@@ -359,13 +302,18 @@
                     <p id="droppable2">Drop here</p>
 
                     <div class="botones">
+                        <form method="post" style="display: inline" action="{{ url("/generacionIndicador/getConsulta2")}}">
+                            @csrf
+                            <button type="submit" id="generar" class="btn btn-success">Generar consulta</button>
+                            <input hidden id="campos1" type="text" name="campos" class="">
+                            <input hidden id="campos2" type="text" name="campos2">
+                         </form>
+                             <button type="button" class="btn btn-primary">Guardar</button>
 
-                        <button type="button" id="generar" class="btn btn-success">Generar consulta</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
-                    </div>
+                     </div>
 
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+                 </div>
+             </div>
+         </div>
+     </body>
+ </html>

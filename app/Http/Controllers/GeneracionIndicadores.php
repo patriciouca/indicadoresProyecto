@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\View\View;
+use Session;
 
 
 class GeneracionIndicadores extends Controller
 {
+    public function inicial(){
+        config(['database.connections.mysql.database'=>session('base')]);
+    }
+
     public function getTablasCampos(){
+        $this->inicial();
+
         $tablas = DB::select('SHOW TABLES');
         $contador=0;
         foreach ($tablas as $valor)
@@ -18,6 +26,7 @@ class GeneracionIndicadores extends Controller
             $devolver[$contador][1] = $this->getCampos($devolver[$contador][0]);
             $contador++;
         }
+
         return $devolver;
     }
 
@@ -28,12 +37,14 @@ class GeneracionIndicadores extends Controller
 
     public function getCampos($nombre)
     {
+        $this->inicial();
         $tablas = DB::select('DESCRIBE '.$nombre);
         return $tablas;
     }
 
     public function getRelaciones()
     {
+        $this->inicial();
         $tablas = DB::select('SELECT CONCAT( table_name, \'.\',
         column_name, \' -> \',
         referenced_table_name, \'.\',
@@ -147,7 +158,7 @@ class GeneracionIndicadores extends Controller
     }
 
     public function generateSql(Request $request){
-
+        $this->inicial();
         $sCampos=$request['campos'];
        $sSql = "SELECT ";
        $sSqlFrom = " FROM ";
@@ -209,9 +220,9 @@ class GeneracionIndicadores extends Controller
     }
 
     public function generateSql2(Request $request){
-
-        $sCampos=$request['campos'];
-        $sCampos2=$request['campos2'];
+        $this->inicial();
+        $sCampos=explode(",",$request['campos']);
+        $sCampos2=explode(",",$request['campos2']);
         $sSql = "SELECT ";
         $sSqlFrom = " FROM ";
         $sSqlGroup = "";
@@ -334,14 +345,43 @@ class GeneracionIndicadores extends Controller
         $sSqlFrom = substr($sSqlFrom,0,strlen($sSqlFrom)-1);
         $sSqlDef  = $sSql.$sSqlFrom;
         if($sSqlGroup != "")
-            $sSqlDef.=" GROUP BY indicadoresProyecto.".$sSqlGroup;
-        return $sSqlDef;
+            $sSqlDef.=" GROUP BY (".session('base').".".$sSqlGroup;
+
+        $tablas = DB::select($sSqlDef);
+
+        return view('generacionIndicadores/tabla')->with('tablas', $tablas);
     }
 
     public function evaluarConsulta(Request $request){
+        $this->inicial();
         $tablas = DB::select($request['consulta']);
-
-        return $tablas;
+        return view('generacionIndicadores/tabla')->with('tablas', $tablas);
     }
+
+    public function elegirBd(){
+        $this->inicial();
+        $bases=DB::select('SHOW DATABASES');
+        return view('generacionIndicadores/elegir')->with("bases",$bases);
+    }
+
+    public function setBd(Request $r){
+        session(['base' => $r['datos']]);
+        return redirect()->action('GeneracionIndicadores@index');
+    }
+
+    public function setEnvironmentValue($envKey, $envValue)
+    {
+        $envFile = app()->environmentFilePath();
+        $str = file_get_contents($envFile);
+
+        $oldValue = strtok($str, "{$envKey}=");
+
+        $str = str_replace("{$envKey}={$oldValue}", "{$envKey}={$envValue}\n", $str);
+
+        $fp = fopen($envFile, 'w');
+        fwrite($fp, $str);
+        fclose($fp);
+    }
+
 
 }

@@ -171,6 +171,54 @@
     display: none;
 }
 
+.draggable.badge.badge-secondary.draggable1{
+    background-color: #c6e2ff;
+    border: 2px dashed #63717f;
+    color:black;
+}
+
+.draggable.badge.badge-secondary.draggable1:hover{
+    background-color: #8a9eb2;
+
+}
+
+.draggable.badge.badge-secondary.draggable1:active{
+    background-color: #8a9eb2;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.78);
+
+}
+
+.group{
+    text-align: center;
+    border-top:5px outset #005b96;
+}
+
+.btn.btn-primary{
+    background-color: 	#005b96;
+    margin-left: 5%;
+    line-height: 70px;
+}
+
+.btn.btn-primary:hover{
+    background-color: 	#03396c;
+    margin-left:5%;
+}
+
+#droppable1{
+
+    border:3px dashed #6497b1;
+    text-align: center;
+    line-height: 130px;
+}
+
+#droppable2{
+    text-align: center;
+    border:3px dashed #6497b1;
+    line-height: 130px;
+}
+
+
+
 @media all and (max-width: 600px) {
     #banner-secondary p.intro,
     #banner-secondary .download-box {
