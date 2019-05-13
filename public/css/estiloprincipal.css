@@ -237,6 +237,15 @@
     background-color: #8FBC8F !important;
 }
 
+.bool{
+    background-color: #B0C4DE !important;
+}
+
+.enum{
+    background-color: #ADD8E6 !important;
+}
+
+
 @media all and (max-width: 600px) {
     #banner-secondary p.intro,
     #banner-secondary .download-box {

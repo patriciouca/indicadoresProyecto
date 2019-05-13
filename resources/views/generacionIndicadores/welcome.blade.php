@@ -320,11 +320,16 @@
                             </h3>
                             <div>
                                 <ul>
+
                                 @foreach($tabla[1] as $campo)
-                                    @if(strpos($campo->Type, 'int') !== false)
+                                    @if(strpos($campo->Type, 'tinyint(1)') !== false)
+                                        <li class="draggable badge badge-secondary draggable1 bool">
+                                    @elseif(strpos($campo->Type, 'int') !== false)
                                         <li class="draggable badge badge-secondary draggable1 numero">
                                     @elseif(strpos($campo->Type, 'timestamp') !== false)
                                             <li class="draggable badge badge-secondary draggable1 fecha">
+                                    @elseif(strpos($campo->Type, 'enum') !== false)
+                                        <li class="draggable badge badge-secondary draggable1 enum">
                                     @else
                                         <li class="draggable badge badge-secondary draggable1 texto">
                                     @endif
