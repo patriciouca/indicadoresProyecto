@@ -177,6 +177,7 @@ class GeneracionIndicadores extends Controller
         return array("from" => $from, "where" => $where);
     }
 
+    /*
     public function generateSql(Request $request){
         $this->inicial();
         $sCampos=$request['campos'];
@@ -370,6 +371,151 @@ class GeneracionIndicadores extends Controller
         $tablas = DB::select($sSqlDef);
 
         return view('generacionIndicadores/tabla')->with('tablas', $tablas)->with('consulta', $sSqlDef);
+    }
+    */
+
+    public function generateSqlBienFormada(Request $request)
+    {
+        $this->inicial();
+        $sCampos=explode(",",$request['campos']);
+        $sCampos2=explode(",",$request['campos2']);
+
+        $sSql="";
+        $consulta=[];
+        $sSqlGroup = [];
+        $tablas=[];
+        $sSqlGroupT =false;
+
+        foreach ($sCampos as $valor)
+        {
+            switch($valor) {
+
+                case "+":
+                    $sSql = $sSql . "+";
+                    break;
+
+                case "-":
+                    $sSql = $sSql . "-";
+                    break;
+
+                case "*":
+                    $sSql = $sSql . "*";
+                    break;
+
+                case "/":
+                    $sSql = $sSql . "/";
+                    break;
+
+                case "contar(":
+                    $sSql = $sSql . "count(";
+                    $sSqlGroupT=true;
+                    break;
+
+                case ")":
+                    $sSql = $sSql . ")";
+                    break;
+
+                case "(":
+                    $sSql = $sSql . "(";
+                    break;
+
+                default:
+                    $tmp =  explode(".", $valor);
+                    if(sizeof($tmp)==2)
+                    {
+                        if($sSqlGroupT)
+                        {
+                            array_push($sSqlGroup,$tmp[0].".".$tmp[1]);
+                            //$sSqlGroup.=$tmp[0].".".$tmp[1];
+                            $sSqlGroupT=false;
+                        }
+
+                        if(array_search($tmp[0],$tablas)==false)
+                        {
+                            array_push($tablas,array_search($tmp[0],$tablas));
+                            array_push($tablas,$tmp[0]);
+                        }
+                        $sSql = $sSql . $tmp[1];
+                    }
+                    else
+                        return var_dump($tmp);
+            }
+
+        }
+        array_push($consulta,$sSql);
+        $sSql = "";
+        foreach ($sCampos2 as $valor)
+        {
+            switch($valor) {
+
+                case "+":
+                    $sSql = $sSql . "+";
+                    break;
+
+                case "-":
+                    $sSql = $sSql . "-";
+                    break;
+
+                case "*":
+                    $sSql = $sSql . "*";
+                    break;
+
+                case "/":
+                    $sSql = $sSql . "/";
+                    break;
+
+                case "contar(":
+                    $sSql = $sSql . "count(";
+                    $sSqlGroupT=true;
+                    break;
+
+                case ")":
+                    $sSql = $sSql . ")";
+                    break;
+
+                case "(":
+                    $sSql = $sSql . "(";
+                    break;
+
+                default:
+                    $tmp =  explode(".", $valor);
+                    if(sizeof($tmp)==2)
+                    {
+                        if($sSqlGroupT)
+                        {
+                            array_push($sSqlGroup,$tmp[0].".".$tmp[1]);
+                            //$sSqlGroup.=$tmp[0].".".$tmp[1];
+                            $sSqlGroupT=false;
+                        }
+
+                        if(array_search($tmp[0],$tablas)==false)
+                        {
+                            array_push($tablas,array_search($tmp[0],$tablas));
+                            array_push($tablas,$tmp[0]);
+                        }
+                        $sSql = $sSql . $tmp[1];
+                    }
+                    else
+                        return var_dump($tmp);
+            }
+
+        }
+        array_push($consulta,$sSql);
+
+        $db=DB::table($tablas[1]);
+        $seleccionar="";
+        foreach ($consulta as $consulti)
+        {
+            $seleccionar.=$consulti.",";
+        }
+        $seleccionar = substr($seleccionar,0,strlen($seleccionar)-1);
+        $db->select(DB::raw($seleccionar));
+        $db->groupBy($sSqlGroup);
+
+        $consultar=$db->toSql();
+
+        return view('generacionIndicadores/tabla')->with('tablas',  $db->get())->with('consulta', $consultar);
+
     }
 
     public function pruebagenerateSql2(Request $request){
