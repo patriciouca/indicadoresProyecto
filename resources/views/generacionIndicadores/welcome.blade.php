@@ -32,6 +32,7 @@
             var elemento1=true,elemento2=true;
             var incontar1=false,incontar2=false;
             var inparentesis1=false,inparentesis2=false;
+            var borrar1=false,borrar2=false;
 
             var dropfuncion=function( event, ui ) {
                 var hemetido=$(ui.draggable)[0].innerHTML;
@@ -43,7 +44,7 @@
                 if(clase.indexOf("draggable1")!=-1)
                     esElemento=true;
 
-                var predicado;
+                var predicado=true;
                 var textoOperacion=$(ui.draggable)[0].innerHTML;
 
                 if(hemetido=="contar")
@@ -80,15 +81,28 @@
                         }
                         else{
                             predicado=false;
+                            console.log("pred")
+                        }
+                        if(hemetido=="borrar") {
+                            console.log(metido1[metido1.length-1]);
+                            borrar1=true;
+                            metido1.pop();
+                            predicado=true;
+
+
                         }
                     }
 
-                    if(predicado)
+                    if(predicado && hemetido!="borrar")
                     {
                         if(!elemento1)
-                            metido1.push(tabla+"."+hemetido);
-                        else
-                            metido1.push(hemetido);
+
+                                metido1.push(tabla + "." + hemetido);
+
+                        else{
+                                metido1.push(hemetido);
+                            }
+
 
                         if(incontar1)
                         {
@@ -138,9 +152,16 @@
                         else{
                             predicado=false;
                         }
+                        if(hemetido=="borrar") {
+                            borrar2=true;
+                            metido2.pop();
+                            predicado=true;
+
+
+                        }
                     }
 
-                    if(predicado)
+                    if(predicado  && hemetido!="borrar")
                     {
                         if(!elemento2)
                             metido2.push(tabla+"."+hemetido);
@@ -173,12 +194,34 @@
                 console.log(metido2);
 
 
-                if(predicado)
+                if(predicado && hemetido!="borrar")
                 {
                     if($( this ).html()=="Drop here")
                         $( this ).html(hemetido);
                     else
                         $( this ).append(hemetido);
+                }
+                if(predicado && hemetido=="borrar")
+                {
+                    if(borrar1) {
+                        $(this).empty();
+                        borrar1=false;
+                        hemetido = "";
+                        for (var i = 0; i < metido1.length; i++) {
+                            hemetido += metido1[i];
+                        }
+                        $(this).append(hemetido);
+                    }else if(borrar2){
+                        $(this).empty();
+                        borrar2=false;
+                        hemetido = "";
+                        for (var j = 0; j < metido2.length; j++) {
+                            hemetido += metido2[j];
+
+
+                        }
+                        $(this).append(hemetido);
+                    }
                 }
 
 
@@ -294,6 +337,7 @@
                             <li class="btn btn-primary operacion draggable draggable2">contar</li>
                             <li class="btn btn-primary operacion draggable draggable2">(</li>
                             <li class="btn btn-primary operacion draggable draggable2">)</li>
+                            <li class="btn btn-primary operacion draggable draggable2">borrar</li>
                         </ul>
                     </div>
 
