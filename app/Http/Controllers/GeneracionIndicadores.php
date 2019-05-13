@@ -62,14 +62,14 @@ class GeneracionIndicadores extends Controller
         return $devolver;
     }
 
-    public function matrizCaminos($tablaOrigen,$tablaDestino){
+    public function matrizCaminos(){
 
         $relaciones = array();
         $caminos = array();
-        $arrayAux = $this->getRelaciones();
+        $relacionesRAW = $this->getRelaciones();
 
         //Generacion de un Array que almacene todas las relaciones en un formato mas comodo para trabajar
-        foreach ($arrayAux as $relacionSinProcesar) {
+        foreach ($relacionesRAW as $relacionSinProcesar) {
             $tablasSeparadas = explode(' -> ', $relacionSinProcesar);
             $elementosRelacion1 = explode('.', $tablasSeparadas[0]);
             $elementosRelacion2 = explode('.', $tablasSeparadas[1]);
@@ -82,16 +82,16 @@ class GeneracionIndicadores extends Controller
             );
         }
 
-        $arrayAux = $this->getTablasCampos();
+        $nombresTablas = $this->getTablasCampos();
 
         //Convertir $arrayAux en un array con el cual sea mas facil trabajar
-        for ($i = 0; $i < count($arrayAux); $i++) {
-            $arrayAux[$i] = $arrayAux[$i][0];
+        for ($i = 0; $i < count($nombresTablas); $i++) {
+            $nombresTablas[$i] = $nombresTablas[$i][0];
         }
 
-        foreach ($arrayAux as $tabla1) {
+        foreach ($nombresTablas as $tabla1) {
             $caminos[$tabla1] = array();
-            foreach ($arrayAux as $tabla2) {
+            foreach ($nombresTablas as $tabla2) {
                 $caminos[$tabla1][$tabla2] = "";
             }
         }
@@ -104,14 +104,14 @@ class GeneracionIndicadores extends Controller
         }
 
         //Guardando caminos reflexivos triviales
-        foreach ($arrayAux as $tabla) {
+        foreach ($nombresTablas as $tabla) {
             $caminos[$tabla][$tabla] = $tabla;
         }
 
         //Guardando conexion entre las distintas tablas
-        foreach ($arrayAux as $tabla3) {
-            foreach ($arrayAux as $tabla1) {
-                foreach ($arrayAux as $tabla2) {
+        foreach ($nombresTablas as $tabla3) {
+            foreach ($nombresTablas as $tabla1) {
+                foreach ($nombresTablas as $tabla2) {
                     if ($caminos[$tabla1][$tabla2] == "") {
                         if ($caminos[$tabla1][$tabla3] != "" && $caminos[$tabla3][$tabla2] != "") {
                             $caminos[$tabla1][$tabla2] = $tabla3;
@@ -122,10 +122,11 @@ class GeneracionIndicadores extends Controller
         }
 
         //$devolver=array($relaciones, $caminos);
-        return $this->camino($relaciones,$caminos,$tablaOrigen,$tablaDestino);
+        return array($relaciones,$caminos);
     }
 
-    function encontrarRelacion($relaciones, $tabla1, $tabla2){
+    function encontrarRelacion($tabla1, $tabla2){
+        $relaciones = session('relaciones');
         foreach ($relaciones as $r){
             if(($r["tabla1"]==$tabla1 && $r["tabla2"]==$tabla2) || ($r["tabla2"]==$tabla1 && $r["tabla1"]==$tabla2))
                 return $r;
@@ -133,26 +134,45 @@ class GeneracionIndicadores extends Controller
         return null;
     }
 
-    public function camino(&$relaciones, &$grafoTablas, $tabla1, $tabla2){
-        $tablaActual = $tabla2;
+    function encontrarRelaciones($tabla1, $tabla2){
+        $relaciones = session('relaciones');
+        $relacionesEntreTablas = array();
+        foreach ($relaciones as $r){
+            if(($r["tabla1"]==$tabla1 && $r["tabla2"]==$tabla2) || ($r["tabla2"]==$tabla1 && $r["tabla1"]==$tabla2))
+                array_push($relacionesEntreTablas, $r);
+        }
+        return $relacionesEntreTablas;
+    }
+
+    public function camino($tabla1, $tabla2){
+        $grafoTablas = session('grafoTablas');
+        $tablaActual = $tabla1;
         $from = array();
         $where = array();
-        $cont = 0;
+
         //Guarda en el array $from todas las tablas involucradas en el camino, empezsando por tabla2 y acabando en tabla 1
-        while($tablaActual != $grafoTablas[$tabla1][$tablaActual]){
-            $from[$cont] = $tablaActual;
-            $tablaActual = $grafoTablas[$tabla1][$tablaActual];
-            $cont++;
+        while($tablaActual != $tabla2){
+            array_push($from, $tablaActual);
+            $tablaActual = $grafoTablas[$tablaActual][$tabla2];
         }
-        $from[$cont++] = $tablaActual;
-        $from[$cont] = $tabla1;
+        array_push($from, $tablaActual);
 
-
+        $nTablas = sizeof($from);
         //Generacion de las distintas clausulas where para unir las tablas
-        for($i=0; $i<$cont; $i++){
-            $r = $this->encontrarRelacion($relaciones, $from[$i], $from[$i+1]);
-            $where[$i] = $r["tabla1"] . "." . $r["elemento1"] . "=" . $r["tabla2"] . "." . $r["elemento2"];
+        //Version de varias relaciones entre dos tablas
+        for($i=0; $i<$nTablas-1; $i++){
+            $relaciones = $this->encontrarRelaciones($from[$i], $from[$i+1]);
+            while(sizeof($relaciones) > 0) {
+                $r = array_pop($relaciones);
+                $string = $r["tabla1"] . "." . $r["elemento1"] . "=" . $r["tabla2"] . "." . $r["elemento2"];
+                array_push($where, $string);
+            }
         }
+        //Version de una unica relacion entre dos tablas
+        /*for($i=0; $i<$nTablas-1; $i++){
+            $r = $this->encontrarRelacion($from[$i], $from[$i+1]);
+            $where[$i] = $r["tabla1"] . "." . $r["elemento1"] . "=" . $r["tabla2"] . "." . $r["elemento2"];
+        }*/
 
         return array("from" => $from, "where" => $where);
     }
@@ -366,6 +386,11 @@ class GeneracionIndicadores extends Controller
 
     public function setBd(Request $r){
         session(['base' => $r['datos']]);
+        $ret = $this->matrizCaminos();
+        $relaciones = $ret[0];
+        $grafoTablas = $ret[1];
+        session(['grafoTablas' => $grafoTablas]);
+        session(['relaciones' => $relaciones]);
         return redirect()->action('GeneracionIndicadores@index');
     }
 
