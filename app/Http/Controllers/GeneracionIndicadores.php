@@ -27,6 +27,7 @@ class GeneracionIndicadores extends Controller
             $contador++;
         }
 
+
         return $devolver;
     }
 

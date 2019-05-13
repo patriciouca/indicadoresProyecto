@@ -317,8 +317,15 @@
                             <div>
                                 <ul>
                                 @foreach($tabla[1] as $campo)
-                                    <li class="draggable badge badge-secondary draggable1">
-                                    {{$campo->Field}}
+                                    @if(strpos($campo->Type, 'int') !== false)
+                                        <li class="draggable badge badge-secondary draggable1 numero">
+                                    @elseif(strpos($campo->Type, 'timestamp') !== false)
+                                            <li class="draggable badge badge-secondary draggable1 fecha">
+                                    @else
+                                        <li class="draggable badge badge-secondary draggable1 texto">
+                                    @endif
+                                        <h3>{{$campo->Field}}</h3>
+                                        <h5>{{$campo->Type}}</h5>
                                     </li>
                                 @endforeach
                                 </ul>

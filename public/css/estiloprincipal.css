@@ -217,7 +217,25 @@
     line-height: 130px;
 }
 
+.badge-secondary h3{
+    font-size: 1em;
+}
 
+.badge-secondary h5{
+    font-size: 0.75em;
+}
+
+.numero{
+    background-color: #c6e2ff !important;
+}
+
+.texto{
+    background-color: #4D7788 !important;
+}
+
+.fecha{
+    background-color: #8FBC8F !important;
+}
 
 @media all and (max-width: 600px) {
     #banner-secondary p.intro,
