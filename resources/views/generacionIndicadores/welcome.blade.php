@@ -36,14 +36,18 @@
 
             var dropfuncion=function( event, ui ) {
                 var hemetido=$(ui.draggable)[0].innerHTML;
-                hemetido=hemetido.trim();
+
+
+
                 var esElemento=false;
 
                 //hasClass("draggable1")
                 var clase=$(ui.draggable)[0].className;
                 if(clase.indexOf("draggable1")!=-1)
                     esElemento=true;
-
+                if(esElemento)
+                    hemetido=$(hemetido)[0].innerHTML;
+                hemetido=hemetido.trim();
                 var predicado=true;
                 var textoOperacion=$(ui.draggable)[0].innerHTML;
 
