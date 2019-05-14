@@ -236,9 +236,6 @@
                 $("#campos1").val(metido1);
                 $("#campos2").val(metido2);
 
-                console.log(elemento1);
-                console.log(elemento2);
-
 
             };
 
