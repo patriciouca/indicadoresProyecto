@@ -201,10 +201,6 @@
 
                 }
 
-                console.log(metido1);
-                console.log(metido2);
-
-
                 if(predicado && hemetido!="borrar")
                 {
                     if($( this ).html()=="Eje X" || $( this ).html()=="Eje Y")
@@ -239,6 +235,9 @@
 
                 $("#campos1").val(metido1);
                 $("#campos2").val(metido2);
+
+                console.log(elemento1);
+                console.log(elemento2);
 
 
             };
@@ -307,7 +306,18 @@
                             alert("El eje y está vacio");
 
                     }
-                    if(metido1.length>0 && metido2.length>0)
+                    if(elemento1 && elemento2)
+                        alert("El eje X e Y deben acabar en un elemento");
+                    else{
+                        if(elemento1)
+                            alert("El eje X deben acabar en un elemento");
+                        if(elemento2)
+                            alert("El eje Y deben acabar en un elemento");
+
+                    }
+
+
+                    if(metido1.length>0 && metido2.length>0 && !elemento1 && !elemento2)
                         $(this)[0].submit();
                 });
 
