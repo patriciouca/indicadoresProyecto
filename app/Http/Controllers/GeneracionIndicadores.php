@@ -7,6 +7,7 @@ use DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\View\View;
 use Session;
+use Illuminate\Database\QueryException;
 
 
 class GeneracionIndicadores extends Controller
@@ -372,7 +373,7 @@ class GeneracionIndicadores extends Controller
 
         return view('generacionIndicadores/tabla')->with('tablas', $tablas)->with('consulta', $sSqlDef);
     }
-    */
+
 
     public function generateSqlBienFormada(Request $request)
     {
@@ -517,6 +518,7 @@ class GeneracionIndicadores extends Controller
         return view('generacionIndicadores/tabla')->with('tablas',  $db->get())->with('consulta', $consultar);
 
     }
+        */
 
     function generarConsulta($sCampos){
         $this->inicial();
@@ -667,7 +669,15 @@ class GeneracionIndicadores extends Controller
        /* if(sizeof($sSqlGroup)>0)
             $db->groupBy($sSqlGroup);*/
 
-        return view('generacionIndicadores/tabla')->with('tablas',  $db->get())->with('consulta', $db->toSql());
+        try {
+            $get=$db->get();
+            return view('generacionIndicadores/tabla')->with('tablas',  $get)->with('consulta', $db->toSql());
+        } catch (QueryException $e) {
+            return view('errores/welcome')->with("mensaje","Error en la consulta ".$e->getSql());
+        }
+
+
+
 
     }
 
@@ -692,20 +702,5 @@ class GeneracionIndicadores extends Controller
         session(['relaciones' => $relaciones]);
         return redirect()->action('GeneracionIndicadores@index');
     }
-
-    public function setEnvironmentValue($envKey, $envValue)
-    {
-        $envFile = app()->environmentFilePath();
-        $str = file_get_contents($envFile);
-
-        $oldValue = strtok($str, "{$envKey}=");
-
-        $str = str_replace("{$envKey}={$oldValue}", "{$envKey}={$envValue}\n", $str);
-
-        $fp = fopen($envFile, 'w');
-        fwrite($fp, $str);
-        fclose($fp);
-    }
-
 
 }
