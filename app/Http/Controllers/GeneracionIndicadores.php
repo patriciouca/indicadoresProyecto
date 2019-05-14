@@ -510,7 +510,8 @@ class GeneracionIndicadores extends Controller
         }
         $seleccionar = substr($seleccionar,0,strlen($seleccionar)-1);
         $db->select(DB::raw($seleccionar));
-        $db->groupBy($sSqlGroup);
+        if(sizeof($sSqlGroup)>0)
+            $db->groupBy($sSqlGroup);
 
         $consultar=$db->toSql();
 

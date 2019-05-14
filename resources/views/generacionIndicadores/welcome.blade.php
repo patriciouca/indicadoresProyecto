@@ -85,7 +85,10 @@
                         }
                         else{
                             predicado=false;
-                            console.log("pred")
+                            if(elemento1)
+                                alert("Recuerda que hay que poner un elemento en el contenedor X");
+                            else
+                                alert("Recuerda que hay que poner una operacion en el contenedor X");
                         }
                         if(hemetido=="borrar") {
                             console.log(metido1[metido1.length-1]);
@@ -155,6 +158,10 @@
                         }
                         else{
                             predicado=false;
+                            if(elemento2)
+                                alert("Recuerda que hay que poner un elemento en el contenedor Y");
+                            else
+                                alert("Recuerda que hay que poner una operacion en el contenedor Y");
                         }
                         if(hemetido=="borrar") {
                             borrar2=true;
@@ -205,6 +212,7 @@
                     else
                         $( this ).append(hemetido);
                 }
+
                 if(predicado && hemetido=="borrar")
                 {
                     if(borrar1) {
