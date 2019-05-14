@@ -33,8 +33,9 @@ class GeneracionIndicadores extends Controller
     }
 
     public function index() {
-
-        return view('generacionIndicadores/welcome')->with('tablas', $this->getTablasCampos());
+        //return session('grafoTablas')['cliente']['tipologia'];
+        $someJSON = json_encode(session('grafoTablas'));
+        return view('generacionIndicadores/welcome')->with('tablas', $this->getTablasCampos())->with('grafo',$someJSON);
     }
 
     public function getCampos($nombre)

@@ -27,6 +27,7 @@
 
         <script>
 
+            var grafo=<?php print_r($grafo);?>;
             var metido1=[];
             var metido2=[];
             var elemento1=true,elemento2=true;
@@ -105,12 +106,13 @@
                     if(predicado1 && hemetido1!="borrar")
                     {
                         if(!elemento1)
-
-                                metido1.push(tabla + "." + hemetido1);
-
+                        {
+                            metido1.push(tabla + "." + hemetido1);
+                            poner(1,tabla);
+                        }
                         else{
-                                metido1.push(hemetido1);
-                            }
+                            metido1.push(hemetido1);
+                        }
 
 
                         if(incontar1)
@@ -191,8 +193,10 @@
 
                     if(predicado2  && hemetido2!="borrar")
                     {
-                        if(!elemento2)
+                        if(!elemento2) {
                             metido2.push(tabla+"."+hemetido2);
+                            poner(2,tabla);
+                        }
                         else
                             metido2.push(hemetido2);
 
@@ -228,6 +232,7 @@
                         $( this ).html(hemetido1);
                     else
                         $( this ).append(hemetido1);
+
                 }
                 if(predicado2 && hemetido2!="borrar")
                 {
@@ -245,6 +250,7 @@
                         hemetido1 = $(this).html();
                         if(borrado1.indexOf(".") != -1){ //contiene '.'
                             borrado1=borrado1.split('.');
+                            devolver(1,borrado1[0]);
                             $(this).empty();
                             $(this).append(hemetido1.substring(0,hemetido1.length-borrado1[1].length));
 
@@ -263,6 +269,7 @@
                         hemetido2 = $(this).html();
                         if(borrado2.indexOf(".") != -1){ //contiene '.'
                             borrado2=borrado2.split('.');
+                            devolver(2,borrado1[0]);
                             $(this).empty();
                             $(this).append(hemetido2.substring(0,hemetido2.length-borrado2[1].length));
                         }else {
@@ -325,9 +332,124 @@
 
             }
 
+            function devolver(cual,pongo) {
+
+                var fila=grafo[pongo];
+
+                if(cual==1) {
+
+                    $.each(fila, function(index, value) {
+
+                        if(value=="")
+                        {
+                            var i = accesibles1.indexOf(index);
+                            console.log(value+" "+i);
+                            if (i == -1) {
+                                accesibles1.push(index);
+                                var o = accesibles.indexOf(index);
+                                if (o == -1) {
+                                    accesibles.push(index);
+                                }
+                            }
+                        }
+
+                    });
+
+                }
+                else
+                {
+                    $.each(fila, function(index, value) {
+
+                        $.each(fila, function(index, value) {
+
+                            if(value=="")
+                            {
+                                var i = accesibles2.indexOf(index);
+                                console.log(value+" "+i);
+                                if (i == -1) {
+                                    accesibles2.push(index);
+                                    var o = accesibles.indexOf(index);
+                                    if (o == -1) {
+                                        accesibles.push(index);
+                                    }
+                                }
+                            }
+
+                        });
+                    });
+                }
+
+                console.log("TOTAL "+accesibles);
+                console.log("1 "+accesibles1);
+                console.log("2 "+accesibles2);
+            }
+
+            function poner(cual,pongo) {
+
+                var fila=grafo[pongo];
+                if(cual==1) {
+                    $.each(fila, function(index, value) {
+                        if(value=="")
+                            quitar(1,index);
+                    });
+                }
+                else
+                {
+                    $.each(fila, function(index, value) {
+                        if(value=="")
+                            quitar(2,index);
+                    });
+                }
+            }
+
+            function quitar(cual,quito){
+
+                if(cual==1) {
+                    var index = accesibles1.indexOf(quito);
+
+                    if (index > -1) {
+                        accesibles1.splice(index,1);
+                    }
+                }
+                else
+                {
+                    var index = accesibles2.indexOf(quito);
+                    if (index > -1) {
+                        accesibles2.splice(index,1);
+                    }
+                }
+
+                if(accesibles2.indexOf(quito)==-1 && accesibles1.indexOf(quito)==-1)
+                {
+                    var index = accesibles.indexOf(quito);
+
+                    if (index > -1) {
+                        accesibles.splice(index,1);
+                    }
+                }
+                console.log("TOTAL "+accesibles);
+                console.log("1 "+accesibles1);
+                console.log("2 "+accesibles2);
+            }
+
+            function inicializarGrafo() {
+                var fila=grafo[Object.keys(grafo)[0]];
+
+                $.each(fila, function(index, value) {
+                    accesibles.push(index);
+                });
+
+                accesibles1=accesibles.slice(0);
+                accesibles2=accesibles.slice(0);
+
+            }
+            var accesibles=[];
+            var accesibles1=[];
+            var accesibles2=[];
+
             $(document).ready(function() {
 
-
+                inicializarGrafo();
 
                 $( "#accordion" ).accordion({
                     header: "> div > h3",
