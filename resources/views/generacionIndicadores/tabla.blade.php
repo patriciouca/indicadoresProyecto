@@ -27,7 +27,12 @@
         <script>
 
             $(document).ready(function() {
-                $('#tabla1').DataTable();
+                var table=$('#tabla1').DataTable({
+                    buttons: [
+                        'copy', 'excel', 'pdf'
+                    ]});
+
+                table.buttons().container().appendTo('body');
             });
         </script>
     </head>
@@ -35,8 +40,10 @@
 
         <div class="flex-center position-ref full-height">
             <div class="contenidotablas">
+                <div class="botones"></div>
                 <input id="consulta" type="text" value="{{$consulta}}" disabled>
                 <table id="tabla1" class="table-striped  table-hover table">
+
                     <thead>
                         <tr>
                             @foreach($tablas[0] as $key=>$tam)

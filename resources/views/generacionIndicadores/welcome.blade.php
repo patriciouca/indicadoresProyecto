@@ -58,7 +58,7 @@
                 {
                     if(hemetido == "contar(" && !incontar1)
                     {
-                        if(elemento1|| $( this ).html()=="Drop here")
+                        if(elemento1|| $( this ).html()=="Eje X")
                         {
                             predicado=true;
                             elemento1=true;
@@ -131,7 +131,7 @@
 
                     if(hemetido == "contar(" && !incontar2)
                     {
-                        if(elemento2 || $( this ).html()=="Drop here")
+                        if(elemento2 || $( this ).html()=="Eje Y")
                         {
                             predicado=true;
                             elemento2=true;
@@ -207,7 +207,7 @@
 
                 if(predicado && hemetido!="borrar")
                 {
-                    if($( this ).html()=="Drop here")
+                    if($( this ).html()=="Eje X" || $( this ).html()=="Eje Y")
                         $( this ).html(hemetido);
                     else
                         $( this ).append(hemetido);
@@ -366,8 +366,8 @@
                     </div>
 
 
-                    <p id="droppable1">Drop here</p>
-                    <p id="droppable2">Drop here</p>
+                    <p id="droppable1">Eje X</p>
+                    <p id="droppable2">Eje Y</p>
 
                     <div class="botones">
                         <form method="post" style="display: inline" action="{{ url("/generacionIndicador/getConsulta2")}}">
