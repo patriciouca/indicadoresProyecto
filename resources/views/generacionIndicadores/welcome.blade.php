@@ -35,79 +35,81 @@
             var borrar1=false,borrar2=false;
 
             var dropfuncion=function( event, ui ) {
-                var hemetido=$(ui.draggable)[0].innerHTML;
-
-
-
-                var esElemento=false;
-
                 //hasClass("draggable1")
-                var clase=$(ui.draggable)[0].className;
-                if(clase.indexOf("draggable1")!=-1)
-                    esElemento=true;
-                if(esElemento)
-                    hemetido=$(hemetido)[0].innerHTML;
-                hemetido=hemetido.trim();
-                var predicado=true;
-                var textoOperacion=$(ui.draggable)[0].innerHTML;
 
-                if(hemetido=="contar")
-                    hemetido+="(";
 
                 if($( this ).is("#droppable1"))
                 {
-                    if(hemetido == "contar(" && !incontar1)
+                    var predicado1=true;
+                    var hemetido1=$(ui.draggable)[0].innerHTML;
+                    var textoOperacion1=$(ui.draggable)[0].innerHTML;
+                    var esElemento1=false;
+                    console.log("hemetido "+hemetido1);
+                    var clase1=$(ui.draggable)[0].className;
+                    if(clase1.indexOf("draggable1")!=-1)
+                        esElemento1=true;
+                    if(esElemento1)
+                        hemetido1=$(hemetido1)[0].innerHTML;
+                    hemetido1=hemetido1.trim();
+
+                    if(hemetido1=="contar")
+                        hemetido1+="(";
+
+                    if(hemetido1 == "contar(" && !incontar1)
                     {
                         if(elemento1|| $( this ).html()=="Eje X")
                         {
-                            predicado=true;
+                            predicado1=true;
                             elemento1=true;
                         }
                     }
-                    else if(textoOperacion=="("){
+                    else if(textoOperacion1=="("){
                         inparentesis1=true;
-                        predicado=true;
+                        predicado1=true;
                     }
                     else{
-                        if(esElemento && elemento1){
-                            predicado=true;
+                        if(esElemento1 && elemento1){
+                            predicado1=true;
                             elemento1=false;
                             var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
                             tabla=tabla.trim();
+                            console.log("esElemento")
 
                         }
-                        else if(!esElemento && !elemento1 && !incontar1){
-                            predicado=true;
+                        else if(!esElemento1 && !elemento1 && !incontar1){
+                            predicado1=true;
                             elemento1=true;
-                            if(textoOperacion==")"){
+                            if(textoOperacion1==")"){
                                 console.log("a");
                             }
                         }
-                        else{
-                            predicado=false;
+                        else if(hemetido1!="borrar"){
+                            predicado1=false;
                             if(elemento1)
                                 alert("Recuerda que hay que poner un elemento en el contenedor X");
                             else
                                 alert("Recuerda que hay que poner una operacion en el contenedor X");
                         }
-                        if(hemetido=="borrar") {
-                            console.log(metido1[metido1.length-1]);
+                        if(hemetido1=="borrar") {
                             borrar1=true;
+                            var borrado1=metido1[metido1.length-1];
+                            if(borrado1.length == 1 || borrado1 == "cont("){
+                                elemento1=false;
+                            }else{
+                                elemento1=true;
+                            }
                             metido1.pop();
-                            predicado=true;
-
-
                         }
                     }
 
-                    if(predicado && hemetido!="borrar")
+                    if(predicado1 && hemetido1!="borrar")
                     {
                         if(!elemento1)
 
-                                metido1.push(tabla + "." + hemetido);
+                                metido1.push(tabla + "." + hemetido1);
 
                         else{
-                                metido1.push(hemetido);
+                                metido1.push(hemetido1);
                             }
 
 
@@ -115,85 +117,100 @@
                         {
                             incontar1=false;
                             metido1.push(")");
-                            hemetido+=")";
+                            hemetido1+=")";
                         }
-                        if(hemetido == "contar(" && predicado)
+                        if(hemetido1 == "contar(" && predicado1)
                         {
                             incontar1=true;
                         }
-                        if(textoOperacion=="("){
+                        if(textoOperacion1=="("){
                             inparentesis1=true;
-                            predicado=true;
+                            predicado1=true;
                         }
                     }
                 }
                 else{
+                    var predicado2=true;
+                    var hemetido2=$(ui.draggable)[0].innerHTML;
+                    var textoOperacion2=$(ui.draggable)[0].innerHTML;
+                    var esElemento2=false;
 
-                    if(hemetido == "contar(" && !incontar2)
+                    var clase2=$(ui.draggable)[0].className;
+                    if(clase2.indexOf("draggable1")!=-1)
+                        esElemento2=true;
+                    if(esElemento2)
+                        hemetido2=$(hemetido2)[0].innerHTML;
+                    console.log(hemetido2);
+                    hemetido2=hemetido2.trim();
+
+                    if(hemetido2 == "contar(" && !incontar2)
                     {
                         if(elemento2 || $( this ).html()=="Eje Y")
                         {
-                            predicado=true;
+                            predicado2=true;
                             elemento2=true;
                         }
 
                     }
-                    else if(textoOperacion==")"){
-                        predicado=true;
+                    else if(textoOperacion2==")"){
+                        predicado2=true;
                         elemento2=true;
                     }
                     else{
-                        if(esElemento && elemento2){
-                            predicado=true;
+                        if(esElemento2 && elemento2){
+                            predicado2=true;
                             elemento2=false;
                             var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
                             tabla=tabla.trim();
                         }
-                        else if(!esElemento && !elemento2 && !incontar2){
-                            predicado=true;
+                        else if(!esElemento2 && !elemento2 && !incontar2){
+                            predicado2=true;
                             elemento2=true;
-                            if(textoOperacion==")"){
+                            if(textoOperacion2==")"){
                                 console.log("a");
                             }
                         }
-                        else{
-                            predicado=false;
+                        else if(hemetido2!="borrar"){
+                            predicado2=false;
                             if(elemento2)
                                 alert("Recuerda que hay que poner un elemento en el contenedor Y");
                             else
                                 alert("Recuerda que hay que poner una operacion en el contenedor Y");
                         }
-                        if(hemetido=="borrar") {
+                        if(hemetido2=="borrar") {
                             borrar2=true;
+                            var borrado2=metido2[metido2.length-1];
+                            if(borrado2.length == 1 || borrado2 == "cont("){
+                                elemento2=false;
+                            }else{
+                                elemento2=true;
+                            }
                             metido2.pop();
-                            predicado=true;
-
-
                         }
                     }
 
-                    if(predicado  && hemetido!="borrar")
+                    if(predicado2  && hemetido2!="borrar")
                     {
                         if(!elemento2)
-                            metido2.push(tabla+"."+hemetido);
+                            metido2.push(tabla+"."+hemetido2);
                         else
-                            metido2.push(hemetido);
+                            metido2.push(hemetido2);
 
                         if(incontar2)
                         {
                             incontar2=false;
                             metido2.push(")");
-                            hemetido+=")";
+                            hemetido2+=")";
                         }
 
 
-                        if(hemetido == "contar(" && predicado)
+                        if(hemetido2 == "contar(" && predicado2)
                         {
                             incontar2=true;
                         }
-                        if(textoOperacion=="("){
+                        if(textoOperacion2=="("){
                             inparentesis2=true;
-                            predicado=true;
+                            predicado2=true;
                         }
 
                     }
@@ -205,37 +222,60 @@
                 console.log(metido2);
 
 
-                if(predicado && hemetido!="borrar")
+                if(predicado1 && hemetido1!="borrar")
                 {
                     if($( this ).html()=="Eje X" || $( this ).html()=="Eje Y")
-                        $( this ).html(hemetido);
+                        $( this ).html(hemetido1);
                     else
-                        $( this ).append(hemetido);
+                        $( this ).append(hemetido1);
+                }
+                if(predicado2 && hemetido2!="borrar")
+                {
+                    if($( this ).html()=="Eje X" || $( this ).html()=="Eje Y")
+                        $( this ).html(hemetido2);
+                    else
+                        $( this ).append(hemetido2);
                 }
 
-                if(predicado && hemetido=="borrar")
+                if(hemetido1=="borrar")
                 {
                     if(borrar1) {
-                        $(this).empty();
+
                         borrar1=false;
-                        hemetido = "";
-                        for (var i = 0; i < metido1.length; i++) {
-                            hemetido += metido1[i];
+                        hemetido1 = $(this).html();
+                        if(borrado1.indexOf(".") != -1){ //contiene '.'
+                            borrado1=borrado1.split('.');
+                            $(this).empty();
+                            $(this).append(hemetido1.substring(0,hemetido1.length-borrado1[1].length));
+
+                        }else {
+                            $(this).empty();
+                            $(this).append(hemetido1.substring(0, hemetido1.length - borrado1.length));
                         }
-                        $(this).append(hemetido);
-                    }else if(borrar2){
-                        $(this).empty();
+                        if( $(this).html()==""){
+                            $(this).append("Eje X");
+                        }
+                    }
+                }
+                if(hemetido2=="borrar"){
+                    if(borrar2){
                         borrar2=false;
-                        hemetido = "";
-                        for (var j = 0; j < metido2.length; j++) {
-                            hemetido += metido2[j];
-
-
+                        hemetido2 = $(this).html();
+                        if(borrado2.indexOf(".") != -1){ //contiene '.'
+                            borrado2=borrado2.split('.');
+                            $(this).empty();
+                            $(this).append(hemetido2.substring(0,hemetido2.length-borrado2[1].length));
+                        }else {
+                            $(this).empty();
+                            $(this).append(hemetido2.substring(0, hemetido2.length - borrado2.length));
                         }
-                        $(this).append(hemetido);
+                        if( $(this).html()==""){
+                            $(this).append("Eje Y");
+                        }
                     }
                 }
 
+                
 
                 $("#campos1").val(metido1);
                 $("#campos2").val(metido2);
