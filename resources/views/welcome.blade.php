@@ -31,7 +31,7 @@
 				
 				    <nav class="clear">
                     <ul>
-                        <li><a href="">Generar Indicadores</a></li>
+                        <li><a href="{{ url("/generacionIndicador/")}}">Generar Indicadores</a></li>
                     </ul>
 					</nav>
 					<br><br><br><br>

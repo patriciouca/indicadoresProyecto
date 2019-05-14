@@ -26,8 +26,8 @@ Route::get('/generacionIndicador/elegir', 'GeneracionIndicadores@index');
 Route::post('/generacionIndicador/setBd','GeneracionIndicadores@setBd');
 
 Route::post('/generacionIndicador/getConsulta','GeneracionIndicadores@generateSql');
-Route::post('/generacionIndicador/getConsulta2','GeneracionIndicadores@pruebagenerateSql2');
-//Route::post('/generacionIndicador/getConsulta2','GeneracionIndicadores@generateSqlBienFormada');
+
+Route::post('/generacionIndicador/getConsulta2','GeneracionIndicadores@generateSqlBienFormada');
 
 Route::post('/generacionIndicador/evaluarConsulta','GeneracionIndicadores@evaluarConsulta');
 
