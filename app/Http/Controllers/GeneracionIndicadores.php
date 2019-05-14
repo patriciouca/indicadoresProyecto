@@ -672,7 +672,7 @@ class GeneracionIndicadores extends Controller
             $get=$db->get();
             return view('generacionIndicadores/tabla')->with('tablas',  $get)->with('consulta', $db->toSql());
         } catch (QueryException $e) {
-            return view('errores/welcome')->with("mensaje","Error en la consulta ".$e->getSql());
+            return view('errores/welcome')->with("mensaje","Error en la consulta :".$e->getSql());
         }
 
 

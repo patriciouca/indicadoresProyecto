@@ -46,6 +46,9 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            h3{
+                font-size: 0.5em;
+            }
         </style>
 
         <title>ERROR</title>
@@ -56,7 +59,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                {{$mensaje}}
+                    <h3>{{$mensaje}}</h3>
                 </div>
             </div>
         </div>
