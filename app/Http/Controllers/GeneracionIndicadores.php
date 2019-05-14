@@ -576,7 +576,7 @@ class GeneracionIndicadores extends Controller
                             array_push($tablas,array_search($tmp[0],$tablas));
                             array_push($tablas,$tmp[0]);
                         }
-                        $sSql = $sSql . $tmp[0] . '.' . $tmp[1];
+                        $sSql = $sSql . $tmp[0] . '.' . $tmp[1] . '"' . $tmp[0] . '.' . $tmp[1] . '"';
                     }
                     else
                         return var_dump($tmp);
