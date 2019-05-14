@@ -568,7 +568,6 @@ class GeneracionIndicadores extends Controller
                         if($sSqlGroupT)
                         {
                             array_push($sSqlGroup,$tmp[0].".".$tmp[1]);
-                            //$sSqlGroup.=$tmp[0].".".$tmp[1];
                             $sSqlGroupT=false;
                         }
 
@@ -587,7 +586,7 @@ class GeneracionIndicadores extends Controller
 
         $nTablas = sizeof($tablas);
         $sSqlFrom = array();
-        $sSqlWhere = array();
+        $sSqlJoin = array();
         if($nTablas > 2){
             for($i=3; $i<$nTablas; $i=$i+2){
                 //La tabla esta dentro del contenedor anterior al from?
@@ -606,8 +605,8 @@ class GeneracionIndicadores extends Controller
                     //Cada conexion entre tablas se revisa si esta incluida en el contenedor anteior al where
                     //y si no lo esta entonces se incluye al mismo
                     foreach($caminos['where'] as $conexion) {
-                        if(!in_array($conexion, $sSqlWhere)){
-                            array_push($sSqlWhere, $conexion);
+                        if(!in_array($conexion, $sSqlJoin)){
+                            array_push($sSqlJoin, $conexion);
                         }
                     }
                 }
@@ -616,12 +615,10 @@ class GeneracionIndicadores extends Controller
             $sSqlFrom[0] = $tablas[1];
         }
 
-
-
-        return array($sSql, $sSqlFrom, $sSqlWhere);
+        return array($sSql, $sSqlFrom, $sSqlJoin, $sSqlGroup);
     }
 
-    public function pruebagenerateSql2(Request $request){
+    public function realizarConsultaSQL(Request $request){
         $this->inicial();
         $consultas = array();
         $sCampos=explode(",",$request['campos']);
@@ -631,7 +628,8 @@ class GeneracionIndicadores extends Controller
 
         $sSql = $consultas[0][0] . "," . $consultas[1][0];
         $sSqlFrom = $consultas[0][1];
-        $sSqlWhere = $consultas[0][2];
+        $sSqlJoin = $consultas[0][2];
+        $sSqlGroup = array_merge($consultas[0][3], $consultas[1][3]);
 
         $nTablas = sizeof($consultas[1][1]);
         for($i=0; $i<$nTablas; $i++){
@@ -649,8 +647,8 @@ class GeneracionIndicadores extends Controller
                 //Cada conexion entre tablas se revisa si esta incluida en el contenedor anteior al where
                 //y si no lo esta entonces se incluye al mismo
                 foreach($caminos['where'] as $conexion) {
-                    if(!in_array($conexion, $sSqlWhere)){
-                        array_push($sSqlWhere, $conexion);
+                    if(!in_array($conexion, $sSqlJoin)){
+                        array_push($sSqlJoin, $conexion);
                     }
                 }
             }
@@ -661,13 +659,14 @@ class GeneracionIndicadores extends Controller
         $nTablas = sizeof($sSqlFrom);
         if($nTablas > 1){
             for($i=1; $i<$nTablas; $i++) {
-                $db->join($sSqlFrom[$i], $sSqlWhere[$i-1][0], '=', $sSqlWhere[$i-1][1]);
+                $db->join($sSqlFrom[$i], $sSqlJoin[$i-1][0], '=', $sSqlJoin[$i-1][1]);
             }
         }
 
         $db->select(DB::raw($sSql));
-       /* if(sizeof($sSqlGroup)>0)
-            $db->groupBy($sSqlGroup);*/
+        if(sizeof($sSqlGroup)>0)
+            foreach($sSqlGroup as $agrupar)
+                $db->groupBy($agrupar);
 
         try {
             $get=$db->get();
