@@ -258,7 +258,7 @@
                     hemetido2 = $(this).html();
                     if(borrado2.indexOf(".") != -1){ //contiene '.'
                         borrado2=borrado2.split('.');
-                        devolver(2,borrado1[0]);
+                        devolver(2,borrado2[0]);
                         $(this).empty();
                         $(this).append(hemetido2.substring(0,hemetido2.length-borrado2[1].length));
                     }else {
