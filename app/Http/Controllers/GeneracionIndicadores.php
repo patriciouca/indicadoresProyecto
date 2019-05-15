@@ -193,27 +193,33 @@ class GeneracionIndicadores extends Controller
         $tablas=[];
         $sSqlGroupT =false;
 
+        $operadorActivo = false;
+
         foreach ($sCampos as $valor)
         {
             switch($valor) {
 
                 case "+":
                     $sSql = $this->eliminarUltimaMencion($sSql);
+                    $operadorActivo = true;
                     $sSql = $sSql . "+";
                     break;
 
                 case "-":
                     $sSql = $this->eliminarUltimaMencion($sSql);
+                    $operadorActivo = true;
                     $sSql = $sSql . "-";
                     break;
 
                 case "*":
                     $sSql = $this->eliminarUltimaMencion($sSql);
+                    $operadorActivo = true;
                     $sSql = $sSql . "*";
                     break;
 
                 case "/":
                     $sSql = $this->eliminarUltimaMencion($sSql);
+                    $operadorActivo = true;
                     $sSql = $sSql . "/";
                     break;
 
@@ -286,12 +292,19 @@ class GeneracionIndicadores extends Controller
             $sSqlFrom[0] = $tablas[1];
         }
 
+        //Generamos el alias si hay activo un operador
+        if($operadorActivo) {
+            $sSql = $this->eliminarUltimaMencion($sSql);
+            $sSql = $sSql . '"' . $sSql . '"';
+        }
+
         return array($sSql, $sSqlFrom, $sSqlJoin, $sSqlGroup);
     }
 
     public function realizarConsultaSQL(Request $request){
         $this->inicial();
         $consultas = array();
+
         $sCampos=explode(",",$request['campos']);
         $sCampos2=explode(",",$request['campos2']);
         array_push($consultas, $this->generarConsulta($sCampos));
@@ -324,6 +337,86 @@ class GeneracionIndicadores extends Controller
                 }
             }
         }
+
+        $db=DB::table($sSqlFrom[0]);
+
+        $nTablas = sizeof($sSqlFrom);
+        if($nTablas > 1){
+            for($i=1; $i<$nTablas; $i++) {
+                $db->join($sSqlFrom[$i], $sSqlJoin[$i-1][0], '=', $sSqlJoin[$i-1][1]);
+            }
+        }
+
+        $db->select(DB::raw($sSql));
+        if(sizeof($sSqlGroup)>0)
+            foreach($sSqlGroup as $agrupar)
+                $db->groupBy($agrupar);
+
+        try {
+            $get=$db->get();
+            return view('generacionIndicadores/tabla')->with('tablas',  $get)->with('consulta', $db->toSql());
+        } catch (QueryException $e) {
+            return view('errores/welcome')->with("mensaje","Error en la consulta :".$e->getSql());
+        }
+    }
+
+
+    public function pruebaVariosEjes(Request $request){
+        $this->inicial();
+        $consultas = array();
+        //$requestKeys = array_keys($request);
+        $nextKey = 'campos';
+
+        $sCampos=explode(",",$request[$nextKey]);
+        array_push($consultas, $this->generarConsulta($sCampos));
+        $sSql = $consultas[0][0];
+        $sSqlFrom = $consultas[0][1];
+        $sSqlJoin = $consultas[0][2];
+        $sSqlGroup = $consultas[0][3];
+        $nEjes = 2;
+
+        $request['campos3'] = 'elemento.codigo,+,elemento.codigo';
+        $request['campos4'] = 'cliente.codigo,+,cliente.codigo';
+
+        $nextKey = 'campos' . $nEjes;
+        while(isset($request[$nextKey])){
+            $sCampos=explode(",",$request[$nextKey]);
+            array_push($consultas, $this->generarConsulta($sCampos));
+
+            $sSql = $sSql . ',' . $consultas[$nEjes-1][0];
+
+            $nTablas = sizeof($consultas[$nEjes-1][1]);
+            for($i=0; $i<$nTablas; $i++){
+                if(!in_array($consultas[$nEjes-1][1][$i], $sSqlFrom)){
+                    $caminos = $this->camino($sSqlFrom[0], $consultas[$nEjes-1][1][$i]);
+
+                    //Cada tabla del camino se revisa si esta incluida en el contenedor anteior al from
+                    //y si no lo esta entonces se incluye al mismo
+                    foreach($caminos['from'] as $tabla) {
+                        if (!in_array($tabla, $sSqlFrom)) {
+                            array_push($sSqlFrom, $tabla);
+                        }
+                    }
+
+                    //Cada conexion entre tablas se revisa si esta incluida en el contenedor anteior al where
+                    //y si no lo esta entonces se incluye al mismo
+                    foreach($caminos['where'] as $conexion) {
+                        if(!in_array($conexion, $sSqlJoin)){
+                            array_push($sSqlJoin, $conexion);
+                        }
+                    }
+                }
+            }
+
+            $nEjes++;
+            $nextKey = 'campos' . $nEjes;
+        }
+
+        $sCampos=explode(",",$request['campos']);
+        $sCampos2=explode(",",$request['campos2']);
+        array_push($consultas, $this->generarConsulta($sCampos));
+        array_push($consultas, $this->generarConsulta($sCampos2));
+
 
         $db=DB::table($sSqlFrom[0]);
 
