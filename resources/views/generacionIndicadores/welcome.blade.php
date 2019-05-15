@@ -107,7 +107,7 @@
                     {
                         if(!elemento1)
                         {
-                            var i = accesibles1.indexOf(tabla);
+                            var i = accesibles.indexOf(tabla);
                             if(i>=0)
                             {
                                 metido1.push(tabla+"."+hemetido1);
@@ -202,7 +202,7 @@
                     if(predicado2  && hemetido2!="borrar")
                     {
                         if(!elemento2) {
-                            var i = accesibles2.indexOf(tabla);
+                            var i = accesibles.indexOf(tabla);
                             if(i>=0)
                             {
                                 metido2.push(tabla+"."+hemetido2);
@@ -374,48 +374,17 @@
 
                 var fila=grafo[pongo];
 
-                if(cual==1) {
+                $.each(fila, function(index, value) {
 
-                    $.each(fila, function(index, value) {
-
-                        if(value=="")
-                        {
-                            var i = accesibles1.indexOf(index);
-                            console.log(value+" "+i);
-                            if (i == -1) {
-                                accesibles1.push(index);
-                                var o = accesibles.indexOf(index);
-                                if (o == -1) {
-                                    accesibles.push(index);
-                                }
-                            }
+                    if(value=="")
+                    {
+                        var i = accesibles.indexOf(index);
+                        if (i == -1) {
+                            accesibles.push(index);
                         }
+                    }
 
-                    });
-
-                }
-                else
-                {
-                    $.each(fila, function(index, value) {
-
-                        $.each(fila, function(index, value) {
-
-                            if(value=="")
-                            {
-                                var i = accesibles2.indexOf(index);
-                                console.log(value+" "+i);
-                                if (i == -1) {
-                                    accesibles2.push(index);
-                                    var o = accesibles.indexOf(index);
-                                    if (o == -1) {
-                                        accesibles.push(index);
-                                    }
-                                }
-                            }
-
-                        });
-                    });
-                }
+                });
 
                 imprimirAce();
                 revisar();
@@ -441,37 +410,23 @@
 
             function quitar(cual,quito){
 
-                if(cual==1) {
-                    var index = accesibles1.indexOf(quito);
+                var index = accesibles.indexOf(quito);
 
-                    if (index > -1) {
-                        accesibles1.splice(index,1);
-                    }
-                }
-                else
-                {
-                    var index = accesibles2.indexOf(quito);
-                    if (index > -1) {
-                        accesibles2.splice(index,1);
-                    }
+                if (index > -1) {
+                    accesibles.splice(index,1);
                 }
 
-                if(accesibles2.indexOf(quito)==-1 && accesibles1.indexOf(quito)==-1)
-                {
-                    var index = accesibles.indexOf(quito);
-
-                    if (index > -1) {
-                        accesibles.splice(index,1);
-                    }
-                }
                 imprimirAce();
                 revisar();
             }
 
             function imprimirAce(){
+                /*
                 console.log("TOTAL "+accesibles);
                 console.log("1 "+accesibles1);
                 console.log("2 "+accesibles2);
+                
+                 */
             }
 
             function inicializarGrafo() {
@@ -481,13 +436,8 @@
                     accesibles.push(index);
                 });
 
-                accesibles1=accesibles.slice(0);
-                accesibles2=accesibles.slice(0);
-
             }
             var accesibles=[];
-            var accesibles1=[];
-            var accesibles2=[];
 
             $(document).ready(function() {
 
