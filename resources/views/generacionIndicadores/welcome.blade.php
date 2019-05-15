@@ -389,7 +389,7 @@
                     accesibles2.splice(index,1);
                 }
             }
-            if(accesibles2.indexOf(quito)==-1 && accesibles1.indexOf(quito)==-1)
+            if(accesibles2.indexOf(quito)==-1 || accesibles1.indexOf(quito)==-1)
             {
                 var index = accesibles.indexOf(quito);
                 if (index > -1) {
