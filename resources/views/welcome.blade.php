@@ -5,6 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         
         <title>Generador de Indicadores Automático</title>
+
+        <link rel="shortcut icon" href={{ URL::asset('img/logo1.ico') }} />
         
 		<link rel="stylesheet" href="{{ URL::asset('css/estiloprincipal2.css') }}?{{date('l jS \of F Y h:i:s A')}}" type="text/css" media="all" />
         

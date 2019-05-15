@@ -13,26 +13,68 @@
                 integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
                 crossorigin="anonymous"></script>
 
-        <title>Laravel</title>
+        <title>Generador de Indicadores Automático</title>
+
+        <link rel="shortcut icon" href={{ URL::asset('img/logo1.ico') }} />
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
 
-        <link rel="stylesheet" href="{{ URL::asset('css/estiloprincipal.css') }}?{{date('l jS \of F Y h:i:s A')}}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ URL::asset('css/estiloprincipal2.css') }}?{{date('l jS \of F Y h:i:s A')}}" type="text/css" media="all" />
 
 
     </head>
     <body>
-        <form method="post" action="{{ url("/generacionIndicador/setBd")}}">
-            @csrf
-            <select name="datos">
-                @foreach($bases as $base)
-                    <option value={{$base->Database}}>{{$base->Database}}</option>
-                @endforeach
-            </select>
-            <button type="submit" class="btn btn-primary">Generar Consulta</button>
-        </form>
+    <section id="page">
+        <br>
+        <header>
 
-     </body>
+            <hgroup>
+                <img src={{ URL::asset('img/Saica-svg.svg') }} alt="">
+            </hgroup>
+
+
+        </header>
+
+
+        <section id="articles">
+
+            <div class="line"></div> <br>
+
+            <h2>Elija la base de datos sobre la que realizar la consula</h2>
+
+            <br><br>
+
+                <form method="post" action="{{ url("/generacionIndicador/setBd")}}">
+                    @csrf
+
+                    <select name="datos" id="select">
+                        @foreach($bases as $base)
+                            <option value={{$base->Database}}>{{$base->Database}}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn btn-primary">Generar Consulta</button>
+                </form>
+
+            <br>
+
+            <div class="line"></div>
+
+
+            <br><br>
+        </section>
+
+        <footer>
+
+
+            <a href="https://saicasl.eu/" ><img src={{ URL::asset('img/Saica-svgl.svg') }}></a>
+
+
+        </footer>
+
+    </section>
+
+    </body>
  </html>
+
