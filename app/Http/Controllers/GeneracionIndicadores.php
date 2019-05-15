@@ -534,27 +534,38 @@ class GeneracionIndicadores extends Controller
             switch($valor) {
 
                 case "+":
+                    $sSql = substr($sSql, 0, strlen($sSql)-1);
+                    $sSql = substr($sSql, 0, strrpos($sSql, '"'));
                     $sSql = $sSql . "+";
                     break;
 
                 case "-":
+                    $sSql = substr($sSql, 0, strlen($sSql)-1);
+                    $sSql = substr($sSql, 0, strrpos($sSql, '"'));
                     $sSql = $sSql . "-";
                     break;
 
                 case "*":
+                    $sSql = substr($sSql, 0, strlen($sSql)-1);
+                    $sSql = substr($sSql, 0, strrpos($sSql, '"'));
                     $sSql = $sSql . "*";
                     break;
 
                 case "/":
+                    $sSql = substr($sSql, 0, strlen($sSql)-1);
+                    $sSql = substr($sSql, 0, strrpos($sSql, '"'));
                     $sSql = $sSql . "/";
                     break;
 
                 case "contar(":
+
                     $sSql = $sSql . "count(";
                     $sSqlGroupT=true;
                     break;
 
                 case ")":
+                    $sSql = substr($sSql, 0, strlen($sSql)-1);
+                    $sSql = substr($sSql, 0, strrpos($sSql, '"'));
                     $sSql = $sSql . ")";
                     break;
 
