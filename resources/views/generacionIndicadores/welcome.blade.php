@@ -420,6 +420,16 @@
         var accesibles2=[];
         $(document).ready(function() {
             inicializarGrafo();
+            $('#formulario').submit(function (evt) {
+                evt.preventDefault();
+                if(metido1.length==0 && metido2.length==0)
+                    alert("El eje X e Y está vacio");
+                else{
+                    if(metido1.length==0)
+                        alert("El eje X está vacio");
+                    if(metido2.length==0)
+                        alert("El eje y está vacio");
+                }});
             $( "#accordion" ).accordion({
                 header: "> div > h3",
                 collapsible: true,
@@ -496,7 +506,7 @@
             <p id="droppable2">Eje Y</p>
 
             <div class="botones">
-                <form method="post" style="display: inline" action="{{ url("/generacionIndicador/getConsulta2")}}">
+                <form id="formulario" method="post" style="display: inline" action="{{ url("/generacionIndicador/getConsulta2")}}">
                     @csrf
                     <button type="submit" id="generar" class="btn btn-success">Generar consulta</button>
                     <input hidden id="campos1" type="text" name="campos" class="">
