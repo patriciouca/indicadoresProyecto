@@ -393,19 +393,10 @@
             function poner(cual,pongo) {
 
                 var fila=grafo[pongo];
-                if(cual==1) {
-                    $.each(fila, function(index, value) {
-                        if(value=="")
-                            quitar(1,index);
-                    });
-                }
-                else
-                {
-                    $.each(fila, function(index, value) {
-                        if(value=="")
-                            quitar(2,index);
-                    });
-                }
+                $.each(fila, function(index, value) {
+                    if(value=="")
+                        quitar(1,index);
+                });
             }
 
             function quitar(cual,quito){
@@ -425,7 +416,7 @@
                 console.log("TOTAL "+accesibles);
                 console.log("1 "+accesibles1);
                 console.log("2 "+accesibles2);
-                
+
                  */
             }
 
