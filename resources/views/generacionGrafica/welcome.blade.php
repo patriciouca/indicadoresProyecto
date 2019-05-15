@@ -1,35 +1,37 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<?php
+use Illuminate\Http\Request;
+?>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.js"></script>
 
-
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.canvaswrapper.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.colorhelpers.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.saturated.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.browser.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.drawSeries.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.errorbars.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.uiConstants.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.logaxis.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.symbol.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.flatdata.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.navigate.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.fillbetween.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.stack.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.touchNavigate.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.hover.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.touch.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.time.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.axislabels.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.selection.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.composeImages.js"></script>
-        <script language="javascript" type="text/javascript" src="http://localhost/indicadoresProyecto/resources/js/graficas/jquery.flot.legend.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.canvaswrapper.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.colorhelpers.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.saturated.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.browser.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.drawSeries.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.errorbars.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.uiConstants.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.logaxis.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.symbol.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.flatdata.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.navigate.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.fillbetween.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.stack.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.touchNavigate.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.hover.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.touch.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.time.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.axislabels.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.selection.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.composeImages.js"></script>
+        <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.legend.js"></script>
 
 
 
@@ -235,6 +237,7 @@
 
     </head>
     <body>
+
         <div class="flex-center position-ref full-height">
             <!--@if (Route::has('login'))-->
                 <div class="top-right links">
@@ -346,8 +349,8 @@
     var bBars = true;
     var bFill = true;
 
-    $("#cLineas").change(function () {
-        cL = $("#cLineas").val();
+    $("#cLinea").change(function () {
+        cL = $("#cLinea").val();
         carga();
     });
 
@@ -457,11 +460,18 @@
 
 
     function carga() {
+        var i = 0;
+        var d1=[];
+        var ejex = <?php print_r($ejex) ?>;
+        var ejey = <?php print_r($ejey) ?>;
 
-            var d1 = [];
-            for (var i = 0; i < 14; i += 0.5) {
-                d1.push([i, Math.sin(i)]);
-            }
+           for(i = 0; i<{{$numX}}-1;i++){
+                var aux = [ejex[0][i],ejey[0][i]];
+                d1.push(aux);
+           }
+
+
+
 
             var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
 
@@ -491,7 +501,7 @@
                 }
             };
 
-            var data=[{label:"Hola",data:d2,color: cLL}];
+            var data=[{label:"Grafica de la consulta",data:d1,color: cLL}];
 
             $.plot("#grafica1",data, options);
 

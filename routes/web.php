@@ -15,13 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/generacionGrafica', function () {
+/*Route::post('/generacionGrafica', function () {
     return view('generacionGrafica/welcome');
-});
+});*/
 
 Route::get('/generacionIndicador', 'GeneracionIndicadores@elegirBd');
 
 Route::get('/generacionIndicador/elegir', 'GeneracionIndicadores@index');
+
+Route::post('/generacionGrafica','Graficas@load');
 
 Route::post('/generacionIndicador/setBd','GeneracionIndicadores@setBd');
 
