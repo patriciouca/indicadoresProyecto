@@ -107,8 +107,15 @@
                     {
                         if(!elemento1)
                         {
-                            metido1.push(tabla + "." + hemetido1);
-                            poner(1,tabla);
+                            var i = accesibles1.indexOf(tabla);
+                            if(i>=0)
+                            {
+                                metido1.push(tabla+"."+hemetido1);
+                                poner(1,tabla);
+                            }
+                            else{
+                                alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin x");
+                            }
                         }
                         else{
                             metido1.push(hemetido1);
@@ -194,8 +201,16 @@
                     if(predicado2  && hemetido2!="borrar")
                     {
                         if(!elemento2) {
-                            metido2.push(tabla+"."+hemetido2);
-                            poner(2,tabla);
+                            var i = accesibles2.indexOf(tabla);
+                            if(i>=0)
+                            {
+                                metido2.push(tabla+"."+hemetido2);
+                                poner(2,tabla);
+                            }
+                            else{
+                                alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin y");
+                            }
+
                         }
                         else
                             metido2.push(hemetido2);
@@ -332,6 +347,27 @@
 
             }
 
+            function revisar(){
+                var ac=$("#accordion").children();
+                $.each(ac, function(index, value) {
+
+                    var texto=$(value).find("h3")[0];
+                    var textoplano=$(texto).text().trim();
+
+                    var i = accesibles.indexOf(textoplano);
+                    if(i==-1)
+                    {
+
+                        $(texto).hide();
+                    }
+                    else{
+                        $(texto).show();
+                    }
+
+
+                });
+            }
+
             function devolver(cual,pongo) {
 
                 var fila=grafo[pongo];
@@ -379,9 +415,8 @@
                     });
                 }
 
-                console.log("TOTAL "+accesibles);
-                console.log("1 "+accesibles1);
-                console.log("2 "+accesibles2);
+                imprimirAce();
+                revisar();
             }
 
             function poner(cual,pongo) {
@@ -427,6 +462,11 @@
                         accesibles.splice(index,1);
                     }
                 }
+                imprimirAce();
+                revisar();
+            }
+
+            function imprimirAce(){
                 console.log("TOTAL "+accesibles);
                 console.log("1 "+accesibles1);
                 console.log("2 "+accesibles2);
