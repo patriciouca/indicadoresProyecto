@@ -143,10 +143,11 @@
                     hemetido2=$(hemetido2)[0].innerHTML;
                 console.log(hemetido2);
                 hemetido2=hemetido2.trim();
-                if(hemetido2 == "contar(" && !incontar2)
+                if(hemetido2 == "contar" && !incontar2)
                 {
                     if(elemento2 || $( this ).html()=="Eje Y")
                     {
+                        hemetido2="contar(";
                         predicado2=true;
                         elemento2=true;
                     }
@@ -501,7 +502,7 @@
                     <input hidden id="campos1" type="text" name="campos" class="">
                     <input hidden id="campos2" type="text" name="campos2">
                 </form>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button hidden type="button" class="btn btn-primary">Guardar</button>
 
             </div>
 
