@@ -115,6 +115,7 @@
                             }
                             else{
                                 alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin x");
+                                predicado1=false;
                             }
                         }
                         else{
@@ -209,6 +210,7 @@
                             }
                             else{
                                 alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin y");
+                                predicado2=false;
                             }
 
                         }
