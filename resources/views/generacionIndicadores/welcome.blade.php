@@ -421,6 +421,7 @@
         $(document).ready(function() {
             inicializarGrafo();
             $('#formulario').submit(function (evt) {
+                /*
                 evt.preventDefault();
                 if(metido1.length==0 && metido2.length==0)
                     alert("El eje X e Y está vacio");
@@ -429,7 +430,11 @@
                         alert("El eje X está vacio");
                     if(metido2.length==0)
                         alert("El eje y está vacio");
-                }});
+                }
+
+                $(this).submit();*/
+
+            });
             $( "#accordion" ).accordion({
                 header: "> div > h3",
                 collapsible: true,
