@@ -29,7 +29,7 @@ Route::post('/generacionIndicador/setBd','GeneracionIndicadores@setBd');
 
 Route::post('/generacionIndicador/getConsulta','GeneracionIndicadores@generateSql');
 
-Route::post('/generacionIndicador/getConsulta2','GeneracionIndicadores@generateSqlBienFormada');
+Route::post('/generacionIndicador/getConsulta2','GeneracionIndicadores@realizarConsultaSQL');
 
 Route::post('/generacionIndicador/evaluarConsulta','GeneracionIndicadores@evaluarConsulta');
 
