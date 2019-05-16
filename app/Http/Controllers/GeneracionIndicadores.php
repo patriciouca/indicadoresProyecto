@@ -232,6 +232,7 @@ class GeneracionIndicadores extends Controller
                 case ")":
                     $sSql = $this->eliminarUltimaMencion($sSql);
                     $sSql = $sSql . ")";
+                    $sSql = $sSql . '"' . $sSql . '"';
                     break;
 
                 case "(":
@@ -364,7 +365,6 @@ class GeneracionIndicadores extends Controller
     public function pruebaVariosEjes(Request $request){
         $this->inicial();
         $consultas = array();
-        //$requestKeys = array_keys($request);
         $nextKey = 'campos';
 
         $sCampos=explode(",",$request[$nextKey]);
@@ -379,7 +379,7 @@ class GeneracionIndicadores extends Controller
         $request['campos4'] = 'cliente.codigo,+,cliente.codigo';
 
         $nextKey = 'campos' . $nEjes;
-        while(isset($request[$nextKey])){
+        while(isset($request[$nextKey]) ){
             $sCampos=explode(",",$request[$nextKey]);
             array_push($consultas, $this->generarConsulta($sCampos));
 
