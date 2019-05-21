@@ -35,9 +35,16 @@
         var incontar1=false,incontar2=false;
         var inparentesis1=false,inparentesis2=false;
         var borrar1=false,borrar2=false;
+        var dropfuncionW=function( event, ui ) {
+            alert("a");
+        };
         var dropfuncion=function( event, ui ) {
             var arrastrado=$(ui.draggable);
-            if(arrastrado.hasClass("draggable")){
+
+            if(arrastrado.hasClass("draggable3")){
+                alert("Los comparadores son para los filtros");
+            }
+            else if(arrastrado.hasClass("draggable")){
                 if($( this ).is("#droppable1"))
                 {
                     var predicado1=true;
@@ -512,6 +519,9 @@
             $( "#droppable2" ).droppable({
                 drop: dropfuncion
             });
+            $( "#filtro" ).droppable({
+                drop: dropfuncionW
+            });
         } );
     </script>
 </head>
@@ -552,7 +562,7 @@
         </div>
         <div class="contenedor">
             <div class="operaciones">
-                <ul >
+                <ul>
                     <li class="btn btn-primary operacion draggable draggable2">+</li>
                     <li class="btn btn-primary operacion draggable draggable2">-</li>
                     <li class="btn btn-primary operacion draggable draggable2">*</li>
@@ -562,11 +572,19 @@
                     <li class="btn btn-primary operacion draggable draggable2">)</li>
                     <li class="btn btn-primary operacion draggable draggable2">borrar</li>
                 </ul>
+                <ul >
+                    <li class="btn btn-dark operacion draggable draggable3"><</li>
+                    <li class="btn btn-dark operacion draggable draggable3"><=</li>
+                    <li class="btn btn-dark operacion draggable draggable3">></li>
+                    <li class="btn btn-dark operacion draggable draggable3">>=</li>
+                    <li class="btn btn-dark operacion draggable draggable3">=</li>
+                </ul>
             </div>
 
 
-            <p id="droppable1">Eje X</p>
-            <p id="droppable2">Eje Y</p>
+            <p class="dropables" id="droppable1">Eje X</p>
+            <p class="dropables" id="droppable2">Eje Y</p>
+            <p class="dropables" id="filtro">Filtro</p>
 
             <div class="botones">
                 <form id="formulario" method="post" style="display: inline" action="{{ url("/generacionIndicador/getConsulta2")}}">

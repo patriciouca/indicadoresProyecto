@@ -204,14 +204,18 @@
     margin-left:5%;
 }
 
-#droppable1{
-
-    border:3px dashed #6497b1;
-    text-align: center;
-    line-height: 130px;
+.btn.btn-dark{
+    margin-left: 5%;
+    line-height: 70px;
+    color: white;
 }
 
-#droppable2{
+.btn.btn-dark:hover{
+    margin-left:5%;
+    color: white;
+}
+
+.dropables{
     text-align: center;
     border:3px dashed #6497b1;
     line-height: 130px;
