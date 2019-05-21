@@ -31,12 +31,72 @@
         var grafo=<?php print_r($grafo);?>;
         var metido1=[];
         var metido2=[];
+        var metidowhere=[];
+        var arraytemporal=[];
         var elemento1=true,elemento2=true;
         var incontar1=false,incontar2=false;
         var inparentesis1=false,inparentesis2=false;
         var borrar1=false,borrar2=false;
         var dropfuncionW=function( event, ui ) {
-            alert("a");
+            var arrastrado=$(ui.draggable).get(0);
+            if($(arrastrado).hasClass("draggable3") || $(arrastrado).hasClass("draggable1")){
+                var tam=arraytemporal.length;
+                var evaluar=false;
+
+                if(tam==0 || tam==2)
+                {
+                    if($(arrastrado).hasClass("draggable1"))
+                    {
+                        evaluar=true;
+                    }
+                    else
+                    {
+                        alert("Hay que arrastrar un elemento al filtro");
+                        evaluar=false;
+                    }
+                }
+                else{
+                    if($(arrastrado).hasClass("draggable3"))
+                    {
+                        evaluar=true;
+                    }
+                    else
+                    {
+                        alert("Hay que arrastrar un comparador al filtro");
+                        evaluar=false;
+                    }
+                }
+
+                if(evaluar)
+                {
+                    var meto;
+
+                    if(tam==0 || tam==2)
+                    {
+                        meto=$(arrastrado).find("h3").get(0).innerHTML;
+                    }
+                    else{
+                        meto=$(arrastrado)[0].innerText;
+
+                    }
+
+
+
+                    arraytemporal.push(meto);
+
+                    if(tam==2)
+                    {
+                        metidowhere.push(arraytemporal);
+                        console.log(metidowhere);
+                        arraytemporal=[];
+                    }
+
+                }
+                console.log(arraytemporal);
+            }
+            else{
+                alert("Solo puedes introducir elemento y comparadores");
+            }
         };
         var dropfuncion=function( event, ui ) {
             var arrastrado=$(ui.draggable);
