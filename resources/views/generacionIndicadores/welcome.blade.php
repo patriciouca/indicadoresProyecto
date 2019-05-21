@@ -421,7 +421,6 @@
         $(document).ready(function() {
             inicializarGrafo();
             $('#formulario').submit(function (evt) {
-                /*
                 evt.preventDefault();
                 if(metido1.length==0 && metido2.length==0)
                     alert("El eje X e Y está vacio");
@@ -431,9 +430,16 @@
                     if(metido2.length==0)
                         alert("El eje y está vacio");
                 }
-
-                $(this).submit();*/
-
+                if(elemento1 && elemento2)
+                    alert("El eje X e Y deben acabar en un elemento");
+                else{
+                    if(elemento1)
+                        alert("El eje X deben acabar en un elemento");
+                    if(elemento2)
+                        alert("El eje Y deben acabar en un elemento");
+                }
+                if(metido1.length>0 && metido2.length>0 && !elemento1 && !elemento2)
+                    $(this)[0].submit();
             });
             $( "#accordion" ).accordion({
                 header: "> div > h3",
