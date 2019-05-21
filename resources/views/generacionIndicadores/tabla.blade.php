@@ -13,8 +13,9 @@
                 integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
                 crossorigin="anonymous"></script>
 
-        <<title>Generador de Indicadores Automáticos</title>
-        <link rel="shortcut icon" href={{URL::asset('img/logo1.ico')}}/>
+        <title>Generador de Indicadores Automático</title>
+
+        <link rel="shortcut icon" href={{ URL::asset('img/logo1.ico') }} />
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">

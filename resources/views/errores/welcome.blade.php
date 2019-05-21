@@ -51,7 +51,9 @@
             }
         </style>
 
-        <title>ERROR</title>
+        <title>ERROR-Generador de Indicadores Automático</title>
+
+        <link rel="shortcut icon" href={{ URL::asset('img/logo1.ico') }} />
 
     </head>
     
