@@ -37,72 +37,108 @@
         var incontar1=false,incontar2=false;
         var inparentesis1=false,inparentesis2=false;
         var borrar1=false,borrar2=false;
+        var logicoWhere=false;
         var dropfuncionW=function( event, ui ) {
             var arrastrado=$(ui.draggable).get(0);
-            if($(arrastrado).hasClass("draggable3") || $(arrastrado).hasClass("draggable1")){
-                var tam=arraytemporal.length;
-                var evaluar=false;
 
-                if(tam==0 || tam==2)
+
+                if(logicoWhere)
                 {
-                    if($(arrastrado).hasClass("draggable1"))
+                    if($(arrastrado).hasClass("draggable4"))
                     {
-                        evaluar=true;
-                    }
-                    else
-                    {
-                        alert("Hay que arrastrar un elemento al filtro");
-                        evaluar=false;
-                    }
-                }
-                else{
-                    if($(arrastrado).hasClass("draggable3"))
-                    {
-                        evaluar=true;
-                    }
-                    else
-                    {
-                        alert("Hay que arrastrar un comparador al filtro");
-                        evaluar=false;
-                    }
-                }
+                        var meto=[];
+                        meto.push($(arrastrado)[0].innerText);
+                        if(meto=="O")
+                            meto="|";
 
-                if(evaluar)
-                {
-                    var meto;
-
-                    if(tam==0 || tam==2)
-                    {
-                        meto=$(arrastrado).find("h3").get(0).innerHTML;
+                        if(meto=="Y")
+                            meto="&";
+                        metidowhere.push(meto);
+                        logicoWhere=false;
+                        $('#filtro').append(" "+$(arrastrado)[0].innerText+" ");
                     }
                     else{
-                        meto=$(arrastrado)[0].innerText;
-
+                        alert("Recuerde introducir un operador lógico");
                     }
 
-                    if($('#filtro')[0].innerHTML=="Filtro")
-                        $('#filtro')[0].innerHTML=meto
-                    else
-                        $('#filtro').append(meto);
-
-
-
-                    arraytemporal.push(meto);
-
-                    if(tam==2)
-                    {
-                        metidowhere.push(arraytemporal);
-                        console.log(metidowhere);
-                        arraytemporal=[];
-                    }
 
                 }
+                else
+                {
+                    if($(arrastrado).hasClass("draggable3") || $(arrastrado).hasClass("draggable1")){
+                        var tam=arraytemporal.length;
+                        var evaluar=false;
+                        if(tam==0 || tam==2)
+                        {
+                            if($(arrastrado).hasClass("draggable1"))
+                            {
+                                evaluar=true;
+                            }
+                            else
+                            {
+                                alert("Hay que arrastrar un elemento al filtro");
+                                evaluar=false;
+                            }
+                        }
+                        else
+                        {
+                            if($(arrastrado).hasClass("draggable3"))
+                            {
+                                evaluar=true;
+                            }
+                            else
+                            {
+                                alert("Hay que arrastrar un comparador al filtro");
+                                evaluar=false;
+                            }
+                        }
 
-            }
-            else{
-                alert("Solo puedes introducir elemento y comparadores");
-            }
+                        if(evaluar)
+                        {
+
+
+                            var meto;
+
+                            if(tam==0 || tam==2)
+                            {
+                                var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
+                                meto=$(arrastrado).find("h3").get(0).innerHTML;
+                                tabla=tabla.trim();
+
+                            }
+                            else
+                            {
+                                meto=$(arrastrado)[0].innerText;
+
+                            }
+
+                            if($('#filtro')[0].innerHTML=="Filtro")
+                                $('#filtro')[0].innerHTML=meto;
+                            else
+                                $('#filtro').append(meto);
+
+
+                            if(tam==0 || tam==2)
+                                meto=tabla+"."+meto;
+
+                            arraytemporal.push(meto);
+
+                            if(tam==2)
+                            {
+                                metidowhere.push(arraytemporal);
+                                console.log(metidowhere);
+                                arraytemporal=[];
+                                logicoWhere=true;
+                            }
+                        }
+                    }
+                    else{
+                        alert("Solo puedes introducir elemento y comparadores");
+                    }
+                }
+
         };
+
         var dropfuncion=function( event, ui ) {
             var arrastrado=$(ui.draggable);
 
@@ -643,6 +679,8 @@
                     <li class="btn btn-dark operacion draggable draggable3">></li>
                     <li class="btn btn-dark operacion draggable draggable3">>=</li>
                     <li class="btn btn-dark operacion draggable draggable3">=</li>
+                    <li class="btn btn-dark operacion draggable draggable4">Y</li>
+                    <li class="btn btn-dark operacion draggable draggable4">O</li>
                 </ul>
             </div>
 
