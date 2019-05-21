@@ -80,6 +80,11 @@
 
                     }
 
+                    if($('#filtro')[0].innerHTML=="Filtro")
+                        $('#filtro')[0].innerHTML=meto
+                    else
+                        $('#filtro').append(meto);
+
 
 
                     arraytemporal.push(meto);
@@ -92,7 +97,7 @@
                     }
 
                 }
-                console.log(arraytemporal);
+
             }
             else{
                 alert("Solo puedes introducir elemento y comparadores");
