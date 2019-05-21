@@ -62,8 +62,29 @@
                         }
                     }
                     else if(textoOperacion1=="("){
-                        inparentesis1=true;
-                        predicado1=true;
+                        if(elemento1 && !inparentesis1)
+                        {
+                            inparentesis1=true;
+                            predicado1=true;
+                        }
+                        else{
+                            alert("Ahí no puede ir un parentesis en el eje X");
+                            predicado1=false;
+                        }
+                    }
+                    else if(textoOperacion1==")"){
+
+                        if(inparentesis1 && !elemento1)
+                        {
+                            predicado1=true;
+                            elemento1=false;
+                            inparentesis1=false;
+                        }
+                        else{
+                            alert("Respeta la norma de los parentesis en el eje X");
+                            predicado1=false;
+                        }
+
                     }
                     else{
                         if(esElemento1 && elemento1){
@@ -103,15 +124,18 @@
                         if(!elemento1)
                         {
                             var i = accesibles1.indexOf(tabla);
-                            if(i>=0)
-                            {
-                                metido1.push(tabla+"."+hemetido1);
-                                poner(1,tabla);
+                            if(hemetido1!="(" && hemetido1!=")") {
+                                if(i>=0)
+                                {
+                                    metido1.push(tabla+"."+hemetido1);
+                                    poner(1,tabla);
+                                }
+                                else{
+                                    alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin x");
+                                    predicado1=false;
+                                }
                             }
-                            else{
-                                alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin x");
-                                predicado1=false;
-                            }
+
                         }
                         else{
                             metido1.push(hemetido1);
@@ -153,9 +177,31 @@
                             elemento2=true;
                         }
                     }
+                    else if(textoOperacion2=="("){
+                        if(elemento2 && !inparentesis2)
+                        {
+                            inparentesis2=true;
+                            predicado2=true;
+                        }
+                        else{
+                            alert("Ahí no puede ir un parentesis en el eje Y");
+                            predicado2=false;
+                        }
+                    }
                     else if(textoOperacion2==")"){
-                        predicado2=true;
-                        elemento2=true;
+
+                        if(inparentesis2 && !elemento2)
+                        {
+                            console.log("Depurar "+predicado2);
+                            predicado2=true;
+                            elemento2=false;
+                            inparentesis2=false;
+                        }
+                        else{
+                            alert("Respeta la norma de los parentesis en el eje Y");
+                            predicado2=false;
+                        }
+
                     }
                     else{
                         if(esElemento2 && elemento2){
@@ -167,9 +213,6 @@
                         else if(!esElemento2 && !elemento2 && !incontar2){
                             predicado2=true;
                             elemento2=true;
-                            if(textoOperacion2==")"){
-                                console.log("a");
-                            }
                         }
                         else if(hemetido2!="borrar"){
                             predicado2=false;
@@ -192,16 +235,22 @@
                     if(predicado2  && hemetido2!="borrar")
                     {
                         if(!elemento2) {
-                            var i = accesibles2.indexOf(tabla);
-                            if(i>=0)
+
+                            if(hemetido2!="(" && hemetido2!=")")
                             {
-                                metido2.push(tabla+"."+hemetido2);
-                                poner(2,tabla);
+                                var i = accesibles2.indexOf(tabla);
+
+                                if(i>=0)
+                                {
+                                    metido2.push(tabla+"."+hemetido2);
+                                    poner(2,tabla);
+                                }
+                                else{
+                                    alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin y");
+                                    predicado2=false;
+                                }
                             }
-                            else{
-                                alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin y");
-                                predicado2=false;
-                            }
+
                         }
                         else
                             metido2.push(hemetido2);
@@ -221,8 +270,7 @@
                         }
                     }
                 }
-                console.log(metido1);
-                console.log(metido2);
+
                 if(predicado1 && hemetido1!="borrar")
                 {
                     if($( this ).html()=="Eje X" || $( this ).html()=="Eje Y")
