@@ -128,6 +128,7 @@
                                 metidowhere.push(arraytemporal);
                                 console.log(metidowhere);
                                 arraytemporal=[];
+
                                 logicoWhere=true;
                             }
                         }
@@ -136,6 +137,8 @@
                         alert("Solo puedes introducir elemento y comparadores");
                     }
                 }
+
+                $("#filtrosCampo").val(metidowhere);
 
         };
 
@@ -695,6 +698,7 @@
                     <button type="submit" id="generar" class="btn btn-success">Generar consulta</button>
                     <input hidden id="campos1" type="text" name="campos" class="">
                     <input hidden id="campos2" type="text" name="campos2">
+                    <input hidden id="filtrosCampo" type="text" name="filtro">
                 </form>
                 <button hidden type="button" class="btn btn-primary">Guardar</button>
 
