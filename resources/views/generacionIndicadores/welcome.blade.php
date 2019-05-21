@@ -36,246 +36,249 @@
         var inparentesis1=false,inparentesis2=false;
         var borrar1=false,borrar2=false;
         var dropfuncion=function( event, ui ) {
-            //hasClass("draggable1")
-            if($( this ).is("#droppable1"))
-            {
-                var predicado1=true;
-                var hemetido1=$(ui.draggable)[0].innerHTML;
-                var textoOperacion1=$(ui.draggable)[0].innerHTML;
-                var esElemento1=false;
-                console.log("hemetido "+hemetido1);
-                var clase1=$(ui.draggable)[0].className;
-                if(clase1.indexOf("draggable1")!=-1)
-                    esElemento1=true;
-                if(esElemento1)
-                    hemetido1=$(hemetido1)[0].innerHTML;
-                hemetido1=hemetido1.trim();
-                if(hemetido1=="contar")
-                    hemetido1+="(";
-                if(hemetido1 == "contar(" && !incontar1)
+            var arrastrado=$(ui.draggable);
+            if(arrastrado.hasClass("draggable")){
+                if($( this ).is("#droppable1"))
                 {
-                    if(elemento1|| $( this ).html()=="Eje X")
+                    var predicado1=true;
+                    var hemetido1=$(ui.draggable)[0].innerHTML;
+                    var textoOperacion1=$(ui.draggable)[0].innerHTML;
+                    var esElemento1=false;
+                    console.log("hemetido "+hemetido1);
+                    var clase1=$(ui.draggable)[0].className;
+                    if(clase1.indexOf("draggable1")!=-1)
+                        esElemento1=true;
+                    if(esElemento1)
+                        hemetido1=$(hemetido1)[0].innerHTML;
+                    hemetido1=hemetido1.trim();
+                    if(hemetido1=="contar")
+                        hemetido1+="(";
+                    if(hemetido1 == "contar(" && !incontar1)
                     {
-                        predicado1=true;
-                        elemento1=true;
-                    }
-                }
-                else if(textoOperacion1=="("){
-                    inparentesis1=true;
-                    predicado1=true;
-                }
-                else{
-                    if(esElemento1 && elemento1){
-                        predicado1=true;
-                        elemento1=false;
-                        var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
-                        tabla=tabla.trim();
-                        console.log("esElemento")
-                    }
-                    else if(!esElemento1 && !elemento1 && !incontar1){
-                        predicado1=true;
-                        elemento1=true;
-                        if(textoOperacion1==")"){
-                            console.log("a");
-                        }
-                    }
-                    else if(hemetido1!="borrar"){
-                        predicado1=false;
-                        if(elemento1)
-                            alert("Recuerda que hay que poner un elemento en el contenedor X");
-                        else
-                            alert("Recuerda que hay que poner una operacion en el contenedor X");
-                    }
-                    if(hemetido1=="borrar") {
-                        borrar1=true;
-                        var borrado1=metido1[metido1.length-1];
-                        if(borrado1.length == 1 || borrado1 == "cont("){
-                            elemento1=false;
-                        }else{
+                        if(elemento1|| $( this ).html()=="Eje X")
+                        {
+                            predicado1=true;
                             elemento1=true;
                         }
-                        metido1.pop();
                     }
-                }
-                if(predicado1 && hemetido1!="borrar")
-                {
-                    if(!elemento1)
-                    {
-                        var i = accesibles1.indexOf(tabla);
-                        if(i>=0)
-                        {
-                            metido1.push(tabla+"."+hemetido1);
-                            poner(1,tabla);
-                        }
-                        else{
-                            alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin x");
-                            predicado1=false;
-                        }
-                    }
-                    else{
-                        metido1.push(hemetido1);
-                    }
-                    if(incontar1)
-                    {
-                        incontar1=false;
-                        metido1.push(")");
-                        hemetido1+=")";
-                    }
-                    if(hemetido1 == "contar(" && predicado1)
-                    {
-                        incontar1=true;
-                    }
-                    if(textoOperacion1=="("){
+                    else if(textoOperacion1=="("){
                         inparentesis1=true;
                         predicado1=true;
                     }
-                }
-            }
-            else{
-                var predicado2=true;
-                var hemetido2=$(ui.draggable)[0].innerHTML;
-                var textoOperacion2=$(ui.draggable)[0].innerHTML;
-                var esElemento2=false;
-                var clase2=$(ui.draggable)[0].className;
-                if(clase2.indexOf("draggable1")!=-1)
-                    esElemento2=true;
-                if(esElemento2)
-                    hemetido2=$(hemetido2)[0].innerHTML;
-                console.log(hemetido2);
-                hemetido2=hemetido2.trim();
-                if(hemetido2 == "contar" && !incontar2)
-                {
-                    if(elemento2 || $( this ).html()=="Eje Y")
+                    else{
+                        if(esElemento1 && elemento1){
+                            predicado1=true;
+                            elemento1=false;
+                            var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
+                            tabla=tabla.trim();
+                            console.log("esElemento")
+                        }
+                        else if(!esElemento1 && !elemento1 && !incontar1){
+                            predicado1=true;
+                            elemento1=true;
+                            if(textoOperacion1==")"){
+                                console.log("a");
+                            }
+                        }
+                        else if(hemetido1!="borrar"){
+                            predicado1=false;
+                            if(elemento1)
+                                alert("Recuerda que hay que poner un elemento en el contenedor X");
+                            else
+                                alert("Recuerda que hay que poner una operacion en el contenedor X");
+                        }
+                        if(hemetido1=="borrar") {
+                            borrar1=true;
+                            var borrado1=metido1[metido1.length-1];
+                            if(borrado1.length == 1 || borrado1 == "cont("){
+                                elemento1=false;
+                            }else{
+                                elemento1=true;
+                            }
+                            metido1.pop();
+                        }
+                    }
+                    if(predicado1 && hemetido1!="borrar")
                     {
-                        hemetido2="contar(";
-                        predicado2=true;
-                        elemento2=true;
-                    }
-                }
-                else if(textoOperacion2==")"){
-                    predicado2=true;
-                    elemento2=true;
-                }
-                else{
-                    if(esElemento2 && elemento2){
-                        predicado2=true;
-                        elemento2=false;
-                        var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
-                        tabla=tabla.trim();
-                    }
-                    else if(!esElemento2 && !elemento2 && !incontar2){
-                        predicado2=true;
-                        elemento2=true;
-                        if(textoOperacion2==")"){
-                            console.log("a");
-                        }
-                    }
-                    else if(hemetido2!="borrar"){
-                        predicado2=false;
-                        if(elemento2)
-                            alert("Recuerda que hay que poner un elemento en el contenedor Y");
-                        else
-                            alert("Recuerda que hay que poner una operacion en el contenedor Y");
-                    }
-                    if(hemetido2=="borrar") {
-                        borrar2=true;
-                        var borrado2=metido2[metido2.length-1];
-                        if(borrado2.length == 1 || borrado2 == "cont("){
-                            elemento2=false;
-                        }else{
-                            elemento2=true;
-                        }
-                        metido2.pop();
-                    }
-                }
-                if(predicado2  && hemetido2!="borrar")
-                {
-                    if(!elemento2) {
-                        var i = accesibles2.indexOf(tabla);
-                        if(i>=0)
+                        if(!elemento1)
                         {
-                            metido2.push(tabla+"."+hemetido2);
-                            poner(2,tabla);
+                            var i = accesibles1.indexOf(tabla);
+                            if(i>=0)
+                            {
+                                metido1.push(tabla+"."+hemetido1);
+                                poner(1,tabla);
+                            }
+                            else{
+                                alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin x");
+                                predicado1=false;
+                            }
                         }
                         else{
-                            alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin y");
-                            predicado2=false;
+                            metido1.push(hemetido1);
+                        }
+                        if(incontar1)
+                        {
+                            incontar1=false;
+                            metido1.push(")");
+                            hemetido1+=")";
+                        }
+                        if(hemetido1 == "contar(" && predicado1)
+                        {
+                            incontar1=true;
+                        }
+                        if(textoOperacion1=="("){
+                            inparentesis1=true;
+                            predicado1=true;
                         }
                     }
-                    else
-                        metido2.push(hemetido2);
-                    if(incontar2)
+                }
+                else{
+                    var predicado2=true;
+                    var hemetido2=$(ui.draggable)[0].innerHTML;
+                    var textoOperacion2=$(ui.draggable)[0].innerHTML;
+                    var esElemento2=false;
+                    var clase2=$(ui.draggable)[0].className;
+                    if(clase2.indexOf("draggable1")!=-1)
+                        esElemento2=true;
+                    if(esElemento2)
+                        hemetido2=$(hemetido2)[0].innerHTML;
+                    console.log(hemetido2);
+                    hemetido2=hemetido2.trim();
+                    if(hemetido2 == "contar" && !incontar2)
                     {
-                        incontar2=false;
-                        metido2.push(")");
-                        hemetido2+=")";
+                        if(elemento2 || $( this ).html()=="Eje Y")
+                        {
+                            hemetido2="contar(";
+                            predicado2=true;
+                            elemento2=true;
+                        }
                     }
-                    if(hemetido2 == "contar(" && predicado2)
-                    {
-                        incontar2=true;
-                    }
-                    if(textoOperacion2=="("){
-                        inparentesis2=true;
+                    else if(textoOperacion2==")"){
                         predicado2=true;
+                        elemento2=true;
+                    }
+                    else{
+                        if(esElemento2 && elemento2){
+                            predicado2=true;
+                            elemento2=false;
+                            var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
+                            tabla=tabla.trim();
+                        }
+                        else if(!esElemento2 && !elemento2 && !incontar2){
+                            predicado2=true;
+                            elemento2=true;
+                            if(textoOperacion2==")"){
+                                console.log("a");
+                            }
+                        }
+                        else if(hemetido2!="borrar"){
+                            predicado2=false;
+                            if(elemento2)
+                                alert("Recuerda que hay que poner un elemento en el contenedor Y");
+                            else
+                                alert("Recuerda que hay que poner una operacion en el contenedor Y");
+                        }
+                        if(hemetido2=="borrar") {
+                            borrar2=true;
+                            var borrado2=metido2[metido2.length-1];
+                            if(borrado2.length == 1 || borrado2 == "cont("){
+                                elemento2=false;
+                            }else{
+                                elemento2=true;
+                            }
+                            metido2.pop();
+                        }
+                    }
+                    if(predicado2  && hemetido2!="borrar")
+                    {
+                        if(!elemento2) {
+                            var i = accesibles2.indexOf(tabla);
+                            if(i>=0)
+                            {
+                                metido2.push(tabla+"."+hemetido2);
+                                poner(2,tabla);
+                            }
+                            else{
+                                alert("No se puede llegar a la tabla "+tabla+" con lo introducido en el cajetin y");
+                                predicado2=false;
+                            }
+                        }
+                        else
+                            metido2.push(hemetido2);
+                        if(incontar2)
+                        {
+                            incontar2=false;
+                            metido2.push(")");
+                            hemetido2+=")";
+                        }
+                        if(hemetido2 == "contar(" && predicado2)
+                        {
+                            incontar2=true;
+                        }
+                        if(textoOperacion2=="("){
+                            inparentesis2=true;
+                            predicado2=true;
+                        }
                     }
                 }
-            }
-            console.log(metido1);
-            console.log(metido2);
-            if(predicado1 && hemetido1!="borrar")
-            {
-                if($( this ).html()=="Eje X" || $( this ).html()=="Eje Y")
-                    $( this ).html(hemetido1);
-                else
-                    $( this ).append(hemetido1);
-            }
-            if(predicado2 && hemetido2!="borrar")
-            {
-                if($( this ).html()=="Eje X" || $( this ).html()=="Eje Y")
-                    $( this ).html(hemetido2);
-                else
-                    $( this ).append(hemetido2);
-            }
-            if(hemetido1=="borrar")
-            {
-                if(borrar1) {
-                    borrar1=false;
-                    hemetido1 = $(this).html();
-                    if(borrado1.indexOf(".") != -1){ //contiene '.'
-                        borrado1=borrado1.split('.');
-                        devolver(1,borrado1[0]);
-                        $(this).empty();
-                        $(this).append(hemetido1.substring(0,hemetido1.length-borrado1[1].length));
-                    }else {
-                        $(this).empty();
-                        $(this).append(hemetido1.substring(0, hemetido1.length - borrado1.length));
-                    }
-                    if( $(this).html()==""){
-                        $(this).append("Eje X");
+                console.log(metido1);
+                console.log(metido2);
+                if(predicado1 && hemetido1!="borrar")
+                {
+                    if($( this ).html()=="Eje X" || $( this ).html()=="Eje Y")
+                        $( this ).html(hemetido1);
+                    else
+                        $( this ).append(hemetido1);
+                }
+                if(predicado2 && hemetido2!="borrar")
+                {
+                    if($( this ).html()=="Eje X" || $( this ).html()=="Eje Y")
+                        $( this ).html(hemetido2);
+                    else
+                        $( this ).append(hemetido2);
+                }
+                if(hemetido1=="borrar")
+                {
+                    if(borrar1) {
+                        borrar1=false;
+                        hemetido1 = $(this).html();
+                        if(borrado1.indexOf(".") != -1){ //contiene '.'
+                            borrado1=borrado1.split('.');
+                            devolver(1,borrado1[0]);
+                            $(this).empty();
+                            $(this).append(hemetido1.substring(0,hemetido1.length-borrado1[1].length));
+                        }else {
+                            $(this).empty();
+                            $(this).append(hemetido1.substring(0, hemetido1.length - borrado1.length));
+                        }
+                        if( $(this).html()==""){
+                            $(this).append("Eje X");
+                        }
                     }
                 }
-            }
-            if(hemetido2=="borrar"){
-                if(borrar2){
-                    borrar2=false;
-                    hemetido2 = $(this).html();
-                    if(borrado2.indexOf(".") != -1){ //contiene '.'
-                        borrado2=borrado2.split('.');
-                        devolver(2,borrado2[0]);
-                        $(this).empty();
-                        $(this).append(hemetido2.substring(0,hemetido2.length-borrado2[1].length));
-                    }else {
-                        $(this).empty();
-                        $(this).append(hemetido2.substring(0, hemetido2.length - borrado2.length));
-                    }
-                    if( $(this).html()==""){
-                        $(this).append("Eje Y");
+                if(hemetido2=="borrar"){
+                    if(borrar2){
+                        borrar2=false;
+                        hemetido2 = $(this).html();
+                        if(borrado2.indexOf(".") != -1){ //contiene '.'
+                            borrado2=borrado2.split('.');
+                            devolver(2,borrado2[0]);
+                            $(this).empty();
+                            $(this).append(hemetido2.substring(0,hemetido2.length-borrado2[1].length));
+                        }else {
+                            $(this).empty();
+                            $(this).append(hemetido2.substring(0, hemetido2.length - borrado2.length));
+                        }
+                        if( $(this).html()==""){
+                            $(this).append("Eje Y");
+                        }
                     }
                 }
+
+                $("#campos1").val(metido1);
+                $("#campos2").val(metido2);
             }
 
-            $("#campos1").val(metido1);
-            $("#campos2").val(metido2);
         };
         var dragablefuncionHelper=function(){
             $copy = $(this).clone();
@@ -441,6 +444,7 @@
                 if(metido1.length>0 && metido2.length>0 && !elemento1 && !elemento2)
                     $(this)[0].submit();
             });
+
             $( "#accordion" ).accordion({
                 header: "> div > h3",
                 collapsible: true,
