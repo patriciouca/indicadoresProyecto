@@ -40,7 +40,7 @@
         var logicoWhere=false;
         var dropfuncionW=function( event, ui ) {
             var arrastrado=$(ui.draggable).get(0);
-
+            var multivalor=$(arrastrado).hasClass("draggable5");
 
                 if(logicoWhere)
                 {
@@ -65,12 +65,12 @@
                 }
                 else
                 {
-                    if($(arrastrado).hasClass("draggable3") || $(arrastrado).hasClass("draggable1")){
+                    if($(arrastrado).hasClass("draggable3") || $(arrastrado).hasClass("draggable1") || multivalor){
                         var tam=arraytemporal.length;
                         var evaluar=false;
                         if(tam==0 || tam==2)
                         {
-                            if($(arrastrado).hasClass("draggable1"))
+                            if($(arrastrado).hasClass("draggable1") || $(arrastrado).hasClass("draggable5"))
                             {
                                 evaluar=true;
                             }
@@ -101,9 +101,14 @@
 
                             if(tam==0 || tam==2)
                             {
-                                var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
-                                meto=$(arrastrado).find("h3").get(0).innerHTML;
-                                tabla=tabla.trim();
+                                if(multivalor)
+                                {
+                                    meto=$($(arrastrado).find("input")[0]).val();
+                                }else{
+                                    var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
+                                    meto=$(arrastrado).find("h3").get(0).innerHTML;
+                                    tabla=tabla.trim();
+                                }
 
                             }
                             else
@@ -118,8 +123,10 @@
                                 $('#filtro').append(meto);
 
 
-                            if(tam==0 || tam==2)
+                            if(tam==0 || tam==2 && !multivalor)
                                 meto=tabla+"."+meto;
+                            else if(tam==0 || tam==2 && multivalor)
+                                meto="^"+meto;
 
                             arraytemporal.push(meto);
 
@@ -144,8 +151,43 @@
 
         var dropfuncion=function( event, ui ) {
             var arrastrado=$(ui.draggable);
+            var multivalor=arrastrado.hasClass("draggable5");
 
-            if(arrastrado.hasClass("draggable3")){
+            if(multivalor){
+                var metido=$(arrastrado.find("input")[0]).val();
+                if($( this ).is("#droppable1"))
+                {
+                    if(elemento1)
+                    {
+                        elemento1=false;
+                        metido1.push(metido1);
+                        if($( this ).html()=="Eje X")
+                            $( this ).html(metido);
+                        else
+                            $( this ).append(metido);
+                    }
+                    else{
+                        alert("Hay que introducir un elemento en el eje x");
+                    }
+                }
+                else{
+
+                    if(elemento2)
+                    {
+                        elemento2=false;
+                        metido2.push(metido);
+                        if($( this ).html()=="Eje Y")
+                            $( this ).html(metido);
+                        else
+                            $( this ).append(metido);
+                    }
+                    else{
+                        alert("Hay que introducir un elemento en el eje y");
+                    }
+
+                }
+            }
+            else if(arrastrado.hasClass("draggable3")){
                 alert("Los comparadores son para los filtros");
             }
             else if(arrastrado.hasClass("draggable")){
@@ -675,6 +717,7 @@
                     <li class="btn btn-primary operacion draggable draggable2">(</li>
                     <li class="btn btn-primary operacion draggable draggable2">)</li>
                     <li class="btn btn-primary operacion draggable draggable2">borrar</li>
+                    <li class="btn btn-info operacion draggable draggable5"><input id="drag5" type="text"/></li>
                 </ul>
                 <ul >
                     <li class="btn btn-dark operacion draggable draggable3"><</li>
@@ -685,6 +728,8 @@
                     <li class="btn btn-dark operacion draggable draggable4">Y</li>
                     <li class="btn btn-dark operacion draggable draggable4">O</li>
                 </ul>
+
+
             </div>
 
 
