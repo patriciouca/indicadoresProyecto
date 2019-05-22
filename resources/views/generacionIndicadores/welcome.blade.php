@@ -160,7 +160,7 @@
                     if(elemento1)
                     {
                         elemento1=false;
-                        metido1.push(metido1);
+                        metido1.push("^."+metido1);
                         if($( this ).html()=="Eje X")
                             $( this ).html(metido);
                         else
@@ -175,7 +175,7 @@
                     if(elemento2)
                     {
                         elemento2=false;
-                        metido2.push(metido);
+                        metido2.push("^."+metido);
                         if($( this ).html()=="Eje Y")
                             $( this ).html(metido);
                         else
