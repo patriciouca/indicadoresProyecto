@@ -53,6 +53,10 @@
 
                         if(meto=="Y")
                             meto="&";
+
+                        if(meto=="!=")
+                            meto="<>";
+
                         metidowhere.push(meto);
                         logicoWhere=false;
                         $('#filtro').append(" "+$(arrastrado)[0].innerText+" ");
@@ -718,13 +722,12 @@
                     <li class="btn btn-primary operacion draggable draggable2">)</li>
                     <li class="btn btn-primary operacion draggable draggable2">borrar</li>
                     <li class="btn btn-info operacion draggable draggable5"><input id="drag5" type="text"/></li>
-                </ul>
-                <ul >
                     <li class="btn btn-dark operacion draggable draggable3"><</li>
                     <li class="btn btn-dark operacion draggable draggable3"><=</li>
                     <li class="btn btn-dark operacion draggable draggable3">></li>
                     <li class="btn btn-dark operacion draggable draggable3">>=</li>
                     <li class="btn btn-dark operacion draggable draggable3">=</li>
+                    <li class="btn btn-dark operacion draggable draggable3">!=</li>
                     <li class="btn btn-dark operacion draggable draggable4">Y</li>
                     <li class="btn btn-dark operacion draggable draggable4">O</li>
                 </ul>
