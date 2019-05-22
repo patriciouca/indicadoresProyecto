@@ -149,7 +149,6 @@
                             if(tam==2)
                             {
                                 metidowhere.push(arraytemporal);
-                                console.log(metidowhere);
                                 arraytemporal=[];
 
                                 logicoWhere=true;
@@ -162,6 +161,8 @@
                 }
 
                 $("#filtrosCampo").val(metidowhere);
+
+                console.log(arraytemporal,metidowhere);
 
         };
 
@@ -178,7 +179,7 @@
                         if(elemento1)
                         {
                             elemento1=false;
-                            metido1.push("^."+metido1);
+                            metido1.push("^."+metido);
                             if($( this ).html()=="Eje X")
                                 $( this ).html(metido);
                             else
@@ -220,7 +221,7 @@
                     var hemetido1=$(ui.draggable)[0].innerHTML;
                     var textoOperacion1=$(ui.draggable)[0].innerHTML;
                     var esElemento1=false;
-                    console.log("hemetido "+hemetido1);
+
                     var clase1=$(ui.draggable)[0].className;
                     if(clase1.indexOf("draggable1")!=-1)
                         esElemento1=true;
@@ -268,14 +269,11 @@
                             elemento1=false;
                             var tabla=$($($($(ui.draggable).get(0).closest('div').parentNode).get(0)).find($('h3')).get(0)).text();
                             tabla=tabla.trim();
-                            console.log("esElemento")
                         }
                         else if(!esElemento1 && !elemento1 && !incontar1){
                             predicado1=true;
                             elemento1=true;
-                            if(textoOperacion1==")"){
-                                console.log("a");
-                            }
+
                         }
                         else if(hemetido1!="borrar"){
                             predicado1=false;
@@ -342,7 +340,7 @@
                         esElemento2=true;
                     if(esElemento2)
                         hemetido2=$(hemetido2)[0].innerHTML;
-                    console.log(hemetido2);
+
                     hemetido2=hemetido2.trim();
                     if(hemetido2 == "contar" && !incontar2)
                     {
@@ -368,7 +366,7 @@
 
                         if(inparentesis2 && !elemento2)
                         {
-                            console.log("Depurar "+predicado2);
+
                             predicado2=true;
                             elemento2=false;
                             inparentesis2=false;
@@ -501,7 +499,11 @@
 
                 $("#campos1").val(metido1);
                 $("#campos2").val(metido2);
+
+
             }
+            console.log("METDIDO 1 "+metido1);
+            console.log("METDIDO 2 "+metido2);
 
         };
 
@@ -585,7 +587,7 @@
                     if(value=="")
                     {
                         var i = accesibles1.indexOf(index);
-                        console.log(value+" "+i);
+
                         if (i == -1) {
                             accesibles1.push(index);
                             var o = accesibles.indexOf(index);
@@ -603,7 +605,7 @@
                         if(value=="")
                         {
                             var i = accesibles2.indexOf(index);
-                            console.log(value+" "+i);
+
                             if (i == -1) {
                                 accesibles2.push(index);
                                 var o = accesibles.indexOf(index);
@@ -615,7 +617,6 @@
                     });
                 });
             }
-            imprimirAce();
             revisar();
         }
         function poner(cual,pongo) {
@@ -655,7 +656,6 @@
                     accesibles.splice(index,1);
                 }
             }
-            imprimirAce();
             revisar();
         }
         function imprimirAce(){
