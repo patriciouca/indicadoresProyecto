@@ -193,20 +193,22 @@
     border-top:5px outset #005b96;
 }
 
-.btn{
-    margin-left: 5%;
-    line-height: 70px;
-}
-
 .btn.btn-primary{
     background-color: 	#005b96;
-
+    margin-left: 5%;
+    line-height: 70px;
 }
 
 .btn.btn-primary:hover{
     background-color: 	#03396c;
     margin-left:5%;
 }
+
+.btn.btn-secondary{
+    margin-left: 5%;
+    line-height: 70px;
+}
+
 
 .btn.btn-dark{
     margin-left: 5%;

@@ -76,7 +76,15 @@
                         {
                             if($(arrastrado).hasClass("draggable1") || $(arrastrado).hasClass("draggable5"))
                             {
-                                evaluar=true;
+                                meto=$($(arrastrado).find("input")[0]).val();
+                                if(meto!="")
+                                {
+                                    evaluar=true;
+                                }
+                                else{
+                                    evaluar=false;
+                                    alert("El campo multivalor no puede estar vacío");
+                                }
                             }
                             else
                             {
@@ -159,37 +167,44 @@
 
             if(multivalor){
                 var metido=$(arrastrado.find("input")[0]).val();
-                if($( this ).is("#droppable1"))
+                if(metido!="")
                 {
-                    if(elemento1)
+                    if($( this ).is("#droppable1"))
                     {
-                        elemento1=false;
-                        metido1.push("^."+metido1);
-                        if($( this ).html()=="Eje X")
-                            $( this ).html(metido);
-                        else
-                            $( this ).append(metido);
+                        if(elemento1)
+                        {
+                            elemento1=false;
+                            metido1.push("^."+metido1);
+                            if($( this ).html()=="Eje X")
+                                $( this ).html(metido);
+                            else
+                                $( this ).append(metido);
+                        }
+                        else{
+                            alert("Hay que introducir un elemento en el eje x");
+                        }
                     }
                     else{
-                        alert("Hay que introducir un elemento en el eje x");
+
+                        if(elemento2)
+                        {
+                            elemento2=false;
+                            metido2.push("^."+metido);
+                            if($( this ).html()=="Eje Y")
+                                $( this ).html(metido);
+                            else
+                                $( this ).append(metido);
+                        }
+                        else{
+                            alert("Hay que introducir un elemento en el eje y");
+                        }
+
                     }
                 }
                 else{
-
-                    if(elemento2)
-                    {
-                        elemento2=false;
-                        metido2.push("^."+metido);
-                        if($( this ).html()=="Eje Y")
-                            $( this ).html(metido);
-                        else
-                            $( this ).append(metido);
-                    }
-                    else{
-                        alert("Hay que introducir un elemento en el eje y");
-                    }
-
+                    alert("El campo multivalor no puede ser vacío");
                 }
+
             }
             else if(arrastrado.hasClass("draggable3")){
                 alert("Los comparadores son para los filtros");
