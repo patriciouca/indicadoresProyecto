@@ -38,6 +38,10 @@
         var inparentesis1=false,inparentesis2=false;
         var borrar1=false,borrar2=false;
         var logicoWhere=false;
+        var accesibles=[];
+        var accesibles1=[];
+        var accesibles2=[];
+
         var dropfuncionW=function( event, ui ) {
             var arrastrado=$(ui.draggable).get(0);
             var multivalor=$(arrastrado).hasClass("draggable5");
@@ -500,6 +504,7 @@
             }
 
         };
+
         var dragablefuncionHelper=function(){
             $copy = $(this).clone();
             return $copy;};
@@ -544,7 +549,35 @@
                     $(texto).show();
                 }
             });
+
+            revisarBuscar();
+
         }
+
+        function revisarBuscar() {
+            var quedan=[];
+
+            accesibles.forEach(function(element) {
+                var incluye=element.includes($( "#buscar" ).val());
+                if(incluye)
+                    quedan.push(element);
+            });
+
+            var ac=$("#accordion").children();
+            $.each(ac, function(index, value) {
+                var texto=$(value).find("h3")[0];
+                var textoplano=$(texto).text().trim();
+                var incluye=quedan.includes(textoplano);
+                if(incluye)
+                {
+                    $(texto).show();
+                }
+                else{
+                    $(texto).hide();
+                }
+            });
+        }
+
         function devolver(cual,pongo) {
             var fila=grafo[pongo];
             if(cual==1) {
@@ -638,9 +671,7 @@
             accesibles1=accesibles.slice(0);
             accesibles2=accesibles.slice(0);
         }
-        var accesibles=[];
-        var accesibles1=[];
-        var accesibles2=[];
+
         $(document).ready(function() {
             inicializarGrafo();
             $('#formulario').submit(function (evt) {
@@ -663,6 +694,13 @@
                 }
                 if(metido1.length>0 && metido2.length>0 && !elemento1 && !elemento2)
                     $(this)[0].submit();
+            });
+
+            $( "#buscar" ).keyup(function() {
+
+                revisarBuscar();
+
+
             });
 
             $( "#accordion" ).accordion({
@@ -694,6 +732,9 @@
 <div class="flex-center position-ref full-height">
 
     <div class="content">
+        <div>
+            Buscar <input id="buscar" type="text">
+        </div>
         <div id="accordion" class="contenedor">
             @foreach($tablas as $tabla)
                 <div class="group">
