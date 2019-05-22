@@ -728,8 +728,8 @@
                     <li class="btn btn-dark operacion draggable draggable3">>=</li>
                     <li class="btn btn-dark operacion draggable draggable3">=</li>
                     <li class="btn btn-dark operacion draggable draggable3">!=</li>
-                    <li class="btn btn-dark operacion draggable draggable4">Y</li>
-                    <li class="btn btn-dark operacion draggable draggable4">O</li>
+                    <li class="btn btn-secondary operacion draggable draggable4">Y</li>
+                    <li class="btn btn-secondary operacion draggable draggable4">O</li>
                 </ul>
 
 
