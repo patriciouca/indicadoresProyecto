@@ -227,6 +227,23 @@
                     if(esElemento1)
                         hemetido1=$(hemetido1)[0].innerHTML;
                     hemetido1=hemetido1.trim();
+                    for(var i=0;i<metido1.length;i++){
+                        console.log("metido "+i+" "+metido1[i]);
+                    }
+                    if(hemetido1=="borrar" && (metido1[metido1.length-1] =="(" || metido1[metido1.length-1] ==")") ){
+                        if(metido1[metido1.length-1]=="("){
+                            inparentesis1=false;
+
+                        }
+                        if(metido1[metido1.length-1]==")"){
+                            inparentesis1=true;
+                        }
+
+                        borrado1=metido1[metido1.length-1];
+                        metido1.pop();
+                        borrar1=true;
+
+                    }else{
                     if(hemetido1=="contar")
                         hemetido1+="(";
                     if(hemetido1 == "contar(" && !incontar1)
@@ -255,6 +272,7 @@
                             predicado1=true;
                             elemento1=false;
                             inparentesis1=false;
+                            metido1.push(")");
                         }
                         else{
                             alert("Respeta la norma de los parentesis en el eje X");
@@ -295,6 +313,7 @@
                             metido1.pop();
                         }
                     }
+
                     if(predicado1 && hemetido1!="borrar")
                     {
                         if(!elemento1)
@@ -331,7 +350,8 @@
                             predicado1=true;
                         }
                     }
-                }
+                }}
+
                 else{
                     var predicado2=true;
                     var hemetido2=$(ui.draggable)[0].innerHTML;
@@ -344,6 +364,20 @@
                         hemetido2=$(hemetido2)[0].innerHTML;
                     console.log(hemetido2);
                     hemetido2=hemetido2.trim();
+                    if(hemetido2=="borrar" && (metido2[metido2.length-1] =="(" || metido2[metido2.length-1] ==")") ){
+                        if(metido2[metido2.length-1]=="("){
+                            inparentesis2=false;
+
+                        }
+                        if(metido2[metido2.length-1]==")"){
+                            inparentesis2=true;
+                        }
+
+                        borrado2=metido2[metido2.length-1];
+                        metido2.pop();
+                        borrar2=true;
+
+                    }else{
                     if(hemetido2 == "contar" && !incontar2)
                     {
                         if(elemento2 || $( this ).html()=="Eje Y")
@@ -372,6 +406,7 @@
                             predicado2=true;
                             elemento2=false;
                             inparentesis2=false;
+                            metido2.push(")")
                         }
                         else{
                             alert("Respeta la norma de los parentesis en el eje Y");
@@ -445,7 +480,7 @@
                             predicado2=true;
                         }
                     }
-                }
+                }}
 
                 if(predicado1 && hemetido1!="borrar")
                 {
