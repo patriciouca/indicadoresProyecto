@@ -340,7 +340,7 @@ use Illuminate\Http\Request;
     var ticksYD=0;
 
     var nminX=0;
-    var nmaxX=20;
+    var nmaxX=5;
     var ticksX=5;
     var ticksXD=0;
 
@@ -462,8 +462,41 @@ use Illuminate\Http\Request;
     function carga() {
         var i = 0;
         var d1=[];
+
+        var maxX;
+        var minX;
+
         var ejex = <?php print_r($ejex) ?>;
         var ejey = <?php print_r($ejey) ?>;
+
+        ejex[0] = ejex[0].slice(0,ejex[0].length-1);
+        ejey[0] = ejey[0].slice(0,ejey[0].length-1);
+
+        var  myDate = new Array();
+
+        for(int = 0;i<ejex[0].length;i++){
+            myDate.push(new Date(ejex[0][i].replace(" ","T")));
+        }
+
+        if (!isNaN(myDate[0].getMonth())) {
+            console.log("SI HAY");
+            minX = myDate[0];
+            maxX = myDate[myDate.length-1];
+        }
+        else
+        {
+             minX =  Math.min.apply(null,ejex[0]);
+             maxX =  Math.max.apply(null,ejex[0]);
+        }
+
+        var minY = Math.min.apply(null,ejey[0]);
+        var maxY = Math.max.apply(null,ejey[0]);
+
+        nminX = minX;
+        nmaxX = maxX;
+
+        nminY = minY;
+        nmaxY = maxY;
 
            for(i = 0; i<{{$numX}}-1;i++){
                 var aux = [ejex[0][i],ejey[0][i]];
@@ -487,13 +520,13 @@ use Illuminate\Http\Request;
                     showTicks: true,
                     gridLines: true,
                     autoScale: "none",
-                    ticks: ticksX,
-                    min: nminX,
-                    max: nmaxX,
-                    tickDecimals: ticksXD
+                    //ticks: ticksX,
+                    min: (new Date(myDate[0])).getTime(),
+                    max: (new Date(myDate[myDate.length-1])).getTime(),
+                   // tickDecimals: ticksXD,
                 },
                 yaxis: {
-                    autoScale: "none",
+                    autoScale: "auto",
                     ticks: ticksY,
                     min: nminY,
                     max: nmaxY,
