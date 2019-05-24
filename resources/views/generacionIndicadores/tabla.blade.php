@@ -13,7 +13,7 @@
                 integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
                 crossorigin="anonymous"></script>
 
-        <title>Generador de Indicadores Automáticos</title>
+        <<title>Generador de Indicadores Automáticos</title>
         <link rel="shortcut icon" href={{URL::asset('img/logo1.ico')}}/>
 
         <!-- Fonts -->
@@ -22,35 +22,8 @@
 
         <link rel="stylesheet" href="{{ URL::asset('css/estiloprincipal.css') }}?{{date('l jS \of F Y h:i:s A')}}" type="text/css" media="all" />
 
-
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" type="text/css" media="all" />
-
-        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.print.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.flash.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-        <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
-
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js">
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
-
-        <link rel="stylesheet" href="{{ URL::asset('css/estiloprincipal.css') }}?{{date('l jS \of F Y h:i:s A')}}" type="text/css" media="all" />
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.6/datatables.min.css"/>
-
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" type="text/css" media="all" />
-
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
@@ -62,14 +35,13 @@
         <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
         <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
         <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
-
 
         <script>
             $(document).ready(function() {
                 var table = $('#tabla1').DataTable( {
-                    dom: 'lftBipr',
+                    dom: 'Bfrtip',
 
-                        buttons: [
+                        buttons: ['copy','excel','pdf','print',
                             {
                                 text: 'Generar gráfica',
                                 action: function(){document.myform.submit();}
@@ -99,14 +71,20 @@
             <div class="contenidotablas">
                 <form name = "myform" method="POST" style="display: inline" action="{{ url("/generacionGrafica")}}">
                     {{csrf_field()}}
-                    <div class="botones">
+                    <div class="botones"></div>
                     <input id="consulta" type="text" value="{{$consulta}}" disabled>
                     <input hidden id="ejex" name="ejex" type="text">
-                    <input hidden id="ejey" name = "ejey" type="text">></div>
+                    <input hidden id="ejey" name = "ejey" type="text">
                 </form>
                 <div class="botones"></div>
 
+
                 <table id="tabla1" class="table-striped  table-hover table">
+
+                        <div class="botones"></div>
+
+
+
                     <thead>
                         <tr>
                             @foreach($tablas[0] as $key=>$tam)
@@ -120,9 +98,9 @@
                             <tr>
                             @foreach($tabla as $tam)
                                     <td>{{$tam}}
-                                        <script>
-                                            funcion('{{$tam}}');
-                                        </script></td>
+                                        </td><script>
+                                        funcion('{{$tam}}');
+                                    </script>
                             @endforeach
                             </tr>
                         @endforeach
