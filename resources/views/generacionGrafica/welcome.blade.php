@@ -32,7 +32,10 @@ use Illuminate\Http\Request;
         <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.selection.js"></script>
         <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.composeImages.js"></script>
         <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.flot.legend.js"></script>
-
+        <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="/js/flot/jquery.flot.js"></script>
+        <script type="text/javascript" src="/js/flot/jquery.flot.time.js"></script>
+        <script type="text/javascript" src="/js/flot/jquery.flot.axislabels.js"></script>
 
 
             <title>Generador de Indicadores Automático</title>
@@ -480,29 +483,34 @@ use Illuminate\Http\Request;
             myDate.push(new Date(ejex[0][i].replace(" ","T")));
         }
 
-        if (!isNaN(myDate[0].getMonth())) {
-            console.log("SI HAY");
-            minX = myDate[0];
-            maxX = myDate[myDate.length-1];
-        }
-        else
-        {
-             minX =  Math.min.apply(null,ejex[0]);
-             maxX =  Math.max.apply(null,ejex[0]);
+        var fecha = false;
+
+
+        if (ejex[0][0].includes("-") && ejex[0][0].includes(":")) {
+            fecha = true;
+            nminX = myDate[0];
+            nmaxX = myDate[myDate.length-1];
+
         }
 
         var minY = Math.min.apply(null,ejey[0]);
-        var maxY = Math.max.apply(null,ejey[0]);
+        var maxY = Math.max.apply(null,ejey[ejey.length-1]);
 
-        nminX = minX;
-        nmaxX = maxX;
 
-        nminY = minY;
-        nmaxY = maxY;
+           if(fecha){
+               for(i = 0; i<{{$numX}}-1;i++){
 
-           for(i = 0; i<{{$numX}}-1;i++){
-                var aux = [ejex[0][i],ejey[0][i]];
+                var aux = [myDate[i].getTime(),ejey[0][i]];
                 d1.push(aux);
+           }
+           }else{
+
+               for(i = 0; i<{{$numX}}-1;i++){
+
+                   var aux = [ejex[0][i],ejey[0][i]];
+
+                   d1.push(aux);}
+
            }
 
 
@@ -514,6 +522,7 @@ use Illuminate\Http\Request;
 
             var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
 
+            if(!fecha){
             var  options= {series:{
                 lines: {show: bLines, fill: bFill,fillColor:cL},
                 points: {show: bPoints, fill: bFill,fillColor:cP},
@@ -522,23 +531,51 @@ use Illuminate\Http\Request;
                     showTicks: true,
                     gridLines: true,
                     autoScale: "none",
-                    //ticks: ticksX,
-                    min: (new Date(myDate[0])).getTime(),
-                    max: (new Date(myDate[myDate.length-1])).getTime(),
-                   // tickDecimals: ticksXD,
+                    ticks: ticksX,
+                    min: ejex[0][0],
+                    max: ejex[0][ejex[0].length-1],
+                    tickDecimals: ticksXD,
                 },
                 yaxis: {
-                    autoScale: "auto",
+                    autoScale: "none",
                     ticks: ticksY,
                     min: nminY,
                     max: nmaxY,
                     tickDecimals: ticksYD
                 }
-            };
+            };}else{
+
+                var dayOfWeek = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vier", "Sab"];
+
+                var  options= {series:{
+                        lines: {show: bLines, fill: bFill,fillColor:cL},
+                        points: {show: bPoints, fill: bFill,fillColor:cP},
+                        bars: {show: bBars, fill: bFill,fillColor:cB}},
+                    xaxis:{
+                        showTicks: true,
+                        gridLines: true,
+                        autoScale: "none",
+                        ticks: ticksX,
+                        min: (new Date(myDate[0])).getTime(),
+                        max: (new Date(myDate[myDate.length-1])).getTime(),
+                        tickDecimals: ticksXD,
+                        mode: "time"
+                        //tickFormatter: <- AQUI SE LE DA FORMATO A LAS FECHAS
+                    },
+                    yaxis: {
+                        autoScale: "none",
+                        ticks: ticksY,
+                        min: nminY,
+                        max: nmaxY,
+                        //tickDecimals: ticksYD
+                    }
+                };
+            }
 
             var data=[{label:"Grafica de la consulta",data:d1,color: cLL}];
 
             $.plot("#grafica1",data, options);
+            
 
 
 
