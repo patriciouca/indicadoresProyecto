@@ -8,7 +8,13 @@ use Illuminate\Http\Request;
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.js"></script>
-
+        <script
+                src="https://code.jquery.com/jquery-1.11.3.js"
+                integrity="sha256-IGWuzKD7mwVnNY01LtXxq3L84Tm/RJtNCYBfXZw3Je0="
+                crossorigin="anonymous"></script>
+        <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
         <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.js"></script>
         <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.canvaswrapper.js"></script>
         <script language="javascript" type="text/javascript" src="/indicadoresProyecto/resources/js/graficas/jquery.colorhelpers.js"></script>
@@ -244,28 +250,28 @@ use Illuminate\Http\Request;
     <body>
 
         <div class="flex-center position-ref full-height">
-            <!--@if (Route::has('login'))-->
+           @if (Route::has('login'))
                 <div class="top-right links">
-                    <!--@auth-->
+                    @auth
                         <a href="{{ url('/home') }}">Home</a>
-                   <!-- @else-->
+                   @else
                         <a href="{{ route('login') }}">Login</a>
 
-                        <!--@if (Route::has('register'))-->
+                        @if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
-                        <!--@endif-->
-                   <!-- @endauth-->
+                        @endif
+                   @endauth
                 </div>
-            <!--@endif-->
+            @endif
 
             <div class="content">
-                <div class="title m-b-md">
+                <div class="title m-b-md" id="export">
 
-
-                    <div id="grafica1"  style="width:600px;height:300px">
-
-                    </div>
+                    <button id="btnSave">Exportar a PNG</button>
+                    <div id="grafica1"  style="width:600px;height:300px"></div>
                     <div class="graficas">
+
+                        <div id="img-out"></div>
                     <table class="table">
                         <tr>
                             <td><h6 style ="float:left;margin: 20px">Líneas</h6></td>
@@ -290,7 +296,7 @@ use Illuminate\Http\Request;
                         </tr>
                 </table>
 
-                    <table class="table">
+                    <!--<table class="table">
                         <tr>
                             <td><h6 style ="float:left;margin: 20px">Min</h6></td>
                             <td> <input id = "nMinY" type="number" value="0" style ="float:left;margin: 20px"></td>
@@ -326,7 +332,7 @@ use Illuminate\Http\Request;
                                 <td><h6 style ="float:left;margin: 20px">Digitos</h6></td>
                                 <td> <input id = "ticksXD" type="number" value="0" style ="float:left;margin: 20px"></td>
                             </tr>
-                        </table>
+                        </table>-->
                     </div>
                 </div>
             </div>
@@ -463,6 +469,26 @@ use Illuminate\Http\Request;
         carga();
     });
 
+    $(function() {
+        $("#btnSave").click(function() {
+
+            html2canvas($("#grafica1"), {
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                //document.body.appendChild(canvas);
+
+                // Convert and download as image
+                Canvas2Image.saveAsPNG(canvas);
+                //$("#img-out").append(canvas);
+                // Clean up
+                //document.body.removeChild(canvas);
+            }
+        });
+
+
+        });
+    });
+
 
     function carga() {
         var i = 0;
@@ -512,15 +538,6 @@ use Illuminate\Http\Request;
                    d1.push(aux);}
 
            }
-
-
-
-
-            var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
-
-            // A null signifies separate line segments
-
-            var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
 
             if(!fecha){
             var  options= {series:{
@@ -575,7 +592,6 @@ use Illuminate\Http\Request;
             var data=[{label:"Grafica de la consulta",data:d1,color: cLL}];
 
             $.plot("#grafica1",data, options);
-            
 
 
 
