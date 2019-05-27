@@ -781,15 +781,15 @@
 
                             @foreach($tabla[1] as $campo)
                                 @if(strpos($campo->Type, 'tinyint(1)') !== false)
-                                    <li class="draggable badge badge-secondary draggable1 bool">
+                                    <li class="draggable draggableA badge badge-secondary draggable1 bool">
                                 @elseif(strpos($campo->Type, 'int') !== false || strpos($campo->Type, 'float') !== false || strpos($campo->Type, 'double') !== false)
-                                    <li class="draggable badge badge-secondary draggable1 numero">
+                                    <li class="draggable draggableA badge badge-secondary draggable1 numero">
                                 @elseif(strpos($campo->Type, 'timestamp') !== false)
-                                    <li class="draggable badge badge-secondary draggable1 fecha">
+                                    <li class="draggable draggableA badge badge-secondary draggable1 fecha">
                                 @elseif(strpos($campo->Type, 'enum') !== false)
-                                    <li class="draggable badge badge-secondary draggable1 enum">
+                                    <li class="draggable draggableA badge badge-secondary draggable1 enum">
                                 @else
-                                    <li class="draggable badge badge-secondary draggable1 texto">
+                                    <li class="draggable draggableA badge badge-secondary draggable1 texto">
                                         @endif
                                         <h3>{{$campo->Field}}</h3>
                                         <h5>{{$campo->Type}}</h5>
@@ -808,10 +808,10 @@
                     <li class="btn btn-primary operacion draggable draggable2">-</li>
                     <li class="btn btn-primary operacion draggable draggable2">*</li>
                     <li class="btn btn-primary operacion draggable draggable2">/</li>
-                    <li class="btn btn-primary operacion draggable draggable2">contar</li>
+                    <li class="btn btn-primary operacion draggable draggable2 op">contar</li>
                     <li class="btn btn-primary operacion draggable draggable2">(</li>
                     <li class="btn btn-primary operacion draggable draggable2">)</li>
-                    <li class="btn btn-primary operacion draggable draggable2">borrar</li>
+                    <li class="btn btn-primary operacion draggable draggable2 op">borrar</li>
                     <li class="btn btn-info operacion draggable draggable5"><input id="drag5" type="text"/></li>
                     <li class="btn btn-dark operacion draggable draggable3"><</li>
                     <li class="btn btn-dark operacion draggable draggable3"><=</li>

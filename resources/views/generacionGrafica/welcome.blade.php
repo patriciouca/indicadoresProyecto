@@ -296,6 +296,8 @@ use Illuminate\Http\Request;
                         </tr>
                 </table>
 
+
+
                     <!--<table class="table">
                         <tr>
                             <td><h6 style ="float:left;margin: 20px">Min</h6></td>
@@ -479,12 +481,12 @@ use Illuminate\Http\Request;
 
                 // Convert and download as image
                 Canvas2Image.saveAsPNG(canvas);
-                //$("#img-out").append(canvas);
+
                 // Clean up
                 //document.body.removeChild(canvas);
             }
-        });
 
+            });
 
         });
     });
