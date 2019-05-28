@@ -383,8 +383,9 @@ class GeneracionIndicadores extends Controller
         $sSql = $consultas[0][0];
         $sSqlFrom = $consultas[0][1];
         $sSqlJoin = $consultas[0][2];
-        $sSqlGroup = substr($sSql, 0, strpos($sSql, "\""));
-        //return $sSqlGroup;
+        $sSqlGroup = array();
+        array_push($sSqlGroup,substr($sSql, 0, strpos($sSql, "\"")));
+        $doGroup = false;
         $sSqlWhere = array();
         $nEjes = 2;
 
@@ -394,6 +395,9 @@ class GeneracionIndicadores extends Controller
             array_push($consultas, $this->generarConsulta($sCampos));
 
             $sSql = $sSql . ',' . $consultas[$nEjes-1][0];
+            if($doGroup == false)
+                if(sizeof(end($consultas)[3]) > 0)
+                    $doGroup = true;
 
             $nTablas = sizeof($consultas[$nEjes-1][1]);
             for($i=0; $i<$nTablas; $i++){
@@ -506,13 +510,10 @@ class GeneracionIndicadores extends Controller
             $db->orWhereColumn($whereColumn);
         }
 
-        $db->groupBy($sSqlGroup);
+        if($doGroup)
+            $db->groupBy($sSqlGroup);
 
         $db->select(DB::raw($sSql));
-        /*if(sizeof($sSqlGroup)>0)
-            foreach($sSqlGroup as $agrupar)
-                $db->groupBy($agrupar);*/
-
 
         try {
             $get=$db->get();
