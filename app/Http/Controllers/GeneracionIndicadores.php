@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Session;
 use Illuminate\Database\QueryException;
@@ -340,6 +341,15 @@ class GeneracionIndicadores extends Controller
             return view('errores/welcome')->with("mensaje","Error en la consulta :".$e->getSql());
         }
     }*/
+
+    function guardarIndicador(Request $request){
+        $contents = Storage::get('indicadores.csv');
+        //Storage::disk('local')->put('file.txt', 'hola');
+
+        $excel=Excel::import($contents);
+
+        return $contents;
+    }
 
     function obtenerTablas($sSqlWhere){
         $tablas = array();

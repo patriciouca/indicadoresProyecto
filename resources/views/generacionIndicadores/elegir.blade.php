@@ -42,7 +42,7 @@
 
             <div class="line"></div> <br>
 
-            <h2>Elija la base de datos sobre la que realizar la consula</h2>
+            <h2>Elija la base de datos sobre la que realizar la consulta</h2>
 
             <br><br>
 
