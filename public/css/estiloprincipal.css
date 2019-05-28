@@ -212,6 +212,7 @@
     background-color: 	#005b96;
     margin-left: 5px;
     line-height: 44px;
+    cursor: pointer;
 }
 
 .btn.btn-primary:hover{

@@ -13,7 +13,7 @@
                 integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
                 crossorigin="anonymous"></script>
 
-        <<title>Generador de Indicadores Automáticos</title>
+        <title>Generador de Indicadores Automáticos</title>
         <link rel="shortcut icon" href={{URL::asset('img/logo1.ico')}}/>
 
         <!-- Fonts -->
@@ -48,6 +48,9 @@
                             }
                         ]
                     } );
+                $( ".dt-button" ).each(function( index ) {
+                    $(this).addClass("btn btn-primary");
+                });
             });
         </script>
         <script>
