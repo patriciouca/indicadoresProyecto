@@ -111,7 +111,13 @@
                 </table>
             </div>
 
-            </div> </div>
+            </div>
+        <form method="POST" action="{{ url("generacionIndicador/guardarIndicador")}}">
+            {{csrf_field()}}
+            <input type="submit" value="Guardar">
+        </form>
+        </div>
+
 
 
      </body>
