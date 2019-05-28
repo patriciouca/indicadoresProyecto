@@ -373,7 +373,8 @@ class GeneracionIndicadores extends Controller
         $sSql = $consultas[0][0];
         $sSqlFrom = $consultas[0][1];
         $sSqlJoin = $consultas[0][2];
-        $sSqlGroup = $consultas[0][3];
+        $sSqlGroup = substr($sSql, 0, strpos($sSql, "\""));
+        //return $sSqlGroup;
         $sSqlWhere = array();
         $nEjes = 2;
 
@@ -495,10 +496,12 @@ class GeneracionIndicadores extends Controller
             $db->orWhereColumn($whereColumn);
         }
 
+        $db->groupBy($sSqlGroup);
+
         $db->select(DB::raw($sSql));
-        if(sizeof($sSqlGroup)>0)
+        /*if(sizeof($sSqlGroup)>0)
             foreach($sSqlGroup as $agrupar)
-                $db->groupBy($agrupar);
+                $db->groupBy($agrupar);*/
 
 
         try {
