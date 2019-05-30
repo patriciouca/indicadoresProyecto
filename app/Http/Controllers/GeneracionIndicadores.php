@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\IndicadorExport;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\HeadingRowImport;
 use Session;
 use Illuminate\Database\QueryException;
 
@@ -343,13 +346,70 @@ class GeneracionIndicadores extends Controller
     }*/
 
     function guardarIndicador(Request $request){
-        $contents = Storage::get('indicadores.csv');
-        //Storage::disk('local')->put('file.txt', 'hola');
 
-        $excel=Excel::import($contents);
 
-        return $contents;
+        $nombre=$request['nombre'];
+        $consulta=$request['consulta'];
+
+        $url= $path = storage_path('app/indicadores.csv');
+        $headers=[$nombre,$consulta];
+        $arra = array_map('str_getcsv', file($url));
+
+        return $arra;
+
+        array_push($arra,$headers);
+
+        $csv=$this->array2csv($arra);
+
+        Storage::disk('local')->put('indicadores.csv', $csv);
+
+        return redirect()->action('GeneracionIndicadores@indicadores');
+
     }
+
+    function indicadores(){
+
+        $url= $path = storage_path('app/indicadores.csv');
+        $arra = array_map('str_getcsv', file($url));
+
+        return view('generacionIndicadores/indicadores')->with("indicadores",array_slice($arra,1));
+
+    }
+
+    function array2csv($data, $delimiter = ':', $enclosure = '"', $escape_char = "\\")
+    {
+        $f = fopen('php://memory', 'r+');
+        foreach ($data as $item) {
+            fputcsv($f, $item, $delimiter, $enclosure, $escape_char);
+        }
+        rewind($f);
+        $contenido=stream_get_contents($f);
+        fclose($f);
+        return $contenido;
+    }
+
+    function csvToArray($filename = '', $delimiter = ':')
+    {
+        if (!file_exists($filename) || !is_readable($filename))
+            return false;
+
+        $header = null;
+        $data = array();
+        if (($handle = fopen($filename, 'r')) !== false)
+        {
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
+            {
+                if (!$header)
+                    $header = $row;
+                else
+                    $data[] = array_combine($header, $row);
+            }
+            fclose($handle);
+        }
+
+        return $data;
+    }
+
 
     function obtenerTablas($sSqlWhere){
         $tablas = array();

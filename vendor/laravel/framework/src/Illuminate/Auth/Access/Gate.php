@@ -417,6 +417,8 @@ class Gate implements GateContract
      *
      * @param  callable  $callback
      * @return bool
+     *
+     * @throws \ReflectionException
      */
     protected function callbackAllowsGuests($callback)
     {
@@ -462,14 +464,12 @@ class Gate implements GateContract
      */
     protected function callBeforeCallbacks($user, $ability, array $arguments)
     {
-        $arguments = array_merge([$user, $ability], [$arguments]);
-
         foreach ($this->beforeCallbacks as $before) {
             if (! $this->canBeCalledWithUser($user, $before)) {
                 continue;
             }
 
-            if (! is_null($result = $before(...$arguments))) {
+            if (! is_null($result = $before($user, $ability, $arguments))) {
                 return $result;
             }
         }
@@ -529,7 +529,6 @@ class Gate implements GateContract
         }
 
         return function () {
-            return null;
         };
     }
 
@@ -601,6 +600,8 @@ class Gate implements GateContract
      *
      * @param  object|string  $class
      * @return mixed
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function resolvePolicy($class)
     {
@@ -655,7 +656,7 @@ class Gate implements GateContract
     protected function callPolicyBefore($policy, $user, $ability, $arguments)
     {
         if (! method_exists($policy, 'before')) {
-            return null;
+            return;
         }
 
         if ($this->canBeCalledWithUser($user, $policy, 'before')) {
@@ -682,7 +683,7 @@ class Gate implements GateContract
         }
 
         if (! is_callable([$policy, $method])) {
-            return null;
+            return;
         }
 
         if ($this->canBeCalledWithUser($user, $policy, $method)) {

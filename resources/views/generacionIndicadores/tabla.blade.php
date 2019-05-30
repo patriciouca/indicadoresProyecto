@@ -114,6 +114,9 @@
             </div>
         <form method="POST" action="{{ url("generacionIndicador/guardarIndicador")}}">
             {{csrf_field()}}
+
+            <input name="consulta" type="text" value="{{$consulta}}" hidden>
+            <input type="text" name="nombre">
             <input type="submit" value="Guardar">
         </form>
         </div>

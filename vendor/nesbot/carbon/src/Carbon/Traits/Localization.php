@@ -83,6 +83,8 @@ trait Localization
     }
 
     /**
+     * Return default humanDiff() options (merged flags as integer).
+     *
      * @return int
      */
     public static function getHumanDiffOptions()
@@ -202,7 +204,7 @@ trait Localization
     {
         $message = static::getTranslationMessageWith($translator, $key, null, $key);
         if ($message instanceof Closure) {
-            return $message(...array_values($parameters));
+            return (string) $message(...array_values($parameters));
         }
 
         if ($number !== null) {
@@ -212,7 +214,7 @@ trait Localization
             $parameters[':count'] = $parameters['%count%'];
         }
 
-        return $translator->transChoice($key, $number, $parameters);
+        return (string) $translator->transChoice($key, $number, $parameters);
     }
 
     /**
@@ -327,7 +329,7 @@ trait Localization
 
             foreach ($fromTranslations as $index => $word) {
                 if (preg_match("/^$word\$/i", $chunk)) {
-                    return $toTranslations[$index];
+                    return $toTranslations[$index] ?? '';
                 }
             }
 

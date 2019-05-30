@@ -21,6 +21,8 @@ Route::get('/', function () {
 
 Route::get('/generacionIndicador', 'GeneracionIndicadores@elegirBd');
 
+Route::get('/generacionIndicador/indicadores', 'GeneracionIndicadores@indicadores');
+
 Route::get('/generacionIndicador/elegir', 'GeneracionIndicadores@index');
 
 Route::post('/generacionGrafica','Graficas@load');

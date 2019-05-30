@@ -179,6 +179,8 @@ class CarbonInterval extends DateInterval
     }
 
     /**
+     * Set default cascading factors for ->cascade() method.
+     *
      * @param array $cascadeFactors
      */
     public static function setCascadeFactors(array $cascadeFactors)
@@ -1099,6 +1101,8 @@ class CarbonInterval extends DateInterval
                 $unit = $short ? $diffIntervalData['unitShort'] : $diffIntervalData['unit'];
                 $count = $diffIntervalData['value'];
                 $interval[] = $transChoice($short, $diffIntervalData);
+            } elseif ($options & CarbonInterface::SEQUENTIAL_PARTS_ONLY && count($interval) > 0) {
+                break;
             }
 
             // break the loop after we get the required number of parts in array

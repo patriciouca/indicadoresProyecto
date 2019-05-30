@@ -99,12 +99,23 @@ class Kernel implements KernelContract
     protected function defineConsoleSchedule()
     {
         $this->app->singleton(Schedule::class, function ($app) {
-            return new Schedule($this->scheduleTimezone());
+            return (new Schedule($this->scheduleTimezone()))
+                    ->useCache($this->scheduleCache());
         });
 
         $schedule = $this->app->make(Schedule::class);
 
         $this->schedule($schedule);
+    }
+
+    /**
+     * Get the name of the cache store that should manage scheduling mutexes.
+     *
+     * @return string
+     */
+    protected function scheduleCache()
+    {
+        return $_ENV['SCHEDULE_CACHE_DRIVER'] ?? null;
     }
 
     /**
@@ -224,7 +235,7 @@ class Kernel implements KernelContract
             $command = $namespace.str_replace(
                 ['/', '.php'],
                 ['\\', ''],
-                Str::after($command->getPathname(), app_path().DIRECTORY_SEPARATOR)
+                Str::after($command->getPathname(), realpath(app_path()).DIRECTORY_SEPARATOR)
             );
 
             if (is_subclass_of($command, Command::class) &&
