@@ -57,6 +57,8 @@
             @foreach($indicadores as $key=>$tabla)
                 <tr>
                     <?php
+
+
                     $arraynuevo=explode( ':', $tabla[0] );
                     $consulta=$arraynuevo[1]." , ".$tabla[1];
                     echo "<td>$arraynuevo[0]</td>";
@@ -80,7 +82,7 @@
         </table>
     </div>
     <a href="{{ url("generacionIndicador/elegir")}}" class="btn btn-success">Realizar nueva consulta</a>
-
+    <a href="{{ url("generacionIndicador/indicadores")}}" class="btn btn-primary">Indicadores</a>
 
 </div>
 
