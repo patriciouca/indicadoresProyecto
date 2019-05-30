@@ -353,14 +353,11 @@ class GeneracionIndicadores extends Controller
 
         $url= $path = storage_path('app/indicadores.csv');
         $headers=[$nombre,$consulta];
-        $arra = array_map('str_getcsv', file($url));
-
-        return $arra;
+        $arra = array_map(function($v){return str_getcsv($v, ":");}, file($url));
 
         array_push($arra,$headers);
 
-        $csv=$this->array2csv($arra);
-
+        $csv=$this->generateCsv($arra);
         Storage::disk('local')->put('indicadores.csv', $csv);
 
         return redirect()->action('GeneracionIndicadores@indicadores');
@@ -374,6 +371,20 @@ class GeneracionIndicadores extends Controller
 
         return view('generacionIndicadores/indicadores')->with("indicadores",array_slice($arra,1));
 
+    }
+
+    function generateCsv($data, $delimiter = ':', $enclosure = '"') {
+        $handle = fopen('php://temp', 'r+');
+        $contents="";
+        foreach ($data as $line) {
+            fputcsv($handle, $line, $delimiter, $enclosure);
+        }
+        rewind($handle);
+        while (!feof($handle)) {
+            $contents .= fread($handle, 8192);
+        }
+        fclose($handle);
+        return $contents;
     }
 
     function array2csv($data, $delimiter = ':', $enclosure = '"', $escape_char = "\\")
