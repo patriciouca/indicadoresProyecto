@@ -553,33 +553,40 @@ class GeneracionIndicadores extends Controller
             }
         }
 
-
+        $stringWhere = "";
         if(sizeof($sSqlWhere) > 0){
             $where = array();
             $whereColumn = array();
             foreach ($sSqlWhere as $filtro){
                 if($filtro[0] == '|'){
                     $db->orWhere($where);
-                    $db->orWhereColumn($whereColumn);
+                    $db->WhereColumn($whereColumn);
                     $where = array();
                     $whereColumn = array();
+                    $stringWhere = $stringWhere . " OR ";
 
                 }elseif($filtro[0] != '&'){
                     if($filtro[0][0]!='^' && $filtro[2][0]!='^'){
                         array_push($whereColumn, $filtro);
+                        $stringWhere = $stringWhere . $filtro[0] . $filtro[1] . $filtro[2];
                     } else {
                         if($filtro[0][0] == '^'){
                             $filtro[0] = substr($filtro[0], 1);
+                            $stringWhere = $stringWhere . "\"" . $filtro[0] . "\"" . $filtro[1] . $filtro[2];
                         }else{
                             $filtro[2] = substr($filtro[2], 1);
+                            $stringWhere = $stringWhere . $filtro[0] . $filtro[1] . "\"" . $filtro[2] . "\"";
                         }
                         array_push($where, $filtro);
                     }
+
+                }else{
+                    $stringWhere = $stringWhere . " AND ";
                 }
             }
 
             $db->orWhere($where);
-            $db->orWhereColumn($whereColumn);
+            $db->WhereColumn($whereColumn);
         }
 
         if($doGroup)
@@ -589,10 +596,15 @@ class GeneracionIndicadores extends Controller
 
         try {
             $get=$db->get();
+            $sqlString = $db->toSql();
+            if(strpos($sqlString, 'where') != false){
+                $sqlString = substr($sqlString, 0, strpos($sqlString, 'where'));
+                $sqlString = $sqlString . "where " . $stringWhere;
+            }
             if(sizeof($get) == 0)
                 return view('errores/welcome')->with("mensaje","La consulta realizada no obtiene ningun dato");
             else
-                return view('generacionIndicadores/tabla')->with('tablas',  $get)->with('consulta', $db->toSql());
+                return view('generacionIndicadores/tabla')->with('tablas',  $get)->with('consulta', $sqlString);
         } catch (QueryException $e) {
             return view('errores/welcome')->with("mensaje","Error en la consulta :".$e->getSql());
         }
