@@ -57,11 +57,10 @@
                 <tr>
                     <?php
                     $arraynuevo=explode( ':', $tabla[0] );
+                    echo "<td>$arraynuevo[0]</td>";
+                    echo "<td>$arraynuevo[1]";
+                    echo "$tabla[1]</td0>";
                     ?>
-                        @foreach($arraynuevo as $key=>$a)
-                            <td>{{$a}}</td>
-                        @endforeach
-
 
                 </tr>
             @endforeach

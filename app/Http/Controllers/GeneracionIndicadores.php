@@ -357,7 +357,8 @@ class GeneracionIndicadores extends Controller
 
         array_push($arra,$headers);
 
-        $csv=$this->generateCsv($arra);
+
+        $csv=$this->array2csv($arra);
         Storage::disk('local')->put('indicadores.csv', $csv);
 
         return redirect()->action('GeneracionIndicadores@indicadores');
