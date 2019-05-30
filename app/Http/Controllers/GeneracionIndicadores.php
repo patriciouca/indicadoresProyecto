@@ -370,7 +370,7 @@ class GeneracionIndicadores extends Controller
         $url= $path = storage_path('app/indicadores.csv');
         $arra = array_map('str_getcsv', file($url));
 
-        return view('generacionIndicadores/indicadores')->with("indicadores",array_slice($arra,1));
+        return view('generacionIndicadores/indicadores')->with("indicadores",$arra);
 
     }
 

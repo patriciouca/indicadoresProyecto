@@ -1,2 +1,1 @@
-clientes:"select cliente.cif""cliente.cif"",cliente.nombre""cliente.nombre"" from `cliente`"
 Clientela:"select cliente.codigo""cliente.codigo"",cliente.cif""cliente.cif"" from `cliente`"
