@@ -614,4 +614,13 @@ class GeneracionIndicadores extends Controller
         return redirect()->action('GeneracionIndicadores@index');
     }
 
+    public function tablaConConsulta(Request $request)
+    {
+
+        $consulta=$request['consulta'];
+        $results = DB::select($consulta);
+
+        return view('generacionIndicadores/tabla')->with('tablas',  $results)->with('consulta',$consulta);
+    }
+
 }

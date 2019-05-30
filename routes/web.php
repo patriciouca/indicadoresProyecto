@@ -25,6 +25,8 @@ Route::get('/generacionIndicador/indicadores', 'GeneracionIndicadores@indicadore
 
 Route::get('/generacionIndicador/elegir', 'GeneracionIndicadores@index');
 
+Route::post('/generacionIndicador/conConsulta','GeneracionIndicadores@tablaConConsulta');
+
 Route::post('/generacionGrafica','Graficas@load');
 
 Route::post('/generacionIndicador/setBd','GeneracionIndicadores@setBd');

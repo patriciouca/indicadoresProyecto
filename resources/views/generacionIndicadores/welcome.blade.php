@@ -839,7 +839,7 @@
                     <input hidden id="campos2" type="text" name="campos2">
                     <input hidden id="filtrosCampo" type="text" name="filtro">
                 </form>
-                <button hidden type="button" class="btn btn-primary">Guardar</button>
+                <a href="{{ url("generacionIndicador/indicadores")}}" class="btn btn-primary">Indicadores</a>
 
             </div>
 

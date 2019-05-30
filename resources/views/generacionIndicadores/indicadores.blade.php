@@ -49,6 +49,7 @@
             <tr>
                 <td>Nombre</td>
                 <td>Consulta</td>
+                <td>Realizar consulta</td>
             </tr>
             </thead>
             <tbody>
@@ -57,13 +58,24 @@
                 <tr>
                     <?php
                     $arraynuevo=explode( ':', $tabla[0] );
-                    $consulta=$arraynuevo[1]." ".$tabla[1];
+                    $consulta=$arraynuevo[1]." , ".$tabla[1];
                     echo "<td>$arraynuevo[0]</td>";
                     echo "<td>$consulta</td>";
+                    echo "<td><form method=POST action=".url('/generacionIndicador/conConsulta').">";
+                    $consultanueva=str_replace('""',"'",$consulta);
+                    echo "<input hidden type='text' name='consulta' value=$consultanueva'>";
+
+                    ?>
+
+                        {{csrf_field()}}
+
+                    <?php
+                        echo "<input class='btn btn-primary' value='Realizar consulta' type=submit></form></td>";
                     ?>
 
                 </tr>
             @endforeach
+
             </tbody>
         </table>
     </div>

@@ -117,8 +117,10 @@
 
             <input name="consulta" type="text" value="{{$consulta}}" hidden>
             <input type="text" name="nombre">
-            <input type="submit" value="Guardar">
+            <input type="submit" class="btn-primary btn" value="Guardar">
         </form>
+
+        <a href="{{ url("generacionIndicador/elegir")}}" class="btn btn-success">Realizar nueva consulta</a>
         </div>
 
 
