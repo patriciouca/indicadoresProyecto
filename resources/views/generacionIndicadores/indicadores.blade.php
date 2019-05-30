@@ -57,9 +57,9 @@
                 <tr>
                     <?php
                     $arraynuevo=explode( ':', $tabla[0] );
+                    $consulta=$arraynuevo[1]." ".$tabla[1];
                     echo "<td>$arraynuevo[0]</td>";
-                    echo "<td>$arraynuevo[1]";
-                    echo "$tabla[1]</td0>";
+                    echo "<td>$consulta</td>";
                     ?>
 
                 </tr>
