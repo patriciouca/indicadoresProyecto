@@ -79,6 +79,8 @@
             </tbody>
         </table>
     </div>
+    <a href="{{ url("generacionIndicador/elegir")}}" class="btn btn-success">Realizar nueva consulta</a>
+
 
 </div>
 
