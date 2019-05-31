@@ -1,2 +1,4 @@
 Clientela:"select cliente.codigo""cliente.codigo"",cliente.cif""cliente.cif"" from `cliente`"
 "Averias naturaleza":"select tipologia.tipologia""tipologia.tipologia"",count(tipologia.naturaleza)""count(tipologia.naturaleza)"" from `tipologia` group by `tipologia`.`tipologia`"
+"Laboratorios ":"select laboratorio.nombre""laboratorio.nombre"",laboratorio.direccion""laboratorio.direccion"" from `laboratorio`"
+Clientes:"select cliente.cif""cliente.cif"",cliente.fax""cliente.fax"" from `cliente`"

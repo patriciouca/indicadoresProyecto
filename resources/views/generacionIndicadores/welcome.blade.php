@@ -711,23 +711,57 @@
             inicializarGrafo();
             $('#formulario').submit(function (evt) {
                 evt.preventDefault();
+                var predicado=true;
+
                 if(metido1.length==0 && metido2.length==0)
+                {
                     alert("El eje X e Y está vacio");
+                    predicado=false;
+                }
+
                 else{
                     if(metido1.length==0)
+                    {
                         alert("El eje X está vacio");
+                        predicado=false;
+                    }
+
                     if(metido2.length==0)
+                    {
                         alert("El eje y está vacio");
+                        predicado=false;
+                    }
+
                 }
                 if(elemento1 && elemento2)
+                {
                     alert("El eje X e Y deben acabar en un elemento");
+                    predicado=false;
+                }
+
                 else{
                     if(elemento1)
+                    {
                         alert("El eje X deben acabar en un elemento");
+                        predicado=false;
+
+                    }
+
                     if(elemento2)
+                    {
                         alert("El eje Y deben acabar en un elemento");
+                        predicado=false;
+                    }
+
                 }
-                if(metido1.length>0 && metido2.length>0 && !elemento1 && !elemento2)
+
+                if(arraytemporal.length !=0)
+                {
+                    alert("Recuerda acabar los filtros");
+                    predicado=false;
+                }
+
+                if(predicado)
                     $(this)[0].submit();
             });
 

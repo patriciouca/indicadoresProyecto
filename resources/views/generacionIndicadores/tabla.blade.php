@@ -38,6 +38,21 @@
 
         <script>
             $(document).ready(function() {
+
+                $('#guardarI').submit(function (evt) {
+                    evt.preventDefault();
+                    var predicado=true;
+                    if($('#nombreGuardar').val()=="")
+                    {
+                        alert("Asignale un nombre al indicador");
+                        predicado=false;
+                    }
+
+
+                    if(predicado)
+                        $(this)[0].submit();
+                });
+
                 var table = $('#tabla1').DataTable( {
                     dom: 'Bfrtip',
 
@@ -112,15 +127,15 @@
             </div>
 
             </div>
-        <form method="POST" action="{{ url("generacionIndicador/guardarIndicador")}}">
+        <form id="guardarI" method="POST" action="{{ url("generacionIndicador/guardarIndicador")}}">
             {{csrf_field()}}
 
             <input name="consulta" type="text" value="{{$consulta}}" hidden>
-            <input type="text" name="nombre">
+            <input id="nombreGuardar" type="text" name="nombre"/>
             <input type="submit" class="btn-info btn" value="Guardar">
         </form>
 
-        <a href="{{ url("generacionIndicador/elegir")}}" required="required" class="btn btn-success">Realizar nueva consulta</a>
+        <a href="{{ url("generacionIndicador/elegir")}}" class="btn btn-success">Realizar nueva consulta</a>
         <a href="{{ url("generacionIndicador/indicadores")}}" class="btn btn-primary">Indicadores</a>
         </div>
 
