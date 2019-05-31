@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="93985024-58d5-406e-80a6-9974ba238e90" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/app/indicadores.csv" beforeDir="false" afterPath="$PROJECT_DIR$/storage/app/indicadores.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/generacionIndicadores/indicadores.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/generacionIndicadores/indicadores.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/generacionIndicadores/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/generacionIndicadores/welcome.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/generacionIndicadores/welcome.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="875" column="110" selection-start-line="875" selection-start-column="93" selection-end-line="875" selection-end-column="110" />
+            <state relative-caret-position="274">
+              <caret line="767" column="37" lean-forward="true" selection-start-line="767" selection-start-column="37" selection-end-line="767" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -47,8 +48,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/generacionIndicadores/indicadores.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="82" column="94" selection-start-line="82" selection-start-column="94" selection-end-line="82" selection-end-column="94" />
+            <state relative-caret-position="1224">
+              <caret line="93" selection-start-line="93" selection-end-line="93" />
               <folding>
                 <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -68,7 +69,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/storage/app/indicadores.csv">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
@@ -116,8 +117,8 @@
       <find>form</find>
       <find>formul</find>
       <find>guardar</find>
-      <find>indicadores</find>
       <find>guardari</find>
+      <find>indicadores</find>
     </findStrings>
     <replaceStrings>
       <replace>{{asset('/js')}}/</replace>
@@ -152,13 +153,13 @@
         <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/resources/views/generacionIndicadores/elegir.blade.php" />
         <option value="$PROJECT_DIR$/storage/app/.gitignore" />
-        <option value="$PROJECT_DIR$/resources/views/generacionIndicadores/welcome.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/generacionIndicadores/tabla.blade.php" />
         <option value="$PROJECT_DIR$/public/css/estiloprincipal.css" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/resources/views/generacionIndicadores/indicadores.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/GeneracionIndicadores.php" />
         <option value="$PROJECT_DIR$/storage/app/indicadores.csv" />
+        <option value="$PROJECT_DIR$/resources/views/generacionIndicadores/indicadores.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/generacionIndicadores/welcome.blade.php" />
       </list>
     </option>
   </component>
@@ -435,21 +436,7 @@
       <workItem from="1558566357209" duration="1061000" />
       <workItem from="1558912825223" duration="3375000" />
       <workItem from="1559060673473" duration="3670000" />
-      <workItem from="1559216646458" duration="14790000" />
-    </task>
-    <task id="LOCAL-00044" summary="CONSULTAS BN">
-      <created>1557791741811</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1557791741811</updated>
-    </task>
-    <task id="LOCAL-00045" summary="ERRORES">
-      <created>1557793570045</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1557793570045</updated>
+      <workItem from="1559216646458" duration="15039000" />
     </task>
     <task id="LOCAL-00046" summary="ARREGLADO BOTON">
       <created>1557850106145</created>
@@ -780,11 +767,25 @@
       <option name="project" value="LOCAL" />
       <updated>1559302454986</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="BORRAR INDICADOR">
+      <created>1559302541264</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1559302541264</updated>
+    </task>
+    <task id="LOCAL-00094" summary="errorcillo">
+      <created>1559302579340</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1559302579340</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127863000" />
+    <option name="totallyTimeSpent" value="128112000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -849,7 +850,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ERRORES OPERANDO" />
     <MESSAGE value="QUITAR TABLAS" />
     <MESSAGE value="CONTAR" />
     <MESSAGE value="ARREGLADO OPERACIONES" />
@@ -874,7 +874,8 @@
     <MESSAGE value="Comrpobaciones" />
     <MESSAGE value="BONITO" />
     <MESSAGE value="BORRAR INDICADOR" />
-    <option name="LAST_COMMIT_MESSAGE" value="BORRAR INDICADOR" />
+    <MESSAGE value="errorcillo" />
+    <option name="LAST_COMMIT_MESSAGE" value="errorcillo" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/public/index.php">
@@ -1077,27 +1078,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/generacionIndicadores/welcome.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="875" column="110" selection-start-line="875" selection-start-column="93" selection-end-line="875" selection-end-column="110" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/generacionIndicadores/tabla.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="444">
           <caret line="117" column="48" lean-forward="true" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/generacionIndicadores/indicadores.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="82" column="94" selection-start-line="82" selection-start-column="94" selection-end-line="82" selection-end-column="94" />
-          <folding>
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1115,6 +1099,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/generacionIndicadores/indicadores.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1224">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
+          <folding>
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/generacionIndicadores/welcome.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="767" column="37" lean-forward="true" selection-start-line="767" selection-start-column="37" selection-end-line="767" selection-end-column="37" />
         </state>
       </provider>
     </entry>

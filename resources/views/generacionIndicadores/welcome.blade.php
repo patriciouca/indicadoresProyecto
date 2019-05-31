@@ -38,6 +38,7 @@
         var inparentesis1=false,inparentesis2=false;
         var borrar1=false,borrar2=false;
         var logicoWhere=false;
+        var justoMetidoLogico=false;
         var accesibles=[];
         var accesibles1=[];
         var accesibles2=[];
@@ -45,7 +46,7 @@
         var dropfuncionW=function( event, ui ) {
             var arrastrado=$(ui.draggable).get(0);
             var multivalor=$(arrastrado).hasClass("draggable5");
-
+            justoMetidoLogico=false;
                 if(logicoWhere)
                 {
                     if($(arrastrado).hasClass("draggable4"))
@@ -63,6 +64,7 @@
 
                         metidowhere.push(meto);
                         logicoWhere=false;
+                        justoMetidoLogico=true;
                         $('#filtro').append(" "+$(arrastrado)[0].innerText+" ");
                     }
                     else{
@@ -756,6 +758,12 @@
                 }
 
                 if(arraytemporal.length !=0)
+                {
+                    alert("Recuerda acabar los filtros");
+                    predicado=false;
+                }
+
+                if(justoMetidoLogico)
                 {
                     alert("Recuerda acabar los filtros");
                     predicado=false;
