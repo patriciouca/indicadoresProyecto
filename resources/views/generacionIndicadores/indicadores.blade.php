@@ -82,7 +82,7 @@
         </table>
     </div>
     <a href="{{ url("generacionIndicador/elegir")}}" class="btn btn-success">Realizar nueva consulta</a>
-    <a href="{{ url("generacionIndicador/indicadores")}}" class="btn btn-primary">Indicadores</a>
+    <a href="{{ url("generacionIndicador/indicadores")}}" class="btn btn-primary indicadoresButton">Indicadores</a>
 
 </div>
 

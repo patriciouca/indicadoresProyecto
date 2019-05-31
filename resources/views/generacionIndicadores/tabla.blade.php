@@ -132,11 +132,11 @@
 
             <input name="consulta" type="text" value="{{$consulta}}" hidden>
             <input id="nombreGuardar" type="text" name="nombre"/>
-            <input type="submit" class="btn-info btn" value="Guardar">
+            <input type="submit" class="btn btn-info indicadoresButton" value="Guardar">
         </form>
 
         <a href="{{ url("generacionIndicador/elegir")}}" class="btn btn-success">Realizar nueva consulta</a>
-        <a href="{{ url("generacionIndicador/indicadores")}}" class="btn btn-primary">Indicadores</a>
+        <a href="{{ url("generacionIndicador/indicadores")}}" class="btn btn-primary indicadoresButton">Indicadores</a>
         </div>
 
 

@@ -199,6 +199,15 @@
 
 }
 
+#guardarI{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.indicadoresButton{
+    line-height: 25px!important;
+}
+
 .op{
     width: 69px;
 }
@@ -254,6 +263,7 @@
     border:3px dashed #6497b1;
     line-height: 130px;
 }
+
 
 .badge-secondary h3{
     font-size: 1em;
