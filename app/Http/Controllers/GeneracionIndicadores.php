@@ -365,6 +365,25 @@ class GeneracionIndicadores extends Controller
 
     }
 
+    function borrarIndicador(Request $request)
+    {
+        $arraynuevo=[];
+        $nombre=$request['nombre'];
+        $url= $path = storage_path('app/indicadores.csv');
+
+        $arra = array_map(function($v){return str_getcsv($v, ":");}, file($url));
+
+        foreach ($arra as $valor)
+        {
+            if(strcmp($valor[0], $nombre)!= 0)
+                array_push($arraynuevo,$valor);
+
+        }
+        $csv=$this->array2csv($arraynuevo);
+        Storage::disk('local')->put('indicadores.csv', $csv);
+        return redirect()->action('GeneracionIndicadores@indicadores');
+    }
+
     function indicadores(){
 
         $url= $path = storage_path('app/indicadores.csv');

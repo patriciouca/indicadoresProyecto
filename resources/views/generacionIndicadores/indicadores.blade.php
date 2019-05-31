@@ -36,7 +36,7 @@
 
 
 </head>
-<body>
+<body style="overflow: hidden">
 
 <div class="flex-center position-ref full-height">
     <div class="contenidotablas">
@@ -50,6 +50,7 @@
                 <td>Nombre</td>
                 <td>Consulta</td>
                 <td>Realizar consulta</td>
+                <td>Borrar</td>
             </tr>
             </thead>
             <tbody>
@@ -74,7 +75,15 @@
                     <?php
                         echo "<input class='btn btn-primary' value='Realizar consulta' type=submit></form></td>";
                     ?>
+                    <td>
 
+                        <form method="POST" action="{{url('/generacionIndicador/borrarIndicador')}}">
+                            {{csrf_field()}}
+
+                            <input name="nombre" hidden type="text" value="{{$arraynuevo[0]}}">
+                            <input class='btn btn-danger' value='Borrar' type=submit>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
 

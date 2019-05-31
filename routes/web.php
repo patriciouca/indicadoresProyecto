@@ -35,6 +35,8 @@ Route::post('/generacionIndicador/getConsulta','GeneracionIndicadores@generateSq
 
 Route::post('/generacionIndicador/guardarIndicador','GeneracionIndicadores@guardarIndicador');
 
+Route::post('/generacionIndicador/borrarIndicador','GeneracionIndicadores@borrarIndicador');
+
 Route::post('/generacionIndicador/getConsulta2','GeneracionIndicadores@realizarConsultaSQL');
 
 Route::post('/generacionIndicador/evaluarConsulta','GeneracionIndicadores@evaluarConsulta');
