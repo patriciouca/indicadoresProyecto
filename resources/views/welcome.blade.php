@@ -78,7 +78,8 @@
 						<p>En la parte superior puede ver la consulta SQL que se ha utilizado para generarlos. </p>
 						<p>Bajo esta puede ber dos grupos de botones, los 4 primeros son para exportar la tabla en distintos formatos como son copiada en el portapapeles, en formato Excel, en PDF y en imagen para imprimir, en orden de izquierda a derecha, y el último botón es el que generará una gráfica con estos indicadores.</p>
 						<p>En cuanto a la tabla puede realizar acciones como ordenar las distintas filas o realizar una búsqueda entre estas utilizando el buscador situado en la parte superior derecha de la tabla. </p>
-
+						<p>Si lo desea puede guardar la consulta tan solo añadiendo un título y pulsando sobre el botón "Guardar" situado en la parte inferior izquierda. </p>
+						
                     </div>
                 </article>
 
