@@ -1,3 +1,3 @@
 Clientela:"select cliente.codigo""cliente.codigo"",cliente.cif""cliente.cif"" from `cliente`"
-"Laboratorios ":"select laboratorio.nombre""laboratorio.nombre"",laboratorio.direccion""laboratorio.direccion"" from `laboratorio`"
+"Laboratorios":"select laboratorio.nombre""laboratorio.nombre"",laboratorio.direccion""laboratorio.direccion"" from `laboratorio`"
 Clientes:"select cliente.cif""cliente.cif"",cliente.fax""cliente.fax"" from `cliente`"
