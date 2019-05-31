@@ -120,7 +120,7 @@
             <input type="submit" class="btn-info btn" value="Guardar">
         </form>
 
-        <a href="{{ url("generacionIndicador/elegir")}}" class="btn btn-success">Realizar nueva consulta</a>
+        <a href="{{ url("generacionIndicador/elegir")}}" required="required" class="btn btn-success">Realizar nueva consulta</a>
         <a href="{{ url("generacionIndicador/indicadores")}}" class="btn btn-primary">Indicadores</a>
         </div>
 
